@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="Платформа инструментов Гардари: 13 авторских методов исследования, мышления, моделирования и работы с ИИ.">
+<title>Каталог — Платформа инструментов Гардари</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/theme.css">
+<link rel="stylesheet" href="assets/css/layout.css">
+<link rel="stylesheet" href="assets/css/catalog.css">
+<link rel="stylesheet" href="assets/css/detail.css">
+<link rel="stylesheet" href="assets/css/account.css">
+<script type="module" src="assets/js/app.js"></script>
+</head>
+<body>
+
+<div id="shell">
+<a class="skip-link" href="#main">К основному содержанию</a>
+<header class="site-header" id="top">
+ <button class="menu-control" type="button" id="toggle-menu" aria-controls="sidebar" aria-expanded="true" aria-label="Скрыть или открыть левое меню"><span class="menu-lines" aria-hidden="true"><i></i><i></i><i></i></span></button>
+ <a class="brand" href="#catalog" aria-label="Платформа инструментов Гардари — каталог"><span class="bracket platform-mark" aria-hidden="true">&gt;_</span><span class="brand-full">ПЛАТФОРМА ИНСТРУМЕНТОВ ГАРДАРИ</span><span class="brand-short">ГАРДАРИ / ИНСТРУМЕНТЫ</span></a>
+ <nav class="nav-top" aria-label="Навигация"><a href="#catalog">Каталог</a><a href="#about">О платформе</a><a href="#saved">Моя библиотека</a></nav>
+ <a class="btn primary header-account" href="#account"><span class="account-full">ЛИЧНЫЙ КАБИНЕТ</span><span class="account-short">КАБИНЕТ</span> <svg aria-hidden="true" focusable="false" class="chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></a>
+</header>
+<div class="mainframe" id="frame">
+  <div class="mobile-overlay" id="overlay" aria-hidden="true"></div>
+  <aside class="sidepanel" id="sidebar" aria-label="Разделы и инструменты"><button type="button" class="side-close" id="side-close" aria-label="Закрыть меню">Закрыть <span aria-hidden="true">×</span></button><div class="side-inner" id="sidebar-content"></div></aside>
+  <main class="content-area" id="main" tabindex="-1"><section class="panel surface-light"><h1>Каталог инструментов</h1><p role="status">Загружаем библиотеку…</p></section></main>
+</div>
+<footer class="editorial-footer" id="site-footer">
+ <div class="footer-main">
+  <div class="footer-identity"><h2 class="footer-title"><span class="platform-mark" aria-hidden="true">&gt;_</span><span class="footer-name">ПЛАТФОРМА<br>ИНСТРУМЕНТОВ ГАРДАРИ</span></h2><p class="footer-description">Авторские методы и цифровые инструменты для исследования, мышления, творчества и совместной работы с ИИ.</p><p class="footer-motto">ПОНИМАТЬ · СОЗДАВАТЬ · ДЕЙСТВОВАТЬ</p></div>
+  <nav class="footer-navigation" aria-label="Разделы подвала"><h3 class="footer-label">Внутри платформы</h3><a href="#catalog">Каталог</a><a href="#about">О платформе</a><a href="#saved">Избранное</a><a href="#account">Личный кабинет</a></nav>
+  <div class="footer-contacts"><h3 class="footer-label">Гардари</h3><a class="footer-email" href="https://gardari.art/" target="_blank" rel="noopener noreferrer">gardari.art</a><div class="footer-author-links"><a href="https://t.me/gardariart" target="_blank" rel="noopener noreferrer">Телеграм-канал <svg aria-hidden="true" focusable="false" class="chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></a><a href="https://dgardari-ai.github.io/kb-gardari/" target="_blank" rel="noopener noreferrer">Концептуальное бюро <svg aria-hidden="true" focusable="false" class="chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></a></div></div>
+ </div>
+ <div class="footer-legal"><span>© 2026 Денис Гардари · Авторские разработки</span><span>Версия 1.0 · 15.10.2026</span><a class="footer-top clickable" href="#top" data-scroll-to="top">НАВЕРХ <svg aria-hidden="true" focusable="false" class="chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></a></div>
+</footer>
+</div>
+<dialog class="modal-dialog" id="dl-modal" aria-labelledby="modal-title"><div class="dialog-head"><p class="eyebrow">ПОЛУЧЕНИЕ ИНСТРУМЕНТА</p><button type="button" id="close-modal">Закрыть <svg aria-hidden="true" focusable="false" class="chevron chevron-back" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></button></div><div class="dialog-main" id="modal-content"></div></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<noscript><p class="panel">Для каталога и рабочих инструментов включите JavaScript (выполнение сценариев) в браузере.</p></noscript>
+</body>
+</html>

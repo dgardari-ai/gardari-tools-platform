@@ -1,0 +1,48 @@
+/* Local library and demonstration account; no visual claim of server protection. */
+.account-panel { padding: clamp(32px, 4vw, 60px); background: var(--lightgray); }
+.account-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(250px, .7fr); gap: 13px; margin-top: 14px; }
+.account-window { min-width: 0; padding: 32px; border-radius: var(--radius); background: var(--almost); }
+.account-window.surface-blue { background: var(--blue); }
+.account-window.surface-light { background: var(--lightgray); }
+.account-window.surface-white { border: 1px solid #cbd0d3; background: var(--paper); }
+.account-window h2 { margin-bottom: 15px; font-size: clamp(25px, 3vw, 40px); text-transform: lowercase; overflow-wrap: break-word; }
+.account-window p { color: var(--body); font-size: 15px; line-height: 1.6; }
+.account-window .eyebrow { margin-bottom: 24px; font: 11px/1.5 var(--label-font); }
+.account-stat { display: inline-block; font-size: 65px; line-height: 1.05; letter-spacing: -.08em; }
+.account-stat + h2 { margin-top: 15px; }
+.account-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.account-links .btn { font-size: 11px; }
+.activity-row { display: flex; align-items: baseline; justify-content: space-between; gap: 11px; padding: 13px 0; border-top: 1px solid #bbc0c4; font-size: 13px; }
+.activity-row > :first-child { min-width: 0; }
+.activity-row .num { flex: none; color: var(--body); font-size: 10px; }
+.activity-row a { display: inline-flex; align-items: center; gap: 7px; min-height: 34px; }
+.activity-row a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.activity-row .chevron { width: 14px; height: 14px; }
+.activity-meta { display: block; margin-top: 5px; color: var(--body); font: 10px/1.6 var(--label-font); overflow-wrap: anywhere; }
+.membership { display: inline-flex; align-items: center; gap: 9px; max-width: 100%; margin-bottom: 20px; padding: 7px 11px; border-radius: 7px; background: var(--accent); color: var(--ink); font: 11px/1.4 var(--label-font); text-transform: uppercase; }
+.account-tiny, .account-window .account-tiny { margin-top: 20px; color: var(--body); font: 10px/1.55 var(--label-font); text-transform: uppercase; }
+.account-setting { margin-top: 24px; padding: 16px 0; border-top: 1px solid var(--line); font-size: 14px; line-height: 1.5; }
+.account-setting summary { min-height: 44px; cursor: pointer; font-size: 16px; }
+.account-setting p { margin-top: 14px; }
+.account-setting label { display: flex; align-items: start; gap: 12px; margin-top: 18px; }
+.account-setting input { flex: none; width: 20px; height: 20px; accent-color: var(--ink); }
+.account-setting button { max-width: 100%; min-height: 44px; padding: 9px 12px; border: 1px solid var(--ink); border-radius: 9px; background: var(--paper); font: 10px/1.5 var(--label-font); text-transform: uppercase; }
+.download-history .text-link { flex: none; font-size: 10px; }
+.subscription-details { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--line); }
+.subscription-details summary { display: flex; align-items: center; gap: 12px; min-height: 44px; cursor: pointer; font-size: 16px; }
+.subscription-details p { margin-top: 14px; }
+.subscription-details dl { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px 18px; margin: 16px 0 0; font-size: 14px; }
+.subscription-details dt { color: var(--body); }
+.subscription-details dd { margin: 0; }
+@media (max-width: 760px) {
+  .account-window { padding: 27px 24px; }
+}
+@media (max-width: 650px) {
+  .account-grid { grid-template-columns: minmax(0, 1fr); }
+  .account-panel { padding: 30px 24px; }
+  .account-links .btn { flex: 1 1 auto; }
+  .activity-row { flex-wrap: wrap; }
+  .activity-row a { min-height: 44px; }
+  .subscription-details dl { grid-template-columns: minmax(0, 1fr); gap: 5px; }
+  .subscription-details dd { margin-bottom: 12px; }
+}

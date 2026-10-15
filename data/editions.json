@@ -1,0 +1,340 @@
+[
+  {
+    "productId": "razvedka",
+    "methodVersion": null,
+    "editionVersion": "demo-1.0",
+    "status": "sample",
+    "assets": [
+      {
+        "id": "razvedka-1",
+        "format": "ChatGPT",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "razvedka-2",
+        "format": "Claude",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "razvedka-3",
+        "format": "Универсальная инструкция",
+        "delivery": "generated-markdown",
+        "href": null
+      }
+    ]
+  },
+  {
+    "productId": "sozvuchie",
+    "methodVersion": null,
+    "editionVersion": "demo-1.0",
+    "status": "sample",
+    "assets": [
+      {
+        "id": "sozvuchie-1",
+        "format": "ChatGPT",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "sozvuchie-2",
+        "format": "Claude",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "sozvuchie-3",
+        "format": "Универсальная инструкция",
+        "delivery": "generated-markdown",
+        "href": null
+      }
+    ]
+  },
+  {
+    "productId": "dr",
+    "methodVersion": null,
+    "editionVersion": "demo-1.0",
+    "status": "sample",
+    "assets": [
+      {
+        "id": "dr-1",
+        "format": "ChatGPT",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "dr-2",
+        "format": "Claude",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "dr-3",
+        "format": "Методический документ",
+        "delivery": "generated-markdown",
+        "href": null
+      }
+    ]
+  },
+  {
+    "productId": "watch",
+    "methodVersion": null,
+    "editionVersion": "demo-1.0",
+    "status": "sample",
+    "assets": [
+      {
+        "id": "watch-1",
+        "format": "ChatGPT",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "watch-2",
+        "format": "Claude",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "watch-3",
+        "format": "Универсальная методика",
+        "delivery": "generated-markdown",
+        "href": null
+      }
+    ]
+  },
+  {
+    "productId": "triads",
+    "methodVersion": null,
+    "editionVersion": "demo-1.0",
+    "status": "sample",
+    "assets": [
+      {
+        "id": "triads-1",
+        "format": "ChatGPT",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "triads-2",
+        "format": "Claude",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "triads-3",
+        "format": "Методика PDF / MD",
+        "delivery": "generated-markdown",
+        "href": null
+      }
+    ]
+  },
+  {
+    "productId": "trialect",
+    "methodVersion": null,
+    "editionVersion": "demo-1.0",
+    "status": "sample",
+    "assets": [
+      {
+        "id": "trialect-1",
+        "format": "ChatGPT",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "trialect-2",
+        "format": "Claude",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "trialect-3",
+        "format": "Универсальная инструкция",
+        "delivery": "generated-markdown",
+        "href": null
+      }
+    ]
+  },
+  {
+    "productId": "thinker",
+    "methodVersion": null,
+    "editionVersion": "demo-1.0",
+    "status": "sample",
+    "assets": [
+      {
+        "id": "thinker-1",
+        "format": "ChatGPT",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "thinker-2",
+        "format": "Claude",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "thinker-3",
+        "format": "Теоретический корпус",
+        "delivery": "generated-markdown",
+        "href": null
+      }
+    ]
+  },
+  {
+    "productId": "modeller",
+    "methodVersion": null,
+    "editionVersion": "demo-1.0",
+    "status": "sample",
+    "assets": [
+      {
+        "id": "modeller-1",
+        "format": "ChatGPT",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "modeller-2",
+        "format": "Claude",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "modeller-3",
+        "format": "Сценарная методика",
+        "delivery": "generated-markdown",
+        "href": null
+      }
+    ]
+  },
+  {
+    "productId": "admin",
+    "methodVersion": null,
+    "editionVersion": "demo-1.0",
+    "status": "sample",
+    "assets": [
+      {
+        "id": "admin-1",
+        "format": "ChatGPT",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "admin-2",
+        "format": "Claude",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "admin-3",
+        "format": "Универсальная инструкция",
+        "delivery": "generated-markdown",
+        "href": null
+      }
+    ]
+  },
+  {
+    "productId": "plugin-maker",
+    "methodVersion": null,
+    "editionVersion": "demo-1.0",
+    "status": "sample",
+    "assets": [
+      {
+        "id": "plugin-maker-1",
+        "format": "Плагин ChatGPT · ZIP",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "plugin-maker-2",
+        "format": "Самостоятельный навык · SKILL.md",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "plugin-maker-3",
+        "format": "Методика и шаблоны",
+        "delivery": "generated-markdown",
+        "href": null
+      }
+    ]
+  },
+  {
+    "productId": "rdc-agent",
+    "methodVersion": null,
+    "editionVersion": "demo-1.0",
+    "status": "sample",
+    "assets": [
+      {
+        "id": "rdc-agent-1",
+        "format": "Протокол RDC",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "rdc-agent-2",
+        "format": "Настройка рабочего контура",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "rdc-agent-3",
+        "format": "Комплект примеров",
+        "delivery": "generated-markdown",
+        "href": null
+      }
+    ]
+  },
+  {
+    "productId": "drive-knowledge",
+    "methodVersion": null,
+    "editionVersion": "demo-1.0",
+    "status": "sample",
+    "assets": [
+      {
+        "id": "drive-knowledge-1",
+        "format": "Инструкция для ChatGPT",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "drive-knowledge-2",
+        "format": "Схема Google Drive",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "drive-knowledge-3",
+        "format": "Проверочные шаблоны",
+        "delivery": "generated-markdown",
+        "href": null
+      }
+    ]
+  },
+  {
+    "productId": "chatgpt-project",
+    "methodVersion": null,
+    "editionVersion": "demo-1.0",
+    "status": "sample",
+    "assets": [
+      {
+        "id": "chatgpt-project-1",
+        "format": "Настройка ChatGPT Project",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "chatgpt-project-2",
+        "format": "Методика · Markdown",
+        "delivery": "generated-markdown",
+        "href": null
+      },
+      {
+        "id": "chatgpt-project-3",
+        "format": "Контрольный список",
+        "delivery": "generated-markdown",
+        "href": null
+      }
+    ]
+  }
+]
