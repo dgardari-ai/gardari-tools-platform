@@ -1,3 +1,4 @@
+import {initPhotoCards} from './photo-cards.js';
 import {initFooter} from './footer.js';
 import {applyManualData,manualPresentation} from './manual-edits.js';
 import {loadData} from './data.js';
@@ -24,6 +25,7 @@ async function start() {
   const presentManual=manualPresentation(data.manual);
   const store = createLocalAdapter(data);
   const main = document.getElementById('main');
+  initPhotoCards(main);
   const sidebar = document.getElementById('sidebar');
   const side = document.getElementById('sidebar-content');
   const frame = document.getElementById('frame');
