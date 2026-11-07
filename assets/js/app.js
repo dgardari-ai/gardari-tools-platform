@@ -8,6 +8,13 @@ import {renderDetail} from './detail.js';
 import {newBench,renderBench,compose} from './workbench.js';
 import {createDownloads} from './downloads.js';
 import {renderAccount,renderAbout} from './account.js';
+import {renderTraining,refreshTraining,renderLesson} from './training.js';
+import {renderHome} from './home.js';
+import {renderSidebar} from './sidebar.js';
+import {createAccountState} from './account-state.js';
+import {lessonById} from './lessons-data.js';
+import {renderAgent} from './agent.js';
+import {followWorkbench} from './sticky-workbench.js';
 
 async function start() {
   const data = await loadData();
@@ -18,15 +25,17 @@ async function start() {
   const side = document.getElementById('sidebar-content');
   const frame = document.getElementById('frame');
   const menuButton = document.getElementById('toggle-menu');
-  const mobile = matchMedia('(max-width:1060px)');
+  followWorkbench();
   const filters = {category:'Все',search:''};
+  const learningFilters = {kind:'Все',search:''};
+  const account=createAccountState();
   const benches = new Map();
   const benchFor = id => {
     if (!benches.has(id)) benches.set(id,newBench(data.byId.get(id)));
     return benches.get(id);
   };
   let route = parseRoute(data);
-  let menuOpen = !mobile.matches;
+  let menuOpen = false;
   const storageNotice = document.createElement('p');
   storageNotice.className = 'storage-notice';
   storageNotice.setAttribute('role','status');
@@ -38,28 +47,61 @@ async function start() {
   function syncMenu() {
     frame.classList.toggle('noside',!menuOpen);
     menuButton.setAttribute('aria-expanded',String(menuOpen));
-    menuButton.setAttribute('aria-label',menuOpen?'Скрыть меню':'Открыть меню');
+    menuButton.setAttribute('aria-label',menuOpen?'Закрыть меню':'Открыть меню');
     sidebar.inert = !menuOpen;
     sidebar.setAttribute('aria-hidden',String(!menuOpen));
-    document.body.classList.toggle('menu-open',menuOpen && mobile.matches);
-    const modalMenu = menuOpen && mobile.matches;
-    if (modalMenu) {sidebar.setAttribute('role','dialog');sidebar.setAttribute('aria-modal','true');}
-    else {sidebar.removeAttribute('role');sidebar.removeAttribute('aria-modal');}
-    main.inert = modalMenu;
-    document.querySelector('.site-header').inert = modalMenu;
-    document.getElementById('site-footer').inert = modalMenu;
-    document.querySelector('.skip-link').inert = modalMenu;
+    document.body.classList.remove('menu-open');
+    sidebar.removeAttribute('role');
+    sidebar.removeAttribute('aria-modal');
   }
   function setMenu(open,restore = true) {
     menuOpen = open;
     syncMenu();
-    if (open && mobile.matches) focusElement(document.getElementById('side-close'));
-    else if (!open && restore) focusElement(menuButton);
+    if(open) { positionMenu(); focusElement(side.querySelector('[aria-current="page"]') || side.querySelector('a')); }
+    else if (restore) focusElement(menuButton);
   }
-  function renderSide() {
-    const nav = (href,label,code,active,tail='') => `<a href="${href}" class="side-link ${active?'active':''}" ${active?'aria-current="page"':''}><span class="num">${code}</span><span>${E(label)}</span>${tail}</a>`;
-    side.innerHTML = `<nav aria-label="Разделы и инструменты"><div class="side-head">НАВИГАЦИЯ / РАЗДЕЛЫ</div>${nav('#catalog','Весь каталог','00',route.page==='catalog')}<div class="side-section"></div>${data.groups.map(group => `<a href="#catalog" class="side-group-name" data-filter-link="${E(group.id)}"><span class="num">${group.n}.0</span><span>${E(group.name)}</span></a>${data.catalog.filter(t => t.category===group.id).map(t => nav('#tool/'+t.id,t.name,t.code,route.page==='tool'&&route.id===t.id)).join('')}`).join('')}<div class="side-section"><div class="side-group-name"><span class="num">5.0</span>Личное</div>${nav('#saved','Избранное','5.1',route.page==='saved',`<span class="end" id="side-favorite-count">${store.snapshot().favorites.length}</span>`)}${nav('#account','Кабинет','5.2',route.page==='account')}</div><div class="side-footer-link">${nav('#about','О платформе','',route.page==='about')}</div><p class="side-note">Каталог, подробные материалы и личная библиотека — в одной платформе.</p></nav>`;
+  function positionMenu() {
+    const header = document.getElementById('top');
+    const headerFrame = document.querySelector('.header-frame');
+    const viewport = document.documentElement.clientWidth;
+    const moduleWidth = (frame.getBoundingClientRect().width - 24) / 3;
+    const controlSize = viewport<=925 ? 57 : (moduleWidth - 4 * 7.5) / 5;
+    document.documentElement.style.setProperty('--navigation-control-size', `${controlSize}px`);
+    const trigger = menuButton.getBoundingClientRect();
+    const content = frame.getBoundingClientRect();
+    const top = Math.round(header.getBoundingClientRect().bottom + 10);
+    const margin = Number.parseFloat(getComputedStyle(headerFrame).columnGap) || 14;
+    const fullWidth = Math.min(380, Math.max(0, viewport - 24));
+    const sideWidth = Math.min(fullWidth, Math.max(0, content.left - margin - 12));
+    const anchoredWidth = Math.min(sideWidth, Math.max(0, trigger.right - 12));
+    const aside = anchoredWidth >= 240;
+    const width = aside ? anchoredWidth : fullWidth;
+    const left = aside ? trigger.right - width : Math.max(12, Math.min(trigger.left, viewport - fullWidth - 12));
+    sidebar.style.width = `${width}px`;
+    sidebar.style.left = `${left}px`;
+    sidebar.dataset.placement = aside ? 'aside' : 'overlay';
+    document.getElementById('search').placeholder = route.page==='training'||route.page==='lesson' ? 'НАЙТИ МИНИ-КУРС ИЛИ ЛЕКЦИЮ…' : innerWidth<=680 ? 'НАЙТИ ИНСТРУМЕНТ…' : 'ПЛАТФОРМА ИНСТРУМЕНТОВ: НАЙТИ МЕТОД…';
+    document.documentElement.style.setProperty('--platform-menu-top', `${top}px`);
+    document.documentElement.style.setProperty('--platform-header-height', `${header.offsetHeight}px`);
   }
+  new ResizeObserver(positionMenu).observe(document.getElementById('top'));
+  window.addEventListener('resize',positionMenu);
+  window.addEventListener('scroll',positionMenu,{passive:true});
+  positionMenu();
+  function syncHeader() {
+    const selected = route.page==='tool' ? 'catalog' : route.page==='lesson' ? 'training' : route.page;
+    document.querySelectorAll('[data-header-page]').forEach(link => {
+      if (link.dataset.headerPage===selected) link.setAttribute('aria-current','page');
+      else link.removeAttribute('aria-current');
+    });
+    const learning=route.page==='training'||route.page==='lesson';
+    document.getElementById('search').value=learning?learningFilters.search:filters.search;
+    document.getElementById('search').setAttribute('aria-label',learning?'Поиск обучения':'Поиск инструмента');
+    document.getElementById('header-search').setAttribute('aria-label',learning?'Поиск по обучению':'Поиск по каталогу инструментов');
+    positionMenu();
+  }
+
+  function renderSide() { renderSidebar(side,data,store,route); }
   function updateChapter() {
     document.querySelectorAll('.chapter-link').forEach(link => {
       if (link.dataset.chapterId===route.anchor) link.setAttribute('aria-current','location');
@@ -67,16 +109,20 @@ async function start() {
     });
   }
   function renderPage() {
-    main.dataset.view=route.page==='tool'?`tool/${route.id}`:route.page;
+    main.dataset.view=route.page==='tool'?`tool/${route.id}`:route.page==='lesson'?`lesson/${route.id}`:route.page;
     renderSide();
+    syncHeader();
     if (route.page==='catalog') renderCatalog(main,data,store,filters);
     else if (route.page==='tool') renderDetail(main,data.byId.get(route.id),data,store,benchFor(route.id));
     else if (route.page==='saved') renderFavorites(main,data,store);
-    else if (route.page==='account') renderAccount(main,data,store);
-    else if (route.page==='about') renderAbout(main,data);
+    else if (route.page==='account') renderAccount(main,data,store,account);
+    else if (route.page==='about') renderHome(main,data,store);
+    else if (route.page==='training') renderTraining(main,data,learningFilters,account);
+    else if (route.page==='lesson') renderLesson(main,route.id,data,account);
+    else if (route.page==='agent') renderAgent(main);
     else main.innerHTML = `<section class="panel surface-light"><p class="eyebrow">СТРАНИЦА НЕ НАЙДЕНА</p><h1>Проверьте адрес</h1><p>Такого инструмента или раздела нет в каталоге.</p><div class="empty-actions"><a class="btn primary" href="#catalog">ОТКРЫТЬ КАТАЛОГ ${arrow()}</a></div></section>`;
-    const names = {catalog:'Каталог',saved:'Избранное',account:'Личный кабинет',about:'О платформе','not-found':'Страница не найдена'};
-    document.title = `${route.page==='tool'?data.byId.get(route.id).name:names[route.page]} — Платформа инструментов Гардари`;
+    const names = {catalog:'Каталог',saved:'Избранное',account:'Личный кабинет',about:'Главная',training:'Обучение',lesson:'Обучение',agent:'AI агент','not-found':'Страница не найдена'};
+    document.title = `${route.page==='tool'?data.byId.get(route.id).name:route.page==='lesson'?lessonById(route.id).title:names[route.page]} — Платформа инструментов Гардари`;
     const description = route.page==='tool' ? data.byId.get(route.id).summary : '13 авторских методов исследования, мышления, моделирования и работы с ИИ.';
     document.querySelector('meta[name="description"]').content = description;
     syncMenu();
@@ -90,7 +136,6 @@ async function start() {
     const next = parseRoute(data);
     const sameTool = next.page==='tool' && route.page==='tool' && next.id===route.id;
     route = next;
-    if (mobile.matches) setMenu(false,false);
     if (!sameTool || !main.querySelector('.detail-main') || initial) renderPage();
     else updateChapter();
     requestAnimationFrame(() => {
@@ -104,7 +149,7 @@ async function start() {
   }
   const downloads = createDownloads(data,store,() => {
     updateStorageNotice();
-    if (route.page==='account') {renderAccount(main,data,store);focusElement(main.querySelector('h1'));}
+    if (route.page==='account') {renderPage();focusElement(main.querySelector('h1'));}
   });
   function syncFavoriteControls() {
     document.querySelectorAll('[data-action="star"]').forEach(control => {
@@ -118,12 +163,13 @@ async function start() {
         control.innerHTML=`<span aria-hidden="true">${selected?'★':'☆'}</span>`;
       } else control.innerHTML=`${selected?'УБРАТЬ ИЗ ИЗБРАННОГО':'СОХРАНИТЬ В БИБЛИОТЕКУ'} ${arrow()}`;
     });
-    document.getElementById('side-favorite-count').textContent=store.snapshot().favorites.length;
+    renderSide();
   }
   function favorite(id,button) {
     if (!data.byId.has(id)) return;
     const oldIndex = [...main.querySelectorAll('[data-action="star"]')].indexOf(button);
     const saved = store.toggleFavorite(id);
+    if (route.page==='account') renderPage();
     if (route.page==='saved') {
       renderFavorites(main,data,store);
       const buttons = [...main.querySelectorAll('[data-action="star"]')];
@@ -137,7 +183,11 @@ async function start() {
     const scrollLink = event.target.closest('[data-scroll-to],.skip-link');
     if (scrollLink) {
       event.preventDefault();
-      focusElement(scrollLink.classList.contains('skip-link')?main:document.getElementById('top'),true);
+      if (scrollLink.classList.contains('skip-link')) focusElement(main,true);
+      else {
+        focusElement(document.getElementById('top'));
+        window.scrollTo({top:0,left:0,behavior:'instant'});
+      }
       return;
     }
     const filterLink = event.target.closest('[data-filter-link]');
@@ -146,7 +196,6 @@ async function start() {
       filters.search = '';
       if (route.page==='catalog') {
         event.preventDefault();
-        setMenu(false,false);
         renderPage();
         focusElement(main.querySelector('h1'),true);
       }
@@ -154,7 +203,13 @@ async function start() {
     const control = event.target.closest('[data-action]');
     if (control) {
       const action = control.dataset.action;
-      if (action==='filter') {filters.category=control.dataset.cat;refreshCatalog(data,store,filters);}
+      if (action==='demo-signin') {account.signInDemo();renderPage();window.scrollTo({top:0,left:0,behavior:'instant'});focusElement(main.querySelector('h1'));}
+      else if (action==='demo-signout') {account.signOut();renderPage();window.scrollTo({top:0,left:0,behavior:'instant'});focusElement(main.querySelector('.account-profile h2'));}
+      else if (action==='account-section') focusElement(document.getElementById(control.dataset.section),true);
+      else if (action==='learning-save') {account.toggleLesson(control.dataset.lesson);renderPage();focusElement(main.querySelector(`[data-action="learning-save"][data-lesson="${control.dataset.lesson}"]`));}
+      else if (action==='learning-filter') {learningFilters.kind=control.dataset.kind;refreshTraining(data,learningFilters,account);}
+      else if (action==='learning-reset') {learningFilters.kind='Все';learningFilters.search='';document.getElementById('search').value='';refreshTraining(data,learningFilters,account);}
+      else if (action==='filter') {filters.category=control.dataset.cat;refreshCatalog(data,store,filters);}
       else if (action==='reset') {filters.category='Все';filters.search='';document.getElementById('search').value='';refreshCatalog(data,store,filters);focusElement(document.getElementById('search'));}
       else if (action==='star') favorite(control.dataset.id,control);
       else if (action==='download') downloads.show(control.dataset.id,control.hasAttribute('data-index')?Number(control.dataset.index):undefined);
@@ -186,7 +241,10 @@ async function start() {
     if (sameLink && sameLink.hash===location.hash && !event.defaultPrevented) {event.preventDefault();applyRoute();}
   });
   document.addEventListener('input',event => {
-    if (event.target.id==='search') {filters.search=event.target.value;refreshCatalog(data,store,filters);}
+    if (event.target.id==='search') {
+      if(route.page==='training'||route.page==='lesson') {learningFilters.search=event.target.value;if(route.page==='training')refreshTraining(data,learningFilters,account);}
+      else {filters.search=event.target.value;if(route.page==='catalog')refreshCatalog(data,store,filters);}
+    }
     if (event.target.id==='bench-prompt' && route.page==='tool') {
       const state=benchFor(route.id);state.text=event.target.value;state.output='';
       document.querySelector('.output-panel')?.remove();
@@ -202,15 +260,7 @@ async function start() {
     }
   });
   document.addEventListener('keydown',event => {
-    if (menuOpen && mobile.matches) {
-      if (event.key==='Escape') {event.preventDefault();setMenu(false);return;}
-      if (event.key==='Tab') {
-        const controls=[...sidebar.querySelectorAll('a,button')].filter(el=>el.getClientRects().length);
-        const first=controls[0],last=controls.at(-1);
-        if (event.shiftKey && document.activeElement===first) {event.preventDefault();last.focus();}
-        else if (!event.shiftKey && document.activeElement===last) {event.preventDefault();first.focus();}
-      }
-    }
+    if (menuOpen && event.key==='Escape') {event.preventDefault();setMenu(false);return;}
     const tab=event.target.closest('[role="tab"]');
     if (tab && ['ArrowRight','ArrowLeft','Home','End'].includes(event.key)) {
       event.preventDefault();
@@ -221,15 +271,26 @@ async function start() {
     }
   });
   menuButton.addEventListener('click',()=>setMenu(!menuOpen));
-  document.getElementById('side-close').addEventListener('click',()=>setMenu(false));
   document.getElementById('overlay').addEventListener('click',()=>setMenu(false));
-  mobile.addEventListener('change',()=>{
-    const sidebarHadFocus=sidebar.contains(document.activeElement);
-    menuOpen=!mobile.matches;syncMenu();
-    if (!menuOpen && sidebarHadFocus) focusElement(menuButton);
+  document.addEventListener('pointerdown',event=>{
+    if(menuOpen && sidebar.dataset.placement==='overlay' && !sidebar.contains(event.target) && !menuButton.contains(event.target))setMenu(false,false);
+  });
+  document.getElementById('header-search').addEventListener('submit',event=>{
+    event.preventDefault();
+    if(route.page==='training'||route.page==='lesson'){
+      learningFilters.search=document.getElementById('search').value;
+      if(route.page==='training'){renderPage();focusElement(main.querySelector('h1'),true);}
+      else location.hash='#training';
+      return;
+    }
+    filters.search=document.getElementById('search').value;
+    filters.category='Все';
+    if(route.page==='catalog'){renderPage();focusElement(main.querySelector('h1'),true);}
+    else location.hash='#catalog';
   });
   window.addEventListener('hashchange',()=>applyRoute());
   window.addEventListener('storage',event=>{
+    if(event.key===account.key){account.refresh();if(['training','lesson','account'].includes(route.page))renderPage();return;}
     if (event.key!==store.key && event.key!==null) return;
     store.refresh();
     updateStorageNotice();
@@ -241,13 +302,13 @@ async function start() {
     } else if (route.page==='account') {
       const focusedId=document.activeElement?.id;
       const openDetails=[...main.querySelectorAll('details')].map(item=>item.open);
-      renderAccount(main,data,store);
+      renderPage();
       main.querySelectorAll('details').forEach((item,index)=>{item.open=!!openDetails[index];});
       if (focusedId) focusElement(document.getElementById(focusedId));
     }
     syncFavoriteControls();
   });
-  if (!location.hash) history.replaceState(null,'','#catalog');
+  if (!location.hash) history.replaceState(null,'','#about');
   history.scrollRestoration='manual';
   window.addEventListener('platform:manual-preview',event=>{applyManualData(data,event.detail);renderPage();});
   window.addEventListener('platform:editor-context',event=>{

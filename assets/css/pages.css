@@ -1,0 +1,62 @@
+/* Learning and account use the shared cards and black/yellow roles. */
+.learning-status { display:inline-flex; align-self:flex-start; width:fit-content; margin-top:14px; padding:5px 9px; border:1px solid var(--ink); border-radius:999px; font:400 9px/1.3 var(--label-font); }
+.learning-card .card-workzone { margin-top:16px; }
+.lesson-intro { margin-top:20px !important; }
+.reading-intro .lesson-outline-title { margin-top:28px; font-size:22px; text-transform:none; }
+.lesson-outline { padding-left:20px; }
+.lesson-note { margin-top:24px !important; font-size:14px !important; color:var(--body); }
+.lesson-panel .btn.light { background:transparent; color:var(--almost); border-color:#747777; }
+.lesson-back { display:block; margin-top:20px; color:#c7cccf; text-decoration:underline; font-size:13px; }
+.account-layout { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-areas:'library library profile'; gap:12px; align-items:start; margin-top:24px; min-height:calc(100dvh - var(--platform-header-height) - 48px); }
+.account-library { grid-area:library; min-width:0; }
+.account-library .catalog-intro { padding:0 0 10px; }
+.account-profile { grid-area:profile; min-width:0; position:static; height:auto; max-height:none; overflow:visible; }
+.account-profile .work-content { padding:22px 20px; }
+.account-profile .work-content h2 { text-transform:none; }
+.profile-person { display:flex; align-items:center; gap:12px; margin-bottom:18px; }
+.profile-person h2 { font-size:23px; margin-bottom:5px; }
+.profile-person p { font-size:12px; }
+.profile-avatar { display:grid; place-items:center; flex:none; width:46px; height:46px; border:1px solid var(--accent); border-radius:50%; color:var(--accent); font:400 18px/1 var(--label-font); }
+.profile-badge,.work-content .profile-badge { color:var(--accent); font:400 9px/1.4 var(--label-font); letter-spacing:.025em; }
+.profile-email { margin-top:24px; }
+.profile-email label { display:block; margin-bottom:8px; color:#bcc2c4; font:400 10px/1.4 var(--label-font); }
+.profile-email input { display:block; width:100%; min-height:44px; padding:11px 13px; border:1px solid #747777; border-radius:9px; background:#2e3133; color:var(--almost); font-size:14px; }
+.profile-email input::placeholder { color:#bcc2c4; }
+.profile-email .btn,.profile-demo .btn { width:100%; margin-top:12px; font-size:10px; padding:11px 14px; }
+.account-profile .btn.light { background:transparent; color:var(--almost); border-color:#747777; }
+.profile-note,.work-content .profile-note { margin-top:10px; color:#bcc2c4; font-size:11px; line-height:1.5; }
+.profile-demo { margin-top:24px; padding-top:20px; border-top:1px solid #67696b; }
+.profile-nav { display:grid; gap:8px; margin-top:22px; }
+.profile-nav button { display:flex; justify-content:space-between; align-items:center; gap:12px; width:100%; min-height:44px; padding:11px 14px; border:1px solid #747777; border-radius:999px; background:transparent; color:var(--almost); font:400 11px/1.4 var(--label-font); }
+.profile-nav button span { color:inherit; }
+.profile-details { margin-top:20px; padding-top:10px; border-top:1px solid #67696b; }
+.profile-details summary { min-height:40px; padding:10px 0; cursor:pointer; font-size:14px; }
+.profile-details p { margin-top:10px; }
+.profile-check { display:flex; align-items:flex-start; gap:10px; font-size:13px; line-height:1.5; }
+.profile-check input { flex:none; width:18px; height:18px; accent-color:var(--accent); }
+.profile-logout { width:100%; margin-top:24px; }
+.library-section { margin-top:24px; }
+.library-section > h2 { margin-bottom:18px; font:700 25px/1.1 Arial,Helvetica,sans-serif; letter-spacing:-.04em; }
+.library-section > p,.library-empty p { color:var(--body); font-size:15px; line-height:1.5; }
+.library-empty { padding:20px; border:1px solid var(--rule); border-radius:9px; background:var(--almost); }
+.library-empty .text-link { margin-top:12px; }
+.library-empty .btn { margin-top:14px; min-height:44px; font-size:10px; padding:10px 16px; }
+.library-purchased { padding:20px 0; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); }
+.account-card-grid.catalog-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.account-profile:focus { outline:none; }
+@media(min-width:926px) { .account-layout > .account-profile { position:sticky; top:var(--workbench-follow-top,calc(var(--platform-header-height) + 12px)); } }
+@media(max-width:925px) {
+ .account-layout { grid-template-columns:minmax(0,1fr); grid-template-areas:'profile' 'library'; }
+ .account-layout.is-signed-out .account-library { display:none; }
+ .account-profile { width:100%; max-width:420px; justify-self:center; }
+}
+@media(max-width:680px) {
+ .account-card-grid.catalog-grid { grid-template-columns:minmax(0,1fr); }
+ .account-profile .work-content { padding:22px 18px; }
+ .library-section > h2 { font-size:23px; }
+}
+@media(hover:hover) {
+ .profile-nav button:hover { background:var(--accent); color:var(--ink); border-color:var(--accent); }
+ .account-profile .btn.light:hover:not(:disabled),.lesson-panel .btn.light:hover { background:var(--accent); color:var(--ink); border-color:var(--accent); }
+ .profile-details summary:hover,.lesson-back:hover { color:var(--accent); }
+}

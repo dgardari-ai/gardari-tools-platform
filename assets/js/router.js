@@ -1,9 +1,11 @@
+import {lessonById} from './lessons-data.js';
 export function parseRoute(data) {
   let raw;
   try { raw = decodeURIComponent(location.hash.slice(1)); } catch { return {page:'not-found'}; }
-  if (!raw) return {page:'catalog'};
+  if (!raw) return {page:'about'};
   const parts = raw.split('/');
-  if (['catalog','saved','account','about'].includes(parts[0]) && parts.length === 1) return {page:parts[0]};
+  if (['catalog','saved','account','about','training','agent'].includes(parts[0]) && parts.length === 1) return {page:parts[0]};
+  if(parts[0]==='lesson' && parts.length===2 && lessonById(parts[1])) return {page:'lesson',id:parts[1]};
   if (parts[0] === 'tool' && data.byId.has(parts[1])) {
     const tool = data.byId.get(parts[1]);
     if (parts.length === 2) return {page:'tool',id:tool.id};

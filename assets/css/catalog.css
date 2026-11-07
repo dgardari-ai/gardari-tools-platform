@@ -26,6 +26,7 @@
 .toolcard.tone-thinking { background: var(--blue); }
 .toolcard.tone-modelling { --card-copy: #3c4043; background: var(--medium); }
 .toolcard.tone-projects { background: var(--accent); }
+.toolcard.tone-creative { background: var(--almost); }
 .cardlink { position: relative; display: flex; flex: 1; flex-direction: column; min-width: 0; padding: 21px 19px 20px; border: 0; border-radius: 11px 11px 0 0; background: none; color: inherit; text-align: left; }
 .cardlink:focus-visible { outline-offset: -4px; }
 .cardtop { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 22px; color: #353a3d; font: 9px/1.4 var(--label-font); text-transform: uppercase; }

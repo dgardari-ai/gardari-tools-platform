@@ -25,7 +25,7 @@ export function catalogFields(tool){const result=[];const walk=(obj,parts=[])=>{
 export function selectorOK(selector){
  if(typeof selector!=='string'||selector.length>800)return false;
  const id='#(?:main|top|sidebar|site-footer|dl-modal|workbench|(?:section|card)-[a-z0-9-]+)';
- const view='#main\\[data-view="(?:catalog|saved|account|about|not-found|tool/[a-z0-9-]+)"\\]';
+ const view='#main\\[data-view="(?:catalog|saved|account|about|training|agent|not-found|lesson/[a-z0-9-]+|tool/[a-z0-9-]+)"\\]';
  const modal='#dl-modal\\[data-tool="[a-z0-9-]+"\\]';
  const card='#main \\.toolcard\\[data-tool-id="[a-z0-9-]+"\\]';
  const names='cardtitle|cardtop|card-name|card-how|card-workzone|card-workmain|card-worklabel|card-featurelist|card-feature|card-bottom-info|card-use|card-outcome|card-meta-label|card-meta-copy|card-result|card-example|card-example-label|card-example-copy|cardbottom|card-cta|star|toolcard';

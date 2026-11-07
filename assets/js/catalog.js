@@ -12,10 +12,10 @@ export function card(tool, data, store) {
         <span class="card-workmain"><span class="card-worklabel">В РАБОТЕ</span><span class="card-featurelist">${content.work.map(item => `<span class="card-feature">${E(item)}</span>`).join('')}</span></span>
         <span class="card-example"><span class="card-example-label">НАПРИМЕР</span><span class="card-example-copy">«${E(content.example)}»</span></span>
       </span>
-      <span class="card-bottom-info">
+      <div class="card-bottom-info">
         <span class="card-meta-block card-use"><span class="card-meta-label">КОГДА ПРИГОДИТСЯ</span><span class="card-meta-copy">${E(content.input)}</span></span>
         <span class="card-meta-block card-outcome"><span class="card-meta-label">РЕЗУЛЬТАТ</span><span class="card-meta-copy card-result">${E(content.result)}</span></span>
-      </span>
+      </div>
     </a>
     <div class="cardbottom"><a class="card-cta" href="#tool/${tool.id}" aria-label="Читать подробно: ${E(tool.name)}">ПОДРОБНЕЕ ${arrow()}</a><button type="button" class="star ${saved?'saved':''}" data-action="star" data-id="${tool.id}" aria-pressed="${saved}" aria-label="${saved?'Убрать из избранного':'Добавить в избранное'}: ${E(tool.name)}"><span aria-hidden="true">${saved?'★':'☆'}</span></button></div>
   </article>`;
@@ -23,14 +23,16 @@ export function card(tool, data, store) {
 const normalize = text => text.toLocaleLowerCase('ru').replaceAll('ё','е');
 export function refreshCatalog(data,store,filters) {
   const query = normalize(filters.search.trim());
+  const group=data.groups.find(g=>g.id===filters.category);
+  const pending=!query&&group&&!data.catalog.some(t=>t.category===group.id);
   const chosen = data.catalog.filter(tool => (filters.category === 'Все' || tool.category === filters.category) && (!query || normalize(JSON.stringify(tool)).includes(query)));
-  document.getElementById('catalog-results').innerHTML = chosen.length ? `<div class="catalog-grid" aria-label="Инструменты">${chosen.map(t => card(t,data,store)).join('')}</div>` : `<div class="empty-result"><h2>Ничего не найдено</h2><p>Попробуйте другое слово или сбросьте фильтр.</p><div class="empty-actions"><button type="button" class="btn primary" data-action="reset">ПОКАЗАТЬ ВСЁ ${arrow()}</button></div></div>`;
+  document.getElementById('catalog-results').innerHTML = chosen.length ? `<div class="catalog-grid" aria-label="Инструменты">${chosen.map(t => card(t,data,store)).join('')}</div>` : `<div class="empty-result"><h2>${pending?E(group.name):'Ничего не найдено'}</h2><p>${pending?E(group.subtitle)+'. Раздел наполняется.':'Попробуйте другое слово или сбросьте фильтр.'}</p><div class="empty-actions"><button type="button" class="btn primary" data-action="reset">ПОКАЗАТЬ ВСЁ ${arrow()}</button></div></div>`;
   document.getElementById('result-count').textContent = `${chosen.length} / ${data.catalog.length} ИНСТРУМЕНТОВ`;
   document.querySelectorAll('[data-action="filter"]').forEach(button => button.setAttribute('aria-pressed',String(filters.category === button.dataset.cat)));
   document.getElementById('reset-filters').hidden = !filters.search && filters.category === 'Все';
 }
 export function renderCatalog(main,data,store,filters) {
-  main.innerHTML = `<section class="panel catalog-panel"><div class="catalog-intro"><div><h1>0.0 КАТАЛОГ ИНСТРУМЕНТОВ</h1><p class="catalog-subhead">Выберите инструмент Гардари в каталоге или воспользуйтесь поиском.</p></div><div class="catalog-tools"><label class="searchbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10.7" cy="10.7" r="6.4"/><path d="m15.5 15.5 5.2 5.2"/></svg><input id="search" type="search" aria-label="Поиск инструмента" placeholder="Найти инструмент…" autocomplete="off" value="${E(filters.search)}"></label></div></div><div class="catalog-controls" aria-label="Фильтр по направлению">${['Все',...data.groups.map(g => g.id)].map(category => `<button type="button" class="filter" data-action="filter" data-cat="${E(category)}" aria-pressed="${filters.category === category}">${E(category)}</button>`).join('')}<button type="button" class="filter" data-action="reset" id="reset-filters">Сбросить</button><span class="catalog-count" id="result-count" role="status" aria-live="polite" aria-atomic="true"></span></div><div id="catalog-results"></div></section>`;
+  main.innerHTML = `<section class="panel catalog-panel"><div class="catalog-intro"><h1 class="catalog-heading"><span class="catalog-heading-square" aria-hidden="true"></span><span class="catalog-heading-text">КАТАЛОГ ИНСТРУМЕНТОВ</span></h1></div><div class="catalog-controls" aria-label="Фильтр по типу инструмента">${[{id:'Все',name:'Все'},...data.groups].map(group => `<button type="button" class="filter" data-action="filter" data-cat="${E(group.id)}" aria-pressed="${filters.category === group.id}">${E(group.name)}</button>`).join('')}<button type="button" class="filter" data-action="reset" id="reset-filters">Сбросить</button><span class="catalog-count visually-hidden" id="result-count" role="status" aria-live="polite" aria-atomic="true"></span></div><div id="catalog-results"></div></section>`;
   refreshCatalog(data,store,filters);
 }
 export function renderFavorites(main,data,store) {
