@@ -1,3 +1,4 @@
+import {initFooter} from './footer.js';
 import {applyManualData,manualPresentation} from './manual-edits.js';
 import {loadData} from './data.js';
 import {createLocalAdapter} from './storage.js';
@@ -15,6 +16,8 @@ import {createAccountState} from './account-state.js';
 import {lessonById} from './lessons-data.js';
 import {renderAgent} from './agent.js';
 import {followWorkbench} from './sticky-workbench.js';
+
+initFooter();
 
 async function start() {
   const data = await loadData();

@@ -281,3 +281,59 @@
   .catalog-grid .card-use .card-meta-copy, .group-tools .card-use .card-meta-copy { margin-bottom:8px; }
   .catalog-grid .card-result, .group-tools .card-result { line-height:1.1; margin-bottom:15px; }
 }
+
+/* Card template, 07.11.2026: shared type rhythm and an evenly inset action row.
+   Scope through the card so the older navigation layer cannot split these roles. */
+.catalog-grid .toolcard, .group-tools .toolcard {
+  --card-label-size: 14.666667px;
+  --card-copy-leading: 17.333333px; /* saved В РАБОТЕ: 13px × 4/3 */
+  --card-control-size: 40px;
+}
+.catalog-grid .toolcard .cardtop, .group-tools .toolcard .cardtop {
+  align-items: baseline;
+  font-size: clamp(9px, 3.6cqw, 12px);
+  line-height: 1.35;
+}
+.catalog-grid .toolcard .cardnum, .group-tools .toolcard .cardnum,
+.catalog-grid .toolcard .card-name, .group-tools .toolcard .card-name {
+  font-size: inherit;
+  line-height: inherit;
+}
+.catalog-grid .toolcard .card-name, .group-tools .toolcard .card-name {
+  align-items: center;
+}
+.catalog-grid .toolcard .cardtitle, .group-tools .toolcard .cardtitle {
+  /* Reduce the visible interline space by about a third, without glyph overlap. */
+  line-height: .93;
+}
+.catalog-grid .toolcard .card-worklabel, .group-tools .toolcard .card-worklabel,
+.catalog-grid .toolcard .card-meta-label, .group-tools .toolcard .card-meta-label,
+.catalog-grid .toolcard .card-example-label, .group-tools .toolcard .card-example-label {
+  font-size: var(--card-label-size);
+  line-height: 1.35;
+}
+.catalog-grid .toolcard .card-how, .group-tools .toolcard .card-how,
+.catalog-grid .toolcard .card-feature, .group-tools .toolcard .card-feature,
+.catalog-grid .toolcard .card-meta-copy, .group-tools .toolcard .card-meta-copy,
+.catalog-grid .toolcard .card-example-copy, .group-tools .toolcard .card-example-copy {
+  line-height: var(--card-copy-leading) !important;
+}
+.catalog-grid .toolcard .cardbottom, .group-tools .toolcard .cardbottom {
+  margin: 0;
+  padding: var(--card-pad-inline);
+  gap: 10px;
+}
+.catalog-grid .toolcard .card-cta, .group-tools .toolcard .card-cta {
+  flex: 1;
+  min-width: 0;
+  height: var(--card-control-size);
+  min-height: var(--card-control-size);
+}
+.catalog-grid .toolcard .star, .group-tools .toolcard .star {
+  width: var(--card-control-size);
+  height: var(--card-control-size);
+  font-size: 18px;
+}
+.catalog-grid .toolcard .star::before, .group-tools .toolcard .star::before {
+  inset: 0;
+}

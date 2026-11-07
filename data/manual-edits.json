@@ -16,39 +16,46 @@
     "drive-knowledge/summary": "Связать Google Drive и ChatGPT: практическая схема работы с Google Drive как хранилищем актуальных документов, источников и решений, доступных ИИ через подтверждённые подключения. В основе — единый живой документный слой для работы человека и ChatGPT.",
     "chatgpt-project/summary": "Организовать проект в ChatGPT: методика правильной организации проекта ChatGPT: назначение, инструкции, источники, документы, навыки, состояние, изменение и продолжение после паузы. Это помогает создать долговременное рабочее пространство с понятной памятью и правилами."
   },
-  "text": {},
+  "text": {
+    "#main[data-view=\"about\"] > section:nth-of-type(1) > div:nth-of-type(2) > h1:nth-of-type(1)": [
+      "когда теория и знание становятся инструментом"
+    ],
+    "#site-footer > div:nth-of-type(1) > span:nth-of-type(1)": [
+      "ПОНИМАТЬ · СОЗДАВАТЬ · ДЕЙСТВОВАТЬ"
+    ]
+  },
   "styles": {
     "all": {
       "#main .toolcard[data-tool-id=\"razvedka\"] > a:nth-of-type(1) > span:nth-of-type(2)": {
-        "line-height": "16px",
+        "line-height": "17.333333px",
         "margin-top": "3px",
         "font-size": "14.2px"
       },
       "#main .toolcard[data-tool-id=\"razvedka\"] > a:nth-of-type(1) > span:nth-of-type(3) > span:nth-of-type(1) > span:nth-of-type(1)": {
-        "font-size": "11px"
+        "font-size": "14.666667px"
       },
       "#main .toolcard[data-tool-id=\"razvedka\"] > a:nth-of-type(1) > span:nth-of-type(4) > span:nth-of-type(1) > span:nth-of-type(1)": {
-        "font-size": "11px",
+        "font-size": "14.666667px",
         "margin-bottom": "6px"
       },
       "#main .toolcard[data-tool-id=\"razvedka\"] > a:nth-of-type(1) > span:nth-of-type(4) > span:nth-of-type(2) > span:nth-of-type(1)": {
-        "font-size": "11px"
+        "font-size": "14.666667px"
       },
       "#main .toolcard[data-tool-id=\"razvedka\"] > a:nth-of-type(1) > span:nth-of-type(3) > span:nth-of-type(1) > span:nth-of-type(2)": {
-        "line-height": "23px"
+        "line-height": "17.333333px"
       },
       "#main .toolcard[data-tool-id=\"razvedka\"] > a:nth-of-type(1) > span:nth-of-type(3) > span:nth-of-type(1) > span:nth-of-type(2) > span:nth-of-type(1)": {
-        "line-height": "13px"
+        "line-height": "17.333333px"
       },
       "#main .toolcard[data-tool-id=\"razvedka\"] > a:nth-of-type(1) > span:nth-of-type(3) > span:nth-of-type(1) > span:nth-of-type(2) > span:nth-of-type(2)": {
-        "line-height": "13px"
+        "line-height": "17.333333px"
       },
       "#main .toolcard[data-tool-id=\"razvedka\"] > a:nth-of-type(1) > span:nth-of-type(4) > span:nth-of-type(1) > span:nth-of-type(2)": {
-        "line-height": "13px",
+        "line-height": "17.333333px",
         "margin-bottom": "5px"
       },
       "#main .toolcard[data-tool-id=\"razvedka\"] > a:nth-of-type(1) > span:nth-of-type(4) > span:nth-of-type(2) > span:nth-of-type(2)": {
-        "line-height": "16px",
+        "line-height": "17.333333px",
         "margin-bottom": "10px"
       },
       "#top > a:nth-of-type(1) > span:nth-of-type(1)": {
@@ -72,9 +79,35 @@
       },
       "#section-razvedka-intro > div:nth-of-type(2) > h2:nth-of-type(1)": {
         "font-size": "13px"
+      },
+      "#main[data-view=\"about\"] > section:nth-of-type(1) > div:nth-of-type(2) > h1:nth-of-type(1)": {
+        "font-size": "33px"
+      },
+      "#site-footer > div:nth-of-type(2) > div:nth-of-type(1) > h2:nth-of-type(1) > span:nth-of-type(2)": {
+        "line-height": "30px"
+      },
+      "#site-footer > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)": {
+        "line-height": "18px"
       }
     },
     "tablet": {},
     "mobile": {}
+  },
+  "order": {
+    "catalog": [
+      "razvedka",
+      "sozvuchie",
+      "dr",
+      "watch",
+      "triads",
+      "trialect",
+      "thinker",
+      "modeller",
+      "admin",
+      "plugin-maker",
+      "rdc-agent",
+      "drive-knowledge",
+      "chatgpt-project"
+    ]
   }
 }

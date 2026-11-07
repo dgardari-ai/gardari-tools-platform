@@ -1,0 +1,1 @@
+window.__VMG_DESIGN__ = {"assets":[],"components":{},"moves":[],"nodes":[],"overrides":{"source-1bf5fdff":{"ref":{"guard":"p:766d4eda","route":"index.html","selector":"#site-footer > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(2)"}}},"removed":[{"id":"source-1bf5fdff","route":"index.html"}],"schema":1,"sharedStyles":{}};
