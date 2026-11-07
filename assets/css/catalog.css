@@ -304,7 +304,16 @@
 }
 .catalog-grid .toolcard .cardtitle, .group-tools .toolcard .cardtitle {
   /* Reduce the visible interline space by about a third, without glyph overlap. */
-  line-height: .93;
+  font-size: clamp(24px, 10.5cqw, 41px);
+  text-wrap: balance;
+  --card-title-leading: .93em;
+  line-height: var(--card-title-leading);
+  min-height: calc(2 * var(--card-title-leading));
+  margin-bottom: calc(var(--card-title-leading) + 7px);
+}
+.catalog-grid .toolcard .cardtitle::after, .group-tools .toolcard .cardtitle::after {
+  /* Include the one-pixel rule, so its top is exactly one line below the title. */
+  bottom: calc(-1 * var(--card-title-leading) - 1px);
 }
 .catalog-grid .toolcard .card-worklabel, .group-tools .toolcard .card-worklabel,
 .catalog-grid .toolcard .card-meta-label, .group-tools .toolcard .card-meta-label,
@@ -336,4 +345,27 @@
 }
 .catalog-grid .toolcard .star::before, .group-tools .toolcard .star::before {
   inset: 0;
+}
+/* The yellow surface needs the inverse action state to stay visible. */
+.toolcard.tone-projects .card-cta:focus-visible,
+.toolcard.tone-projects .star:focus-visible::before {
+  background: var(--ink);
+  color: var(--accent);
+}
+.toolcard.tone-projects .star:focus-visible { color: var(--accent); }
+@media (hover: hover) {
+  .toolcard.tone-projects .card-cta:hover,
+  .toolcard.tone-projects .star:hover::before {
+    background: var(--ink);
+    color: var(--accent);
+  }
+  .toolcard.tone-projects .star:hover { color: var(--accent); }
+}
+
+/* Both filter rows at two thirds, retaining the shared one-pixel outline. */
+.catalog-panel .catalog-controls { gap: 4.666667px; }
+.catalog-controls .filter {
+  min-height: 28px;
+  padding: 6px 11px;
+  font-size: 7.333333px;
 }
