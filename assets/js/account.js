@@ -12,8 +12,7 @@ export function renderAccount(main,data,store,account=createAccountState()) {
     <a class="btn light" href="${href}">${label} ${arrow()}</a></div>`;
   const library=signed?`
     <div class="catalog-intro"><h1 class="catalog-heading">
-      <span class="catalog-heading-square" aria-hidden="true"></span>
-      <span class="catalog-heading-text">МОЯ БИБЛИОТЕКА</span>
+      <span class="catalog-heading-square" aria-hidden="true"></span><span class="catalog-heading-text">МОЯ БИБЛИОТЕКА</span>
     </h1></div>
     <section class="library-section" id="library-tools"><h2>Выбранные инструменты</h2>
       ${selected.length?`<div class="account-card-grid catalog-grid">${selected.map(t=>card(t,data,store)).join('')}</div>`:empty('Вы пока не выбрали инструменты.','#catalog','ВЫБРАТЬ ИНСТРУМЕНТ')}

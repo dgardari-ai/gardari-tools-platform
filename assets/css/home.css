@@ -9,8 +9,7 @@
 .home-copy p { max-width:none; margin:0; font-size:15.5px; line-height:1.32; color:var(--ink); text-wrap:pretty; }
 .home-copy .keep-together { white-space:nowrap; }
 .home-copy p + p { margin-top:12px; }
-.home-faq { margin:28px 0 38px; }
-.home-faq .catalog-intro,.home-directions .catalog-intro { margin-bottom:16px; }
+.home-faq { margin:var(--section-space-before) 0 var(--section-space-before); }
 .home-faq-list { border-top:1px solid var(--ink); }
 .home-question { border-bottom:1px solid var(--ink); }
 .home-question summary { display:grid; grid-template-columns:24px minmax(0,1fr) 26px; align-items:center; gap:16px; min-height:58px; padding:14px 0; list-style:none; cursor:pointer; font:700 21px/1.15 Arial,Helvetica,sans-serif; letter-spacing:-.03em; }
@@ -22,7 +21,7 @@
 .home-question[open] .home-question-mark { background:var(--accent); }
 .home-answer { max-width:790px; padding:0 40px 20px; color:var(--body); font-size:15px; line-height:1.5; }
 .home-answer p + p { margin-top:10px; }
-.home-directions { margin:28px 0 0; container-type:inline-size; }
+.home-directions { margin:var(--section-space-before) 0 0; container-type:inline-size; }
 .home-directions-track { display:flex; gap:12px; width:100%; height:calc(45cqw - 21.6px); overflow:hidden; }
 .home-direction { position:relative; flex:0 0 calc(12.5cqw - 6px); min-width:0; height:100%; overflow:hidden; border:1px solid var(--ink); border-radius:17px; background:var(--ink); isolation:isolate; transition:flex-basis .62s cubic-bezier(.2,.72,.13,1); }
 .home-direction.is-open { flex-basis:calc(50cqw - 24px); }
@@ -50,7 +49,6 @@
  .home-copy { position:relative; top:auto; left:auto; right:auto; width:100%; margin:16px 0 6px; }
  .home-copy h1 { max-width:none; font-size:26.4px; margin-bottom:12px; }
  .home-copy p { max-width:680px; font-size:15px; }
- .home-faq { margin-top:24px; }
 }
 @media(min-width:681px) and (max-width:925px) {
  .direction-caption { left:18px; right:18px; bottom:18px; --caption-gap:7px; }
@@ -63,7 +61,6 @@
  .home-copy p { font-size:14px; line-height:1.4; }
  .home-question summary { grid-template-columns:20px minmax(0,1fr) 26px; gap:10px; font-size:18px; min-height:60px; padding:13px 0; }
  .home-answer { padding-left:30px; padding-right:0; font-size:14px; }
- .home-directions { margin:24px 0 0; }
  .home-directions-track { height:auto; gap:10px; padding-bottom:8px; overflow-x:auto; overscroll-behavior-inline:contain; scroll-snap-type:x mandatory; scrollbar-width:thin; scrollbar-color:var(--ink) transparent; }
  .home-direction,.home-direction.is-open { flex:0 0 min(76vw,355px); height:auto; aspect-ratio:10/9; scroll-snap-align:start; }
  .direction-vertical { display:none; }
@@ -80,4 +77,44 @@
 }
 @media(prefers-reduced-motion:reduce) {
  .home-direction,.direction-vertical,.direction-caption { transition:none; }
+}
+
+/* Comments: the five circular previews follow the existing 936px field. */
+.home-comments { margin:var(--section-space-before) 0 48px; container-type:inline-size; }
+.comments-row { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:clamp(8px,3.5cqw,32px); width:100%; }
+.comment-preview { position:relative; display:block; width:100%; aspect-ratio:1; overflow:hidden; padding:0; border:1px solid var(--ink); border-radius:50%; background:var(--ink); isolation:isolate; touch-action:manipulation; }
+.comment-preview img { display:block; width:100%; height:100%; object-fit:cover; filter:grayscale(1); transition:transform .3s; }
+.comment-preview::after { content:''; position:absolute; inset:0; background:#0002; pointer-events:none; }
+.comment-preview-play { position:absolute; inset:0; z-index:1; display:grid; place-items:center; color:#fff; pointer-events:none; }
+.comment-preview-play svg { width:clamp(18px,3.5cqw,32px); height:auto; fill:currentColor; filter:drop-shadow(0 1px 4px #0008); }
+.comment-preview[aria-expanded="true"] { opacity:.45; }
+.comment-preview:focus-visible { outline:3px solid var(--accent); outline-offset:4px; }
+.comment-player { position:fixed; inset:0; width:var(--comment-size,624px); max-width:calc(100vw - 32px); max-height:none; margin:auto; padding:0; overflow:visible; border:0; background:transparent; color:#fff; overscroll-behavior:contain; }
+.comment-player::backdrop { background:#17181999; backdrop-filter:blur(3px); }
+.comment-player-view { position:relative; width:100%; aspect-ratio:1; overflow:hidden; border:1px solid #fff8; border-radius:50%; background:#171819; box-shadow:0 20px 64px #0003; }
+.comment-player video { display:block; width:100%; height:100%; object-fit:cover; }
+.comment-video-toggle { position:absolute; inset:0; display:grid; place-items:center; width:100%; height:100%; border:0; border-radius:50%; background:#0003; color:#fff; }
+.comment-video-toggle svg { width:48px; height:48px; fill:currentColor; }
+ .comment-player-view.is-playing .comment-video-toggle { background:transparent; }
+.comment-player-view.is-playing .comment-video-toggle svg { visibility:hidden; }
+.comment-video-toggle:focus-visible { outline:2px solid var(--accent); outline-offset:-8px; }
+.comment-progress-ring { position:absolute; inset:0; width:100%; height:100%; transform:rotate(-90deg); pointer-events:none; }
+.comment-progress-ring circle { fill:none; stroke-width:.6; }
+.comment-progress-track { stroke:#ffffff35; }
+.comment-progress-value { stroke:var(--accent); stroke-linecap:round; stroke-dasharray:307.876080052; stroke-dashoffset:307.876080052; }
+.comment-progress-accessible { position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); }
+.comment-player-close { position:absolute; top:0; right:0; display:grid; place-items:center; width:44px; height:44px; padding:10px; border:1px solid var(--ink); border-radius:50%; background:var(--paper); color:var(--ink); }
+.comment-player-close svg { width:22px; height:22px; fill:none; stroke:currentColor; stroke-width:1.5; }
+.comment-player-title { margin:15px 0 0; font:400 11px/1.4 var(--label-font); text-align:center; text-wrap:balance; }
+.comment-player-status { position:absolute; top:62%; left:15%; right:15%; margin:0; color:#fff; font:400 11px/1.4 var(--label-font); text-align:center; text-wrap:balance; pointer-events:none; }
+.comment-player-status:empty { display:none; }
+@media(max-width:680px) {
+ .home-comments { margin-bottom:36px; }
+}
+@media(hover:hover) {
+ .comment-preview:hover img { transform:scale(1.04); }
+ .comment-player-close:hover { background:var(--accent); }
+}
+@media(prefers-reduced-motion:reduce) {
+ .comment-preview img { transition:none; }
 }

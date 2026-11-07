@@ -7,9 +7,9 @@
 .lesson-note { margin-top:24px !important; font-size:14px !important; color:var(--body); }
 .lesson-panel .btn.light { background:transparent; color:var(--almost); border-color:#747777; }
 .lesson-back { display:block; margin-top:20px; color:#c7cccf; text-decoration:underline; font-size:13px; }
-.account-layout { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-areas:'library library profile'; gap:12px; align-items:start; margin-top:24px; min-height:calc(100dvh - var(--platform-header-height) - 48px); }
+.account-layout { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-areas:'library library profile'; gap:12px; align-items:start; margin-top:var(--section-space-before); min-height:calc(100dvh - var(--platform-header-height) - 48px); }
 .account-library { grid-area:library; min-width:0; }
-.account-library .catalog-intro { padding:0 0 10px; }
+.account-library .catalog-intro { padding:0; }
 .account-profile { grid-area:profile; min-width:0; position:static; height:auto; max-height:none; overflow:visible; }
 .account-profile .work-content { padding:22px 20px; }
 .account-profile .work-content h2 { text-transform:none; }
@@ -46,7 +46,7 @@
 .account-profile:focus { outline:none; }
 @media(min-width:926px) { .account-layout > .account-profile { position:sticky; top:var(--workbench-follow-top,calc(var(--platform-header-height) + 12px)); } }
 @media(max-width:925px) {
- .account-layout { grid-template-columns:minmax(0,1fr); grid-template-areas:'profile' 'library'; }
+ .account-layout { row-gap:var(--section-space-before); grid-template-columns:minmax(0,1fr); grid-template-areas:'profile' 'library'; }
  .account-layout.is-signed-out .account-library { display:none; }
  .account-profile { width:100%; max-width:420px; justify-self:center; }
 }
