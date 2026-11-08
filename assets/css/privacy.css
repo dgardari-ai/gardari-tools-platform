@@ -1,14 +1,14 @@
 .policy-page { --policy-width:936px; }
-.policy-header, .policy-bottom { display:flex; align-items:center; justify-content:space-between; gap:20px; max-width:var(--policy-width); margin:20px auto; padding:16px 24px; border:1px solid var(--ink); border-radius:22px; background:var(--ink); color:var(--almost); font:400 11px/1.5 var(--label-font); }
+.policy-header, .policy-bottom { display:flex; align-items:center; justify-content:space-between; gap:20px; max-width:var(--policy-width); margin:20px auto; padding:16px 24px; border:1px solid var(--ink); border-radius:var(--radius); background:var(--ink); color:var(--almost); font:400 11px/1.5 var(--label-font); }
 .policy-header a, .policy-bottom a { color:inherit; }
 .policy-header > :first-child { color:var(--accent); }
 .policy-main { max-width:var(--policy-width); margin:48px auto; }
 .policy-meta { margin-bottom:20px; color:var(--body); font:400 10px/1.5 var(--label-font); text-transform:uppercase; }
 .policy-main h1 { max-width:800px; margin:0; font-size:clamp(30px,5vw,52px); line-height:1.08; letter-spacing:-.04em; text-wrap:balance; }
-.policy-status { display:block; margin:28px 0 36px; padding:20px 24px; border:1px solid var(--ink); border-radius:22px; font-size:14px; line-height:1.5; }
+.policy-status { display:block; margin:28px 0 36px; padding:20px 24px; border:1px solid var(--ink); border-radius:var(--radius); font-size:14px; line-height:1.5; }
 .policy-status strong { display:block; margin-bottom:10px; font:500 11px/1.5 var(--label-font); text-transform:uppercase; }
 .policy-layout { display:grid; grid-template-columns:220px minmax(0,1fr); gap:36px; align-items:start; }
-.policy-nav { position:sticky; top:24px; padding:18px; border-radius:22px; background:var(--ink); color:var(--almost); font:400 11px/1.5 var(--label-font); }
+.policy-nav { position:sticky; top:24px; padding:18px; border-radius:var(--radius); background:var(--ink); color:var(--almost); font:400 11px/1.5 var(--label-font); }
 .policy-nav ol { margin:0; padding-left:20px; }
 .policy-nav li + li { margin-top:14px; }
 .policy-nav a { color:inherit; }

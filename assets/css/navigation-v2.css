@@ -21,7 +21,7 @@ html { scrollbar-gutter: stable; scroll-padding-top: calc(var(--platform-header-
 .site-header {
   position: sticky; top: 0; z-index: 160; display: block;
   min-height: 0; margin: 0; padding: 0;
-  border: 0; border-radius: 0; background: var(--paper);
+  border: 0; border-radius:0; background: var(--paper);
 }
 .header-frame {
   width: min(calc(var(--platform-field-max) + var(--platform-edge) + var(--platform-edge) + var(--platform-edge-gap) + var(--platform-edge-gap)), calc(100% - 32px));
@@ -32,12 +32,12 @@ html { scrollbar-gutter: stable; scroll-padding-top: calc(var(--platform-header-
 .header-main { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: var(--platform-grid-gap); align-items: center; min-width: 0; }
 .menu-control {
   display: grid; place-items: center; width: var(--navigation-control-size); height: var(--navigation-control-size); justify-self: center;
-  padding: var(--navigation-inner-inset); border: 1px solid var(--ink); border-radius: 50%; background: transparent;
+  padding: var(--navigation-inner-inset); border: 1px solid var(--ink); border-radius:50%; background: transparent;
 }
 .menu-control::before { content: none; }
 .menu-dot {
   display: grid; place-items: center; width: var(--navigation-disc-size); height: var(--navigation-disc-size);
-  border-radius: 50%; background: var(--accent); transition: background .2s;
+  border-radius:50%; background: var(--accent); transition: background .2s;
 }
 .menu-dot svg { width: 19px; height: 19px; fill: none; stroke: #fff; stroke-width: 2.75; stroke-linecap: round; stroke-linejoin: round; transition: transform .2s; }
 .menu-control[aria-expanded="true"] .menu-dot { background: var(--navigation-blue); }
@@ -45,33 +45,33 @@ html { scrollbar-gutter: stable; scroll-padding-top: calc(var(--platform-header-
 .header-search {
   grid-column: 1 / span 2;
   display: flex; align-items: center; gap: 9px; min-width: 0; height: var(--navigation-control-size);
-  padding: var(--navigation-inner-inset); border: 1px solid var(--ink); border-radius: 999px;
+  padding: var(--navigation-inner-inset); border: 1px solid var(--ink); border-radius:999px;
   background: transparent;
 }
 .header-search .brand { display: grid; place-items: center; width: var(--navigation-disc-size); height: var(--navigation-disc-size); min-width: var(--navigation-disc-size); padding: 0; }
 .brand img { display: block; width: 100%; height: 100%; }
 .header-search input {
   width: 100%; min-width: 0; height: 100%; padding: 0;
-  border: 0; border-radius: 0; outline: 0; background: transparent; color: var(--ink);
+  border: 0; border-radius:0; outline: 0; background: transparent; color: var(--ink);
   font: 400 10px/1.4 var(--label-font); letter-spacing: .015em;
 }
 .header-search input::placeholder { color: var(--body); opacity: 1; }
 .header-search input:focus-visible { outline: none; }
 .header-search:focus-within { outline: 2px solid var(--navigation-blue); outline-offset: 3px; }
-.search-submit { display: grid; place-items: center; flex: 0 0 var(--navigation-disc-size); width: var(--navigation-disc-size); height: var(--navigation-disc-size); padding: 0; border: 0; border-radius: 50%; background: transparent; }
+.search-submit { display: grid; place-items: center; flex: 0 0 var(--navigation-disc-size); width: var(--navigation-disc-size); height: var(--navigation-disc-size); padding: 0; border: 0; border-radius:50%; background: transparent; }
 .search-submit svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 1.6; }
 .nav-top { grid-column: 3; display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 7.5px; margin: 0; min-width: 0; }
 .nav-top .section-tab {
   position: relative; display: block; width: 100%; height: var(--navigation-control-size); min-height: 0;
-  padding: 0; border: 0; border-radius: 0; background: transparent; text-decoration: none;
+  padding: 0; border: 0; border-radius:0; background: transparent; text-decoration: none;
 }
 .tab-outline { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .tab-outline path { fill: transparent; stroke: var(--ink); stroke-width: 1; vector-effect: non-scaling-stroke; }
-.tab-number { position: absolute; top: 0; left: 0; display: grid; place-items: center; width: 34.7%; height: auto; aspect-ratio: 1; border: 1px solid var(--ink); border-radius: 50%; background: var(--paper); font: 400 8px/1 var(--label-font); transition: background .18s; }
+.tab-number { position: absolute; top: 0; left: 0; display: grid; place-items: center; width: 34.7%; height: auto; aspect-ratio: 1; border: 1px solid var(--ink); border-radius:50%; background: var(--paper); font: 400 8px/1 var(--label-font); transition: background .18s; }
 .tab-name { position: absolute; left: 3px; right: 3px; bottom: 16.3%; text-align: center; font: 500 clamp(7px,calc(var(--navigation-control-size) * .146),8px)/1.25 var(--label-font); letter-spacing: -.02em; }
 .section-tab[aria-current="page"] .tab-number { background: var(--accent); }
 .nav-top .section-tab:hover, .nav-top .section-tab[aria-current="page"] { text-decoration: none; }
-.nav-top .section-tab:focus-visible { border-radius: 12px; outline-color: var(--navigation-blue); }
+.nav-top .section-tab:focus-visible { border-radius:var(--radius); outline-color: var(--navigation-blue); }
 /* Gallery entrance: a growing disc, an extending capsule and folding tabs. */
 .header-entry-pending .header-search,.header-search-entering { border-color:transparent!important; background:transparent!important; }
 .header-entry-pending .header-search > .brand,
@@ -105,7 +105,7 @@ html { scrollbar-gutter: stable; scroll-padding-top: calc(var(--platform-header-
   position: fixed; z-index: 170; top: var(--platform-menu-top);
   bottom: auto; height: min(690px,calc(100dvh - var(--platform-menu-top) - 18px));
   max-height: calc(100dvh - var(--platform-menu-top) - 18px);
-  border: 1px solid var(--ink); border-radius: 9px; background: #f4f4f4;
+  border: 1px solid var(--ink); border-radius:var(--radius); background: #f4f4f4;
   box-shadow: none; transform: none; scrollbar-width: thin; overscroll-behavior: contain;
   transition: opacity .2s ease, visibility .24s, translate .24s cubic-bezier(.2,.72,.13,1);
 }
@@ -125,35 +125,35 @@ html { scrollbar-gutter: stable; scroll-padding-top: calc(var(--platform-header-
 .side-tool-section .side-link.active .num { height: 18px; margin-block: 0; }
 @media(max-width:680px) { .side-tool-section .side-link { min-height: 22px; } }
 .side-group-name .num { color: inherit; }
-.side-link { min-height: 36px; padding: 8px; border-radius: 0; color: var(--ink); }
+.side-link { min-height: 36px; padding: 8px; border-radius:0; color: var(--ink); }
 .side-link .num { color: var(--navigation-blue); width: 28px; }
 .side-link.active, .side-link[aria-current="page"] { background: transparent; color: var(--ink); font-weight: 700; }
-.side-link.active .num { display: grid; place-items: center; width: 28px; height: 28px; margin-block: -4px; border-radius: 50%; background: var(--accent); color: var(--ink); font-weight: 400; }
+.side-link.active .num { display: grid; place-items: center; width: 28px; height: 28px; margin-block: -4px; border-radius:50%; background: var(--accent); color: var(--ink); font-weight: 400; }
 .mobile-overlay { display: none !important; }
 .detail-main { margin-top: 24px; grid-template-columns: repeat(3,minmax(0,1fr)); grid-template-areas: "overview overview bench" "chapters chapters bench"; gap: var(--platform-grid-gap); }
 @media(min-width:926px) {
   .catalog-grid, .group-tools { grid-template-columns:repeat(3,minmax(0,1fr)); gap:var(--platform-grid-gap); }
 }
 .detail-main > .workbench { position: static; height: auto; max-height: none; overflow: visible; }
-.workbench .worktop { border-radius: 21px 21px 0 0; }
+.workbench .worktop { border-radius:calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0; }
 .workbench .output-panel pre { max-height: none; overflow: visible; }
 /* All action controls use capsules, with circular compact controls. */
 .btn, .filter, .bench-pick button, .account-setting button, #close-modal,
-.format-row button, .modal-options button, .bench-matrix button { border-radius: 999px; }
+.format-row button, .modal-options button, .bench-matrix button { border-radius:999px; }
 .modal-options button { padding: 13px 18px; }
 .modal-options button > span { display: flex; flex-direction: column; gap: 3px; }
 .modal-options button small { display: block; }
-button.text-link { border: 1px solid currentColor; border-radius: 999px; min-height: 40px; padding: 8px 14px; }
+button.text-link { border: 1px solid currentColor; border-radius:999px; min-height: 40px; padding: 8px 14px; }
 .btn { padding-inline: 21px; }
 .filter { min-height: 42px; padding-inline: 17px; border-color: var(--ink); }
 .filter[aria-pressed="true"] { background: var(--accent); color: var(--ink); }
 .bench-pick button { min-height: 40px; padding-inline: 13px; }
-.bench-tabs { padding: 4px; gap: 3px; border: 1px solid #747777; border-radius: 999px; }
-.bench-tabs button { min-height: 40px; padding: 8px 5px; border-radius: 999px; }
+.bench-tabs { padding: 4px; gap: 3px; border: 1px solid #747777; border-radius:999px; }
+.bench-tabs button { min-height: 40px; padding: 8px 5px; border-radius:999px; }
 .bench-tabs button[aria-selected="true"] { box-shadow: none; background: var(--accent); color: var(--ink); }
-.cardbottom .card-cta { display: inline-flex; justify-content: space-between; align-items: center; gap: 14px; min-height: 36px; padding: 8px 13px; border: 1px solid var(--ink); border-radius: 999px; }
-.catalog-grid .star, .group-tools .star { border-radius: 50%; }
-.catalog-grid .star::before, .group-tools .star::before { border-radius: 50%; }
+.cardbottom .card-cta { display: inline-flex; justify-content: space-between; align-items: center; gap: 14px; min-height: 36px; padding: 8px 13px; border: 1px solid var(--ink); border-radius:999px; }
+.catalog-grid .star, .group-tools .star { border-radius:50%; }
+.catalog-grid .star::before, .group-tools .star::before { border-radius:50%; }
 .catalog-grid .star.saved::before, .group-tools .star.saved::before { background: var(--accent); }
 .catalog-grid .star.saved, .group-tools .star.saved { color: var(--ink); }
 #close-modal { min-height: 44px; padding-inline: 16px; border: 1px solid var(--ink); }
@@ -198,7 +198,7 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline-color: va
   .side-link { min-height: 44px; }
   .btn { min-height: 48px; }
   .intro-actions .btn, .output-panel .btn { min-height: 48px; }
-  .workbench .worktop { border-radius: 14px 14px 0 0; }
+  .workbench .worktop { border-radius:calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0; }
   .catalog-panel { padding-top:var(--section-space-before); }
 }
 .training-heading { padding: 24px 0; border-bottom: 1px solid var(--ink); }
@@ -210,11 +210,11 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline-color: va
 .training-item h2 { font-size: 22px; letter-spacing: -.035em; line-height:1.1; }
 .training-item p { margin-top: 10px; font-size: 14px; color: var(--body); }
 .training-item .eyebrow { margin-bottom: 8px; color: var(--navigation-blue); }
-.training-item .btn { width: 44px; min-height: 44px; height: 44px; padding: 12px; border-radius: 50%; justify-content: center; }
+.training-item .btn { width: 44px; min-height: 44px; height: 44px; padding: 12px; border-radius:50%; justify-content: center; }
 @media(max-width:680px) { .training-item { grid-template-columns: 27px minmax(0,1fr) 44px; gap: 10px; } .training-heading h1 { font-size: 30px; } }
 
 /* Graphite/yellow footer: the same surface and controls as the workbench. */
-.editorial-footer { padding:0; border:1px solid var(--ink); border-radius:22px; overflow:hidden; background:var(--ink); color:var(--almost); }
+.editorial-footer { padding:0; border:1px solid var(--ink); border-radius:var(--radius); overflow:hidden; background:var(--ink); color:var(--almost); }
 .footer-worktop { display:flex; align-items:center; justify-content:space-between; gap:16px; min-height:49px; padding:6px 18px; border-bottom:1px solid #67696b; background:#171819; font:400 10px/1.4 var(--label-font); color:#d1d6d9; }
 .footer-worktop .footer-top { flex:none; min-height:36px; margin:0; padding:7px 13px; gap:8px; border:1px solid #747777; border-radius:999px; color:var(--almost); font:400 10px/1.4 var(--label-font); }
 .footer-main { padding:30px 24px 32px; gap:24px; }

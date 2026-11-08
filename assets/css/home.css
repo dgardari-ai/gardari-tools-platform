@@ -23,7 +23,7 @@
 .home-answer p + p { margin-top:10px; }
 .home-directions { margin:var(--section-space-before) 0 0; container-type:inline-size; }
 .home-directions-track { --open-panel-size:calc(50cqw - 24px); display:flex; gap:12px; width:100%; height:var(--open-panel-size); overflow:hidden; }
-.home-direction { position:relative; flex:0 0 calc(12.5cqw - 6px); min-width:0; height:100%; overflow:hidden; border:1px solid var(--ink); border-radius:17px; background:var(--ink); isolation:isolate; transition:flex-basis .62s cubic-bezier(.2,.72,.13,1); }
+.home-direction { position:relative; flex:0 0 calc(12.5cqw - 6px); min-width:0; height:100%; overflow:hidden; border:1px solid var(--ink); border-radius:var(--radius); background:var(--ink); isolation:isolate; transition:flex-basis .62s cubic-bezier(.2,.72,.13,1); }
 .home-direction.is-open { flex-basis:var(--open-panel-size); }
 /* Entrance uses transform/opacity without moving the five-panel layout. */
 .home-direction { transform-origin:50% 0; }

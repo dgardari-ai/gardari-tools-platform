@@ -20,7 +20,7 @@
 .profile-badge,.work-content .profile-badge { color:var(--accent); font:400 9px/1.4 var(--label-font); letter-spacing:.025em; }
 .profile-email { margin-top:24px; }
 .profile-email label { display:block; margin-bottom:8px; color:#bcc2c4; font:400 10px/1.4 var(--label-font); }
-.profile-email input { display:block; width:100%; min-height:44px; padding:11px 13px; border:1px solid #747777; border-radius:9px; background:#2e3133; color:var(--almost); font-size:14px; }
+.profile-email input { display:block; width:100%; min-height:44px; padding:11px 13px; border:1px solid #747777; border-radius:var(--radius); background:#2e3133; color:var(--almost); font-size:14px; }
 .profile-email input::placeholder { color:#bcc2c4; }
 .profile-email .btn,.profile-demo .btn { width:100%; margin-top:12px; font-size:10px; padding:11px 14px; }
 .account-profile .btn.light { background:transparent; color:var(--almost); border-color:#747777; }
@@ -38,7 +38,7 @@
 .library-section { margin-top:24px; }
 .library-section > h2 { margin-bottom:18px; font:700 25px/1.1 Arial,Helvetica,sans-serif; letter-spacing:-.04em; }
 .library-section > p,.library-empty p { color:var(--body); font-size:15px; line-height:1.5; }
-.library-empty { padding:20px; border:1px solid var(--rule); border-radius:9px; background:var(--almost); }
+.library-empty { padding:20px; border:1px solid var(--rule); border-radius:var(--radius); background:var(--almost); }
 .library-empty .text-link { margin-top:12px; }
 .library-empty .btn { margin-top:14px; min-height:44px; font-size:10px; padding:10px 16px; }
 .library-purchased { padding:20px 0; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); }
