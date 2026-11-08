@@ -7,7 +7,7 @@ export const photoByTool={
   },
   "dr": {
     "src": "dr.webp",
-    "alt": "Критические пометки в готовом документе",
+    "alt": "Сеть взаимосвязанных узлов со светящимся центром",
     "position": "50% 50%"
   },
   "triads": {
@@ -47,7 +47,7 @@ export const photoByTool={
   },
   "chatgpt-project": {
     "src": "chatgpt-project.webp",
-    "alt": "Постоянное место работы",
+    "alt": "Совместная работа людей с разными инструментами",
     "position": "50% 50%"
   },
   "thinker": {
