@@ -1,6 +1,6 @@
 import {E,arrow} from './utils.js';
 import {photoCardCopy,photoByTone} from './photo-card-data.js';
-const nameLines={admin:['АДМИН','ИИ-ПРОЕКТЫ'],'plugin-maker':['СВОЙ ПЛАГИН','CHATGPT'],'drive-knowledge':['GOOGLE DRIVE','ЗНАНИЯ'],'chatgpt-project':['РАБОЧИЙ ПРОЕКТ','CHATGPT']};
+const nameLines={"plugin-maker":["СВОЙ ПЛАГИН","CHATGPT"],"rdc-agent":["ДОСТУП К","КОМПЬЮТЕРУ ИЗ ЧАТА"],"drive-knowledge":["КАБИНЕТ НА","GOOGLE DRIVE"],"chatgpt-project":["РАБОЧИЙ ПРОЕКТ","CHATGPT"]};
 
 export function renderPhotoCard(tool,data,store){
   const saved=store.isFavorite(tool.id);

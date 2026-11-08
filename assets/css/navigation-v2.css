@@ -72,6 +72,23 @@ html { scrollbar-gutter: stable; scroll-padding-top: calc(var(--platform-header-
 .section-tab[aria-current="page"] .tab-number { background: var(--accent); }
 .nav-top .section-tab:hover, .nav-top .section-tab[aria-current="page"] { text-decoration: none; }
 .nav-top .section-tab:focus-visible { border-radius: 12px; outline-color: var(--navigation-blue); }
+/* Gallery entrance: a growing disc, an extending capsule and folding tabs. */
+.header-entry-pending .header-search,.header-search-entering { border-color:transparent!important; background:transparent!important; }
+.header-entry-pending .header-search > .brand,
+.header-entry-pending .section-tab,.header-entry-pending .header-search input,.header-entry-pending .search-submit { opacity:0; }
+.header-search-entering { position:relative; isolation:isolate; }
+.header-entrance-shell { position:absolute; left:-1px; top:-1px; width:calc(100% + 2px); height:calc(100% + 2px); box-sizing:border-box; pointer-events:none; z-index:-1; }
+.header-pill-left,.header-pill-right { position:absolute; top:0; }
+.header-pill-left > svg,.header-pill-right > svg { display:block; width:100%; height:100%; overflow:visible; }
+.header-pill-right,.header-pill-straight { will-change:transform; }
+.header-pill-straight { position:absolute; top:0; height:100%; box-sizing:border-box; border-block-style:solid; border-block-color:currentColor; transform-origin:0 50%; }
+.header-search > .brand { transform-origin:center center; }
+.nav-top .section-tab { transform-origin:50% 0%; backface-visibility:hidden; }
+@media(prefers-reduced-motion:reduce) {
+ .header-entry-pending .header-search { border-color:var(--ink)!important; }
+ .header-entry-pending .header-search > .brand,
+ .header-entry-pending .section-tab,.header-entry-pending .header-search input,.header-entry-pending .search-submit { opacity:1; }
+}
 .mainframe, .mainframe.noside { display: block; width: var(--platform-field-width); max-width: none; margin: 0 auto; }
 /* One heading font and an alphabetic baseline keep the mark at cap height. */
 .catalog-intro { grid-template-columns:minmax(0,1fr); margin:0 0 var(--section-space-after); padding:0; border:0; }

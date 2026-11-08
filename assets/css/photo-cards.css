@@ -5,7 +5,7 @@
 .card-slot[data-card-tone="modelling"]{--photo-card-fill:#a8adb2}
 .card-slot[data-card-tone="projects"]{--photo-card-fill:var(--accent)}
 .card-slot>.card-index{position:absolute;z-index:2;top:var(--badge-inset);right:var(--badge-inset);display:grid;place-items:center;width:32px;height:32px;border:1px solid var(--photo-outline);border-radius:50%;background:var(--photo-card-fill);color:#565c62;font:400 11px/1 var(--label-font);font-variant-numeric:tabular-nums}
-.card-slot>.toolcard.photo-card{--muted:#565c62;--line:var(--photo-outline);--mono:var(--label-font);--pad:clamp(16px,6.5cqw,23px);--title-size:clamp(24px,10.5cqw,41px);--title-leading:calc(var(--title-size)*.93);display:flex;flex:1;flex-direction:column;min-width:0;min-height:0;height:auto;aspect-ratio:auto;container-type:normal;container-name:none;border:1px solid var(--line);border-radius:50cqw 50cqw 17px 17px;overflow:hidden;background:var(--photo-card-fill);box-shadow:none}
+.card-slot>.toolcard.photo-card{--muted:#565c62;--line:var(--photo-outline);--mono:var(--label-font);--pad:clamp(16px,6.5cqw,23px);--title-size:clamp(20px,8.8cqw,34.3px);--title-leading:calc(var(--title-size)*.93);display:flex;flex:1;flex-direction:column;min-width:0;min-height:0;height:auto;aspect-ratio:auto;container-type:normal;container-name:none;border:1px solid var(--line);border-radius:50cqw 50cqw 17px 17px;overflow:hidden;background:var(--photo-card-fill);box-shadow:none}
 .card-slot>.photo-card.tone-modelling{--muted:#3b4147}
 .photo-card .card-photo{display:block;flex:none;width:calc(100% - 24px);height:auto;aspect-ratio:1;margin:12px;border-radius:50%;object-fit:cover;object-position:center}
 .photo-card.tone-projects .card-photo{object-position:50% 43%}
@@ -16,7 +16,7 @@
 /* Center the symmetric stroke on the actual ink of its adjacent text line. */
 .photo-card .card-name-arrow{position:relative;display:block;align-self:baseline;flex:0 0 12px;width:12px;height:var(--name-glyph-height,1cap);transform:translateY(var(--name-glyph-descent,0px))}
 .photo-card .card-name .card-name-chevron{position:absolute;top:0;left:50%;display:block;width:auto;height:100%;aspect-ratio:3/2;max-width:none;transform:translateX(-50%);fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;overflow:visible}
-.card-slot>.toolcard.photo-card .card-title{grid-area:1/1;align-self:baseline;margin:0;min-height:calc(2*var(--title-leading));font-size:var(--title-size);font-weight:700;line-height:var(--title-leading);letter-spacing:-.056em;text-wrap:balance;overflow-wrap:normal;hyphens:none;text-transform:none}
+.card-slot>.toolcard.photo-card .card-title{grid-area:1/1;align-self:baseline;margin:0;min-height:calc(3*var(--title-leading));height:calc(3*var(--title-leading));font-size:var(--title-size);font-weight:700;line-height:var(--title-leading);letter-spacing:-.056em;text-wrap:balance;overflow-wrap:normal;hyphens:none;text-transform:none}
 .card-slot>.toolcard.photo-card .card-title::after{content:none}
 .photo-card .card-copy{display:flex;flex-direction:column;align-items:stretch;gap:14px;flex:1;padding:16px var(--pad) 12px}
 .photo-card .copy-block:last-child{margin-top:auto}

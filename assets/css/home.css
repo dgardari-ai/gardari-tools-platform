@@ -1,7 +1,7 @@
 /* Reference lock: x0 home-hero.css and forms-accordion/blog-home.css.
    Supplied artwork is unchanged; only its transparent outer margin is cropped. */
 .home-hero { position:relative; width:100%; aspect-ratio:3778/1788; margin-top:12px; isolation:isolate; }
-.home-art { position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+.home-art { position:absolute; inset:0; overflow:hidden; pointer-events:none; isolation:isolate; }
 .home-art img { position:absolute; top:-14.0939597315%; left:-5.955531% ; width:113.710958%; height:auto; max-width:none; }
 /* First П begins at source x=1760; artwork crop begins at x=225. */
 .home-copy { position:absolute; top:22%; left:40.6299629434%; right:1.5%; }
@@ -117,4 +117,25 @@
 }
 @media(prefers-reduced-motion:reduce) {
  .comment-preview img { transition:none; }
+}
+
+/* The image is made of moving texture tiles; the static image stays hidden until assembly ends. */
+.home-art-particles { position:absolute; inset:0; z-index:1; width:100%; height:100%; pointer-events:none; }
+.home-art.is-assembling img { opacity:0; }
+@media(prefers-reduced-motion:reduce) {
+ .home-art-particles { display:none; }
+ .home-art.is-assembling img { opacity:1; }
+}
+
+/* Native text keeps its original wrapping; a temporary glyph layer folds in. */
+.home-title-hidden .home-copy > h1 { opacity:0!important; }
+.home-description-hidden .home-copy > p { opacity:0; visibility:hidden; }
+.home-lower-hidden > section:not(.home-hero),.home-entry-footer-hidden { opacity:0; visibility:hidden; }
+.home-title-fold { position:absolute; display:block; z-index:2; pointer-events:none; user-select:none; }
+.home-fold-segment { position:absolute; display:block; perspective:700px; white-space:pre; }
+.home-fold-piece { position:relative; display:inline-block; font:inherit; white-space:pre; transform-origin:50% 0%; backface-visibility:hidden; }
+.home-fold-piece::after { content:attr(data-fold-text); position:absolute; inset:0; pointer-events:none; color:transparent; -webkit-text-fill-color:transparent; background-image:linear-gradient(180deg,rgba(0,0,0,.58),rgba(0,0,0,.22) 42%,rgba(255,255,255,.26)); -webkit-background-clip:text; background-clip:text; opacity:var(--heading-crease,0); }
+@media(prefers-reduced-motion:reduce) {
+ .home-title-hidden .home-copy > h1,.home-description-hidden .home-copy > p,.home-lower-hidden > section:not(.home-hero),.home-entry-footer-hidden { opacity:1!important; visibility:visible!important; }
+ .home-title-fold { display:none; }
 }
