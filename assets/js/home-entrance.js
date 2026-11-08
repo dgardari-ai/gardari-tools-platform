@@ -43,7 +43,8 @@ function foldTitle(heading,onComplete) {
  layer.setAttribute('aria-hidden','true');
  Object.assign(layer.style,{left:(box.left-parent.left)+'px',top:(box.top-parent.top)+'px',
   width:box.width+'px',height:box.height+'px',font:style.font,
-  letterSpacing:style.letterSpacing,textTransform:style.textTransform,color:style.color});
+  letterSpacing:style.letterSpacing,textTransform:style.textTransform,color:style.color,
+  webkitTextStrokeWidth:style.webkitTextStrokeWidth,webkitTextStrokeColor:style.webkitTextStrokeColor});
  const walker=document.createTreeWalker(heading,NodeFilter.SHOW_TEXT),glyphs=[];
  let textNode,index=0;
  while((textNode=walker.nextNode())) {
