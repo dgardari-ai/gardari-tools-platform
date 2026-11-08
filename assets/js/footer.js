@@ -6,7 +6,7 @@ export const PLATFORM_URL = 'https://dgardari-ai.github.io/gardari-tools-platfor
 export async function sharePlatform() {
   if (typeof navigator.share === 'function') {
     try {
-      await navigator.share({title:'Платформа инструментов Гардари',url:PLATFORM_URL});
+      await navigator.share({title:'ПЛАТФОРМА ИНСТРУМЕНТОВ',url:PLATFORM_URL});
       return;
     } catch (error) {
       if (error.name === 'AbortError') return;
