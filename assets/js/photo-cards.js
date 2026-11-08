@@ -1,11 +1,12 @@
 import {E,arrow} from './utils.js';
-import {photoCardCopy,photoByTone} from './photo-card-data.js';
+import {photoCardCopy} from './photo-card-data.js';
+import {photoByTool} from './card-images.js';
 const nameLines={"plugin-maker":["СВОЙ ПЛАГИН","CHATGPT"],"rdc-agent":["ДОСТУП К","КОМПЬЮТЕРУ ИЗ ЧАТА"],"drive-knowledge":["КАБИНЕТ НА","GOOGLE DRIVE"],"chatgpt-project":["РАБОЧИЙ ПРОЕКТ","CHATGPT"]};
 
 export function renderPhotoCard(tool,data,store){
   const saved=store.isFavorite(tool.id);
   const tone=data.groups.find(group=>group.id===tool.category).tone;
-  const photo=photoByTone[tone];
+  const photo=photoByTool[tool.id];
   const copy=photoCardCopy[tool.id];
   const configured=nameLines[tool.id];
   const plain=value=>value.toUpperCase().replaceAll('\u00b7','').replace(/\s+/g,' ').trim();
@@ -14,7 +15,7 @@ export function renderPhotoCard(tool,data,store){
   const lastLine=lines?lines[1]:tool.name;
   return `<div class="card-slot card-slot--sketch" data-card-tone="${E(tone)}"><span class="card-index">${E(tool.code)}</span><article class="toolcard photo-card photo-card--sketch tone-${E(tone)}" data-tool-id="${E(tool.id)}" data-code="${E(tool.code)}" data-photo-variant="true">
     <svg class="card-shell" aria-hidden="true"><path vector-effect="non-scaling-stroke"/></svg>
-    <img class="card-photo" src="assets/images/home/${E(photo.src)}" alt="${E(photo.alt)}" width="600" height="600" decoding="async">
+    <img class="card-photo" style="object-position:${E(photo.position)}" src="assets/images/catalog/${E(photo.src)}" alt="${E(photo.alt)}" width="600" height="600" decoding="async">
     <header class="card-heading"><div class="card-identity"><a class="card-name" id="card-name-${E(tool.id)}" href="#tool/${E(tool.id)}" aria-label="${E(tool.name)}">${name}<span class="card-name-text">${E(lastLine)}<span class="photo-name-baseline" aria-hidden="true"></span></span><span class="card-name-arrow" aria-hidden="true"><svg class="card-name-chevron" viewBox="0 4 24 16"><path d="m9 5 7 7-7 7"/></svg></span></a></div><h2 class="card-title cardtitle" id="card-title-${E(tool.id)}"><span class="photo-title-baseline" aria-hidden="true"><span class="photo-title-cap"></span></span>${E(tool.cardTitle)}</h2></header>
     <div class="card-copy"><div class="copy-block"><span class="copy-label">Когда пригодится</span><p>${E(copy.when)}</p></div><div class="copy-block"><span class="copy-label">Результат</span><p>${E(copy.result)}</p></div></div>
     <div class="card-actions"><a class="card-cta card-details" href="#tool/${E(tool.id)}" aria-label="Читать подробно: ${E(tool.name)}">Подробнее ${arrow()}</a><button class="star card-favorite ${saved?'saved':''}" type="button" data-action="star" data-id="${E(tool.id)}" aria-pressed="${saved}" aria-label="${saved?'Убрать из избранного':'Добавить в избранное'}: ${E(tool.name)}"><span aria-hidden="true">${saved?'★':'☆'}</span></button></div>
