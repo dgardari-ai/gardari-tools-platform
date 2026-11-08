@@ -100,7 +100,21 @@
     for(const [scope,properties]of Object.entries(styles).sort(([a],[b])=>{const rank=k=>({all:0,tablet:100,mobile:200}[k.split(':')[0]]??0)+(k.includes(':')?1:0);return rank(a)-rank(b)||a.localeCompare(b);})){
       const [mode,state]=scope.split(':');let select=selector;
       if(state){const pseudo=state==='current'?'[aria-current="page"]':state==='disabled'?':disabled':':'+state;select+=pseudo;select+=','+selector+'[data-vmg-force-state="'+state+'"][data-vmg-object]';}
-      const body=Object.entries(properties).filter(([key,value])=>/^(?:--[a-z][a-z0-9-]*|[a-z][a-z0-9-]*)$/.test(key)&&typeof value==='string'&&!/[{};<>]/.test(value)&&!/(?:url\s*\(|expression\s*\(|@import)/i.test(value)).map(([key,value])=>key+':'+value+'!important').join(';');
+      const safe=Object.entries(properties).filter(([key,value])=>/^(?:--[a-z][a-z0-9-]*|[a-z][a-z0-9-]*)$/.test(key)&&typeof value==='string'&&!/[{};<>]/.test(value)&&!/(?:url\s*\(|expression\s*\(|@import)/i.test(value));
+      const body=safe.filter(([key])=>!key.startsWith('--vmg-shift-')).map(([key,value])=>key+':'+value+'!important').join(';');
+      // A native styleRef can belong to a caption/image. Movement always belongs
+      // to the selected object itself, with an independent CSS translate.
+      const shift=Object.fromEntries(safe.filter(([key])=>key.startsWith('--vmg-shift-')));
+      if(shift['--vmg-shift-x']!==undefined&&shift['--vmg-shift-y']!==undefined){
+        const motionSelector=selector.replaceAll(baseSelector,'[data-vmg-object="'+cssEscape(id)+'"]');
+        const motionBody=Object.entries(shift).map(([key,value])=>key+':'+value+'!important').join(';')+';translate:var(--vmg-shift-x) var(--vmg-shift-y) var(--vmg-shift-z,0px)!important'+(shift['--vmg-shift-inline']==='1'?';display:inline-block!important':'');
+        let motionSelect=motionSelector;
+        if(state){motionSelect+=state==='current'?'[aria-current="page"]':state==='disabled'?':disabled':':'+state;motionSelect+=','+motionSelector+'[data-vmg-force-state="'+state+'"][data-vmg-object]';}
+        const motionRule=motionSelect+'{'+motionBody+'}';
+        if(mode==='all')css+=motionRule;
+        else if(document.documentElement.hasAttribute('data-hub-layout')){const prefix=mode==='mobile'?'html[data-hub-layout="phone"]':'html[data-hub-layout^="tablet-"]';css+=motionSelect.split(',').map(s=>prefix+' '+s).join(',')+'{'+motionBody+'}';}
+        else if(mode==='tablet'||mode==='mobile')css+='@media(max-width:'+(mode==='mobile'?700:1024)+'px){'+motionRule+'}';
+      }
       if(!body)continue;
       const rule=select+'{'+body+'}';
       if(mode==='all')css+=rule;

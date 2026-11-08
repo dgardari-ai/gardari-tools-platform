@@ -252,8 +252,8 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline-color: va
 
 /* r05: one yellow, neutral surfaces, compact cards and full-height following. */
 :root { --accent:#d8c62a; --blue:#f4f4f4; }
-.menu-dot svg { stroke:var(--ink); }
-.menu-control[aria-expanded="true"] svg { stroke:var(--accent); }
+.menu-dot svg { stroke:#fff; }
+.menu-control[aria-expanded="true"] svg { stroke:#fff; }
 .header-search:focus-within, .searchbox:focus-within { outline-color:var(--ink); }
 button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible,
 select:focus-visible, summary:focus-visible { outline-color:var(--ink); }
@@ -350,9 +350,9 @@ select:focus-visible, summary:focus-visible { outline-color:var(--ink); }
 @media(hover:hover) {
   .header-search .brand:hover { background:var(--accent); border-radius:50%; }
   .menu-control:hover .menu-dot { background:var(--ink); }
-  .menu-control:hover svg { stroke:var(--accent); }
+  .menu-control:hover svg { stroke:#fff; }
   .menu-control[aria-expanded="true"]:hover .menu-dot { background:var(--accent); }
-  .menu-control[aria-expanded="true"]:hover svg { stroke:var(--ink); }
+  .menu-control[aria-expanded="true"]:hover svg { stroke:#fff; }
   .section-tab:not([aria-current="page"]):hover .tab-number { background:var(--ink); color:var(--paper); }
   .section-tab[aria-current="page"]:hover .tab-number { background:var(--accent); color:var(--ink); }
   .side-link:hover { background:var(--accent); color:var(--ink); }

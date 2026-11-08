@@ -18,7 +18,7 @@ export function renderAccount(main,data,store,account=createAccountState()) {
       ${selected.length?`<div class="account-card-grid catalog-grid">${selected.map(t=>card(t,data,store)).join('')}</div>`:empty('Вы пока не выбрали инструменты.','#catalog','ВЫБРАТЬ ИНСТРУМЕНТ')}
     </section>
     <section class="library-section" id="library-learning"><h2>Моё обучение</h2>
-      ${lessons.length?`<div class="account-card-grid catalog-grid">${lessons.map(x=>learningCard(x,account)).join('')}</div>`:empty('Сохраните интересующие мини-курсы и лекции.','#training','ПОСМОТРЕТЬ ОБУЧЕНИЕ')}
+      ${lessons.length?`<div class="account-card-grid catalog-grid">${lessons.map(x=>learningCard(x,account,data)).join('')}</div>`:empty('Сохраните интересующие мини-курсы и лекции.','#training','ПОСМОТРЕТЬ ОБУЧЕНИЕ')}
     </section>
     <section class="library-section library-purchased"><h2>Приобретённые материалы</h2>
       <p>Приобретённых инструментов и курсов пока нет. Подписка и платежи пока не подключены.</p>
