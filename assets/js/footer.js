@@ -1,7 +1,7 @@
 import {copyText,notify} from './utils.js';
 
 // Share the public entry point, including from a local or editor preview.
-export const PLATFORM_URL = 'https://dgardari-ai.github.io/gardari-tools-platform/';
+export const PLATFORM_URL = 'https://platforma.gardari.art/';
 
 export async function sharePlatform() {
   if (typeof navigator.share === 'function') {
