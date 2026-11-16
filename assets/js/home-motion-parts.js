@@ -86,6 +86,7 @@ export function createHeadline(stage,heading) {
  stage.append(root);
  try {
   for(const line of heading.children) {
+   if(getComputedStyle(line).display==='none')continue;
    const marker=document.createElement('i');
    Object.assign(marker.style,{display:'inline-block',width:'0',height:'0',padding:'0',margin:'0',border:'0',verticalAlign:'baseline'});
    marker.setAttribute('aria-hidden','true');line.append(marker);

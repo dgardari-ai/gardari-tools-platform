@@ -117,6 +117,13 @@ function measureSectionRhythm(){
  const shell=document.getElementById('shell');
  const first=main.querySelector('.home-faq');
  const width=main.getBoundingClientRect().width;
+ // The authored mobile strip has independent section bars, not the desktop pair.
+ if(window.matchMedia?.('(max-width:700px)').matches){
+  for(const name of ['--section-external-space','--section-internal-space','--section-before-heading','--section-after-heading'])shell.style.removeProperty(name);
+  rhythmWidth=0;
+  if(first){main.dataset.rhythmWidth=String(Math.round(width));main.dataset.rhythmReady="true";}
+  return;
+ }
  if(!first){
   if(rhythmWidth&&Math.abs(rhythmWidth-width)>1){
    for(const name of ['--section-external-space','--section-internal-space','--section-before-heading','--section-after-heading'])shell.style.removeProperty(name);

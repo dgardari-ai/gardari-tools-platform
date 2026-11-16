@@ -1,23 +1,23 @@
-import {initPhotoCards} from './photo-cards.js?v=20261116-shape';
+import {initPhotoCards} from './photo-cards.js?v=20261116-release17';
 import {initFooter} from './footer.js';
 import {applyManualData,manualPresentation} from './manual-edits.js';
 import {loadData} from './data.js';
 import {createLocalAdapter} from './storage.js';
 import {parseRoute} from './router.js';
 import {E,arrow,notify,copyText,focusElement} from './utils.js';
-import {renderCatalog,refreshCatalog,renderFavorites} from './catalog.js?v=20261116-shape';
+import {renderCatalog,refreshCatalog,renderFavorites} from './catalog.js?v=20261116-release17';
 import {renderDetail} from './detail.js';
 import {newBench,renderBench,compose} from './workbench.js';
 import {createDownloads} from './downloads.js';
 import {renderAccount,renderAbout} from './account.js';
 import {renderTraining,refreshTraining,renderLesson} from './training.js?v=20261116-badges';
-import {renderHome} from './home.js?v=20261115-correction3-r2';
-import {renderSidebar} from './sidebar.js?v=20261115-correction3-r2';
+import {renderHome} from './home.js?v=20261116-release17';
+import {renderSidebar} from './sidebar.js?v=20261116-release17';
 import {createAccountState} from './account-state.js';
 import {lessonById} from './lessons-data.js';
 import {renderAgent} from './agent.js';
 import {followWorkbench} from './sticky-workbench.js';
-import {bindHomeMotion} from './home-motion.js?v=20261116-release15';
+import {bindHomeMotion} from './home-motion.js?v=20261116-release17';
 
 initFooter();
 
@@ -55,7 +55,15 @@ async function start() {
     frame.classList.toggle('noside',!menuOpen);
     menuButton.setAttribute('aria-expanded',String(menuOpen));
     menuButton.setAttribute('aria-label',menuOpen?'Закрыть каталог':'Открыть каталог');
-    document.querySelectorAll('[data-menu-trigger]').forEach(button=>button.setAttribute('aria-expanded',String(menuOpen)));
+    const mobileMenu=window.matchMedia('(max-width:700px)').matches;
+    document.querySelectorAll('[data-menu-trigger]').forEach(button=>{
+      const navigationOnly=mobileMenu&&(button.dataset.headerPage==='catalog'||button.matches('.hero-brand-symbol'));
+      if(navigationOnly){button.removeAttribute('aria-expanded');button.removeAttribute('aria-controls');}
+      else{button.setAttribute('aria-expanded',String(menuOpen));button.setAttribute('aria-controls','sidebar');}
+      if(button.matches('.hero-brand-symbol'))button.setAttribute('aria-label',mobileMenu?'Главная':'Открыть каталог');
+      if(button.matches('.header-logo,.hero-menu-trigger'))button.setAttribute('aria-label',mobileMenu?'Открыть меню':'Открыть каталог');
+    });
+    document.getElementById('close-menu').setAttribute('aria-label',mobileMenu?'Закрыть меню':'Закрыть каталог');
     sidebar.inert = !menuOpen;
     sidebar.setAttribute('aria-hidden',String(!menuOpen));
     document.body.classList.remove('menu-open');
@@ -69,7 +77,8 @@ async function start() {
     if(open) { positionMenu(); focusElement(side.querySelector('[aria-current="page"]') || side.querySelector('a')); }
     else if (restore) {
       const available=menuReturn?.isConnected&&menuReturn.getClientRects().length;
-      const fallback=route.page==='about'?main.querySelector('.hero-brand-symbol'):document.querySelector('.header-logo');
+      const homeTrigger=window.matchMedia('(max-width:700px)').matches?'.hero-menu-trigger':'.hero-brand-symbol';
+      const fallback=route.page==='about'?main.querySelector(homeTrigger):document.querySelector('.header-logo');
       focusElement(available?menuReturn:fallback||menuButton);
     }
   }
@@ -86,6 +95,10 @@ async function start() {
   new ResizeObserver(positionMenu).observe(document.getElementById('top'));
   window.addEventListener('resize',positionMenu);
   window.addEventListener('scroll',positionMenu,{passive:true});
+  window.matchMedia('(max-width:700px)').addEventListener('change',()=>{
+    syncMenu();
+    if(route.page==='catalog'&&main.dataset.view==='catalog')refreshCatalog(data,store,filters);
+  });
   positionMenu();
   function syncHeader() {
     const headerNames={catalog:'Каталог инструментов',training:'Обучение: курсы и лекции',saved:'Избранное',account:'Личный кабинет',agent:'AI агент',about:'Главная','not-found':'Страница не найдена'};
@@ -190,11 +203,14 @@ async function start() {
     if(menuTrigger){
       event.preventDefault();
       const catalog=menuTrigger.dataset.headerPage==='catalog';
+      const mobileMenu=window.matchMedia('(max-width:700px)').matches;
       if(catalog){
         filters.category='Все';filters.search='';document.getElementById('search').value='';
         if(route.page==='catalog')renderPage();
         else location.hash='#catalog';
+        if(mobileMenu)return;
       }
+      if(mobileMenu&&menuTrigger.matches('.hero-brand-symbol')){window.scrollTo({top:0,left:0,behavior:'instant'});return;}
       setMenu(true);return;
     }
     if(event.target.closest('#close-menu')){setMenu(false);return;}
