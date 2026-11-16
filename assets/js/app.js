@@ -1,18 +1,18 @@
-import {initPhotoCards} from './photo-cards.js';
+import {initPhotoCards} from './photo-cards.js?v=20261116-shape';
 import {initFooter} from './footer.js';
 import {applyManualData,manualPresentation} from './manual-edits.js';
 import {loadData} from './data.js';
 import {createLocalAdapter} from './storage.js';
 import {parseRoute} from './router.js';
 import {E,arrow,notify,copyText,focusElement} from './utils.js';
-import {renderCatalog,refreshCatalog,renderFavorites} from './catalog.js';
+import {renderCatalog,refreshCatalog,renderFavorites} from './catalog.js?v=20261116-shape';
 import {renderDetail} from './detail.js';
 import {newBench,renderBench,compose} from './workbench.js';
 import {createDownloads} from './downloads.js';
 import {renderAccount,renderAbout} from './account.js';
-import {renderTraining,refreshTraining,renderLesson} from './training.js';
-import {renderHome} from './home.js';
-import {renderSidebar} from './sidebar.js';
+import {renderTraining,refreshTraining,renderLesson} from './training.js?v=20261116-badges';
+import {renderHome} from './home.js?v=20261115-correction3-r2';
+import {renderSidebar} from './sidebar.js?v=20261115-correction3-r2';
 import {createAccountState} from './account-state.js';
 import {lessonById} from './lessons-data.js';
 import {renderAgent} from './agent.js';
@@ -41,6 +41,7 @@ async function start() {
   };
   let route = parseRoute(data);
   let menuOpen = false;
+  let menuReturn=menuButton;
   const storageNotice = document.createElement('p');
   storageNotice.className = 'storage-notice';
   storageNotice.setAttribute('role','status');
@@ -52,7 +53,8 @@ async function start() {
   function syncMenu() {
     frame.classList.toggle('noside',!menuOpen);
     menuButton.setAttribute('aria-expanded',String(menuOpen));
-    menuButton.setAttribute('aria-label',menuOpen?'Закрыть меню':'Открыть меню');
+    menuButton.setAttribute('aria-label',menuOpen?'Закрыть каталог':'Открыть каталог');
+    document.querySelectorAll('[data-menu-trigger]').forEach(button=>button.setAttribute('aria-expanded',String(menuOpen)));
     sidebar.inert = !menuOpen;
     sidebar.setAttribute('aria-hidden',String(!menuOpen));
     document.body.classList.remove('menu-open');
@@ -60,41 +62,35 @@ async function start() {
     sidebar.removeAttribute('aria-modal');
   }
   function setMenu(open,restore = true) {
+    if(open)menuReturn=document.activeElement?.closest?.("[data-menu-trigger],#toggle-menu") || menuButton;
     menuOpen = open;
     syncMenu();
     if(open) { positionMenu(); focusElement(side.querySelector('[aria-current="page"]') || side.querySelector('a')); }
-    else if (restore) focusElement(menuButton);
+    else if (restore) {
+      const available=menuReturn?.isConnected&&menuReturn.getClientRects().length;
+      const fallback=route.page==='about'?main.querySelector('.hero-brand-symbol'):document.querySelector('.header-logo');
+      focusElement(available?menuReturn:fallback||menuButton);
+    }
   }
   function positionMenu() {
-    const header = document.getElementById('top');
-    const headerFrame = document.querySelector('.header-frame');
-    const viewport = document.documentElement.clientWidth;
-    const moduleWidth = (frame.getBoundingClientRect().width - 24) / 3;
-    const controlSize = viewport<=925 ? 57 : (moduleWidth - 4 * 7.5) / 5;
-    document.documentElement.style.setProperty('--navigation-control-size', `${controlSize}px`);
-    const trigger = menuButton.getBoundingClientRect();
-    const content = frame.getBoundingClientRect();
-    const top = Math.round(header.getBoundingClientRect().bottom + 10);
-    const margin = Number.parseFloat(getComputedStyle(headerFrame).columnGap) || 14;
-    const fullWidth = Math.min(380, Math.max(0, viewport - 24));
-    const sideWidth = Math.min(fullWidth, Math.max(0, content.left - margin - 12));
-    const anchoredWidth = Math.min(sideWidth, Math.max(0, trigger.right - 12));
-    const aside = anchoredWidth >= 240;
-    const width = aside ? anchoredWidth : fullWidth;
-    const left = aside ? trigger.right - width : Math.max(12, Math.min(trigger.left, viewport - fullWidth - 12));
-    sidebar.style.width = `${width}px`;
-    sidebar.style.left = `${left}px`;
-    sidebar.dataset.placement = aside ? 'aside' : 'overlay';
-    document.getElementById('search').placeholder = route.page==='training'||route.page==='lesson' ? 'НАЙТИ МИНИ-КУРС ИЛИ ЛЕКЦИЮ…' : innerWidth<=680 ? 'НАЙТИ ИНСТРУМЕНТ…' : 'ПЛАТФОРМА ИНСТРУМЕНТОВ: НАЙТИ МЕТОД…';
-    document.documentElement.style.setProperty('--platform-menu-top', `${top}px`);
-    document.documentElement.style.setProperty('--platform-header-height', `${header.offsetHeight}px`);
+    const viewport=document.documentElement.clientWidth;
+    const content=frame.getBoundingClientRect();
+    const width=Math.min(284,viewport-24);
+    const aside=content.left>=width+52;
+    sidebar.style.width=`${width}px`;
+    sidebar.style.left=`${aside?content.left-width-48:0}px`;
+    sidebar.dataset.placement=aside?'aside':'overlay';
+    document.documentElement.style.setProperty('--platform-header-height',`${document.getElementById('top').offsetHeight}px`);
   }
   new ResizeObserver(positionMenu).observe(document.getElementById('top'));
   window.addEventListener('resize',positionMenu);
   window.addEventListener('scroll',positionMenu,{passive:true});
   positionMenu();
   function syncHeader() {
-    const selected = route.page==='tool' ? 'catalog' : route.page==='lesson' ? 'training' : route.page;
+    const headerNames={catalog:'Каталог инструментов',training:'Обучение: курсы и лекции',saved:'Избранное',account:'Личный кабинет',agent:'AI агент',about:'Главная','not-found':'Страница не найдена'};
+    const pageName=route.page==='tool'?data.byId.get(route.id).name:route.page==='lesson'?(lessonById(route.id).cardTitle||lessonById(route.id).title):headerNames[route.page]||headerNames['not-found'];
+    document.getElementById('section-page-name').textContent=pageName;
+    const selected = route.page==='tool'||route.page==='saved' ? 'catalog' : route.page==='lesson' ? 'training' : route.page;
     document.querySelectorAll('[data-header-page]').forEach(link => {
       if (link.dataset.headerPage===selected) link.setAttribute('aria-current','page');
       else link.removeAttribute('aria-current');
@@ -108,7 +104,7 @@ async function start() {
 
   function renderSide() { renderSidebar(side,data,store,route); }
   function updateChapter() {
-    document.querySelectorAll('.chapter-link').forEach(link => {
+    document.querySelectorAll('.chapter-link,.side-chapter-link').forEach(link => {
       if (link.dataset.chapterId===route.anchor) link.setAttribute('aria-current','location');
       else link.removeAttribute('aria-current');
     });
@@ -130,6 +126,7 @@ async function start() {
     document.title = `${route.page==='tool'?data.byId.get(route.id).name:route.page==='lesson'?lessonById(route.id).title:names[route.page]} — Платформа инструментов Гардари`;
     const description = route.page==='tool' ? data.byId.get(route.id).summary : '13 авторских методов исследования, мышления, моделирования и работы с ИИ.';
     document.querySelector('meta[name="description"]').content = description;
+    syncHeader();
     syncMenu();
     updateStorageNotice();
     updateChapter();
@@ -148,7 +145,7 @@ async function start() {
       if (target) focusElement(target,true);
       else {
         window.scrollTo({top:0,left:0,behavior:'instant'});
-        if (!initial) focusElement(main.querySelector('h1') || main);
+        if (!initial) focusElement(main.querySelector('.filters-only')?document.getElementById('section-page-title'):main.querySelector('h1') || main);
       }
     });
   }
@@ -185,6 +182,22 @@ async function start() {
     notify(`${store.isFavorite(id)?'Сохранено в избранном.':'Убрано из избранного.'}${saved?'':' После закрытия страницы выбор не сохранится.'}`);
   }
   document.addEventListener('click',event => {
+    const menuTrigger=event.target.closest('[data-menu-trigger]');
+    if(menuTrigger){
+      event.preventDefault();
+      const catalog=menuTrigger.dataset.headerPage==='catalog';
+      if(catalog){
+        filters.category='Все';filters.search='';document.getElementById('search').value='';
+        if(route.page==='catalog')renderPage();
+        else location.hash='#catalog';
+      }
+      setMenu(true);return;
+    }
+    if(event.target.closest('#close-menu')){setMenu(false);return;}
+    if(event.target.closest('[data-full-catalog]')){
+      filters.category='Все';filters.search='';document.getElementById('search').value='';
+      if(route.page==='catalog')renderPage();
+    }
     const scrollLink = event.target.closest('[data-scroll-to],.skip-link');
     if (scrollLink) {
       event.preventDefault();
@@ -275,11 +288,7 @@ async function start() {
       tabs[target].click();
     }
   });
-  menuButton.addEventListener('click',()=>setMenu(!menuOpen));
-  document.getElementById('overlay').addEventListener('click',()=>setMenu(false));
-  document.addEventListener('pointerdown',event=>{
-    if(menuOpen && sidebar.dataset.placement==='overlay' && !sidebar.contains(event.target) && !menuButton.contains(event.target))setMenu(false,false);
-  });
+  menuButton.addEventListener('click',()=>{filters.category='Все';filters.search='';location.hash='#catalog';setMenu(true);});
   document.getElementById('header-search').addEventListener('submit',event=>{
     event.preventDefault();
     if(route.page==='training'||route.page==='lesson'){
@@ -325,6 +334,12 @@ async function start() {
   });
   window.addEventListener('platform:editor-ready',()=>window.dispatchEvent(new CustomEvent('platform:rendered',{detail:{catalog:data.catalog}})));
   applyRoute(true);
+  const initialMenu=new URLSearchParams(location.search).get('catalog')==='open';
+  if(initialMenu){
+    setMenu(true);
+    const cleanURL=new URL(location.href);cleanURL.searchParams.delete('catalog');
+    history.replaceState(null,'',cleanURL.pathname+cleanURL.search+cleanURL.hash);
+  }
 }
 start().catch(error => {
   document.getElementById('main').innerHTML = `<section class="panel surface-light"><h1>Не удалось загрузить каталог</h1><p>${E(error.message)}</p><p>Проверьте соединение и откройте страницу через локальный сервер или адрес сайта.</p><div class="empty-actions"><button class="btn primary" id="retry-load" type="button">ПОВТОРИТЬ</button></div></section>`;

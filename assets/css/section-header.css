@@ -1,0 +1,71 @@
+/* Author's 15 Nov header reference, normalized from 1720px to the 936px field.
+   One component is used by app sections and the standalone policy page. */
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:700;font-display:swap;src:url('../fonts/JetBrainsMono-Bold.ttf') format('truetype')}
+.section-header{
+ --section-header-row:45.59375px;
+ --section-header-logo:46.59375px;
+ --section-header-tabs:264.2578125px;
+ --section-header-gap:13.333333px;
+ position:sticky;top:0;z-index:160;display:block;margin:0;padding:0;border:0;border-radius:0;background:var(--paper,#c7b3b3);
+}
+.section-header .header-frame{
+ display:grid;grid-template-columns:var(--section-header-logo) minmax(0,1fr) var(--section-header-tabs);
+ grid-template-rows:var(--section-header-row);align-items:center;gap:0 var(--section-header-gap);
+ width:min(936px,calc(100% - 48px));min-height:0;margin:0 auto;padding:20px 0 29.40625px;
+}
+.section-header .header-frame::after{content:none}
+.section-header .header-logo{
+ position:relative;order:0;display:block;width:var(--section-header-logo);height:46.472862px;
+ margin:0;padding:0;border:0;border-radius:0;background:transparent;color:var(--ink,#262626);line-height:0;
+}
+.section-header .header-logo img{display:block;width:100%;height:100%}
+.section-header .section-page-title{
+ display:flex;align-items:center;justify-content:flex-start;min-width:0;width:100%;height:var(--section-header-row);
+ margin:0;padding:0 28px;box-sizing:border-box;border:1.5px solid var(--ink,#262626);border-radius:999px;
+ background:transparent;color:var(--ink,#262626);font:900 15px/1.05 'Arial Black',Arial,sans-serif;letter-spacing:-.048em;
+ text-align:left;text-transform:uppercase;text-wrap:initial;outline:none;
+}
+.section-header .header-page-name{display:block;min-width:0;max-width:100%;white-space:nowrap;transform:translateY(var(--section-header-name-shift,0px))}
+.section-header .header-title-baseline{display:inline-block;vertical-align:baseline;width:0;height:0;margin:0;padding:0;border:0;font-size:0;line-height:0}
+.section-header .header-frame>.prototype-tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9.341797px;width:var(--section-header-tabs);height:auto;margin:0;justify-self:end;align-items:start}
+.section-header .prototype-tab{position:relative;display:block;width:100%;max-width:none;height:auto;aspect-ratio:1;min-width:0;margin:0;padding:0;border:0;border-radius:0;background:transparent;text-decoration:none;container-type:inline-size;color:var(--ink,#262626)}
+.section-header .prototype-tab>svg{position:absolute;inset:0;display:block;width:100%;height:100%;fill:var(--ink,#262626);stroke:none;overflow:visible}
+.section-header .prototype-tab-dot{position:absolute;left:-1.91667cqw;top:-1.91667cqw;width:38.5667cqw;height:38.5667cqw;box-sizing:border-box;border:3.83333cqw solid var(--ink,#262626);border-radius:50%;background:transparent}
+.section-header .prototype-tab-name{position:absolute;left:1px;right:1px;bottom:13.42cqw;display:block;color:#b3b3b3;font:700 16.033cqw/1.1 var(--label-font);letter-spacing:0;text-align:center;white-space:nowrap}
+.section-header .prototype-tab[aria-current="page"] .prototype-tab-dot{background:#ffa800}
+.section-header .prototype-tab:hover .prototype-tab-name{color:#f2f2f2}
+.section-header .prototype-tab:not([aria-current="page"]):hover .prototype-tab-dot{background:#5a486d}
+.section-header .catalog-trigger{display:none}
+
+/* The title is now in the header. Its semantic H1 remains available in main. */
+#main .photo-catalog-intro.filters-only{justify-content:flex-end;gap:0;margin:0 0 clamp(28.40625px,calc((100vw - 48px)*.0448718),42px);padding:0;border:0}
+#main .filters-only>.catalog-heading{position:absolute!important;width:1px!important;height:1px!important;margin:0!important;padding:0!important;overflow:hidden;clip-path:inset(50%);white-space:nowrap;transform:none!important;border:0}
+#main .filters-only .catalog-controls{width:auto;max-width:100%;margin:0 0 0 auto;padding:0}
+#main[data-view="catalog"]>.catalog-panel,#main[data-view="training"]>.catalog-panel{padding-top:0}
+#main #catalog-results,#main #learning-results{margin-top:0}
+.policy-page .policy-main,.policy-page .policy-bottom{width:min(936px,calc(100% - 48px));max-width:none;margin-left:auto;margin-right:auto;box-sizing:border-box}
+
+/* The folders share the third catalogue column: (field - two 18px gaps) / 3.
+   Their square size also drives the capsule height and the logo's visible size. */
+@media(min-width:792px){
+ .section-header .header-frame{
+  container-type:inline-size;grid-template-columns:calc((100% - 36px)/15 - 7.4px) minmax(0,1fr) calc((100% - 36px)/3);
+  grid-template-rows:auto;align-content:start;column-gap:18px;height:95px;box-sizing:border-box;padding:20px 0 0;
+ }
+ .section-header .header-logo{width:100%;height:auto;aspect-ratio:46.59375/46.472862}
+ .section-header .section-page-title{height:calc((100cqw - 36px)/15 - 8.4px);padding-inline:32px;font-size:16.5px}
+ .section-header .header-frame>.prototype-tabs{width:100%;gap:10.5px}
+}
+
+@media(max-width:925px){.section-header .section-page-title{padding-inline:20px;font-size:14px}.section-header .header-page-name{white-space:normal;text-wrap:balance}}
+@media(max-width:700px){
+ .section-header{position:relative;--section-header-row:36px;--section-header-logo:36px}
+ .section-header .header-frame{grid-template-columns:36px minmax(0,1fr);grid-template-rows:36px auto;gap:12px;width:calc(100% - 32px);padding:16px 0 28px}
+ .section-header .header-logo{width:36px;height:36px}
+ .section-header .section-page-title{height:36px;padding-inline:18px;font-size:14px}
+ .section-header .header-frame>.prototype-tabs{grid-column:1/-1;grid-row:2;width:min(264.2578125px,100%);height:auto;gap:9.341797px;margin:0;justify-self:end}
+ .section-header .header-frame>.prototype-tabs>.prototype-tab{max-width:none;margin:0}
+ .policy-page .policy-main,.policy-page .policy-bottom{width:calc(100% - 32px);margin-inline:auto}
+}
+/* The legal document keeps its original scrolling and contents navigation. */
+.policy-page .section-header{position:relative}

@@ -1,5 +1,5 @@
 import {E,arrow} from './utils.js';
-import {renderPhotoCard} from './photo-cards.js';
+import {renderPhotoCard} from './photo-cards.js?v=20261116-shape';
 export function card(tool,data,store){return renderPhotoCard(tool,data,store);}
 const normalize = text => text.toLocaleLowerCase('ru').replaceAll('ё','е');
 export function refreshCatalog(data,store,filters) {
@@ -13,7 +13,7 @@ export function refreshCatalog(data,store,filters) {
   document.getElementById('reset-filters').hidden = !filters.search && filters.category === 'Все';
 }
 export function renderCatalog(main,data,store,filters) {
-  main.innerHTML = `<section class="panel catalog-panel"><div class="catalog-intro photo-catalog-intro"><h1 class="catalog-heading"><span class="catalog-heading-square" aria-hidden="true"></span><span class="catalog-heading-text">КАТАЛОГ ИНСТРУМЕНТОВ<span class="photo-catalog-baseline" aria-hidden="true"></span></span></h1><div class="catalog-controls" aria-label="Фильтр по типу инструмента">${[{id:'Все',name:'Все'},...data.groups].map(group => `<button type="button" class="filter" data-action="filter" data-cat="${E(group.id)}" aria-pressed="${filters.category === group.id}">${E(group.name)}</button>`).join('')}<button type="button" class="filter" data-action="reset" id="reset-filters">Сбросить</button><span class="catalog-count visually-hidden" id="result-count" role="status" aria-live="polite" aria-atomic="true"></span></div></div><div id="catalog-results"></div></section>`;
+  main.innerHTML = `<section class="panel catalog-panel"><div class="catalog-intro photo-catalog-intro filters-only"><h1 class="catalog-heading"><span class="catalog-heading-square" aria-hidden="true"></span><span class="catalog-heading-text">КАТАЛОГ ИНСТРУМЕНТОВ<span class="photo-catalog-baseline" aria-hidden="true"></span></span></h1><div class="catalog-controls" aria-label="Фильтр по типу инструмента">${[{id:'Все',name:'Все'},...data.groups].map(group => `<button type="button" class="filter" data-action="filter" data-cat="${E(group.id)}" aria-pressed="${filters.category === group.id}">${E(group.name)}</button>`).join('')}<button type="button" class="filter" data-action="reset" id="reset-filters">Сбросить</button><span class="catalog-count visually-hidden" id="result-count" role="status" aria-live="polite" aria-atomic="true"></span></div></div><div id="catalog-results"></div></section>`;
   refreshCatalog(data,store,filters);
 }
 export function renderFavorites(main,data,store) {

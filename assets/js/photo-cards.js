@@ -13,7 +13,8 @@ export function renderPhotoCard(tool,data,store){
   const lines=configured&&plain(configured.join(' '))===plain(tool.name)?configured:null;
   const name=lines?`<span class="card-name-above">${E(lines[0])}</span>`:'';
   const lastLine=lines?lines[1]:tool.name;
-  return `<div class="card-slot card-slot--sketch" data-card-tone="${E(tone)}"><span class="card-index">${E(tool.code)}</span><article class="toolcard photo-card photo-card--sketch tone-${E(tone)}" data-tool-id="${E(tool.id)}" data-code="${E(tool.code)}" data-photo-variant="true">
+  return `<div class="card-slot card-slot--sketch" data-card-tone="${E(tone)}"><article class="toolcard photo-card photo-card--sketch tone-${E(tone)}" data-tool-id="${E(tool.id)}" data-code="${E(tool.code)}" data-photo-variant="true">
+    <span class="card-index">${E(tool.code)}</span>
     <svg class="card-shell" aria-hidden="true"><path vector-effect="non-scaling-stroke"/></svg>
     <img class="card-photo" style="object-position:${E(photo.position)}" src="assets/images/catalog/${E(photo.src)}" alt="${E(photo.alt)}" width="600" height="600" decoding="async">
     <header class="card-heading"><div class="card-identity"><a class="card-name" id="card-name-${E(tool.id)}" href="#tool/${E(tool.id)}" aria-label="${E(tool.name)}">${name}<span class="card-name-text">${E(lastLine)}<span class="photo-name-baseline" aria-hidden="true"></span></span><span class="card-name-arrow" aria-hidden="true"><svg class="card-name-chevron" viewBox="0 4 24 16"><path d="m9 5 7 7-7 7"/></svg></span></a></div><h2 class="card-title cardtitle" id="card-title-${E(tool.id)}"><span class="photo-title-baseline" aria-hidden="true"><span class="photo-title-cap"></span></span>${E(tool.cardTitle)}</h2></header>
@@ -67,8 +68,29 @@ function glyphBounds(element,text){
   glyphCache.set(key,bounds);return bounds;
 }
 
+// The new Arial Black face is wider. Keep a shared three-line slot and fit all
+// visible card titles together, so a long title never crosses its divider.
+function fitTitleSlots(){
+ const cards=[...main.querySelectorAll('.photo-card')];
+ if(!cards.length)return;
+ for(const card of cards)card.style.removeProperty('--title-size');
+ const titles=cards.map(card=>card.querySelector('.card-title'));
+ let size=Math.min(...titles.map(title=>parseFloat(getComputedStyle(title).fontSize)));
+ const fits=()=>titles.every(title=>{
+  const text=[...title.childNodes].find(node=>node.nodeType===3&&node.textContent.trim());
+  if(!text)return true;
+  const range=document.createRange();range.selectNodeContents(text);
+  const tops=[...range.getClientRects()].map(rect=>Math.round(rect.top*2)/2);
+  return new Set(tops).size<=3;
+ });
+ while(!fits()&&size>16){
+  size=Math.max(16,size-.25);
+  for(const card of cards)card.style.setProperty('--title-size',size+'px');
+ }
+}
 function measureTypography(){
   typographyFrame=0;
+  fitTitleSlots();
   for(const card of main.querySelectorAll('.photo-card')){
     const name=card.querySelector('.card-name-text');
     const title=card.querySelector('.card-title');
@@ -82,19 +104,56 @@ function measureTypography(){
     measureSketchSpacing(card,title);measureShell(card);
     card.dataset.typographyReady='true';
   }
+  measureSectionRhythm();
   measureCatalogHeading();
 }
 
+let rhythmWidth=0;
+function rhythmValue(element,name,value){
+ const next=Math.round(value*64)/64+'px';
+ if(element.style.getPropertyValue(name)!==next)element.style.setProperty(name,next);
+}
+function measureSectionRhythm(){
+ const shell=document.getElementById('shell');
+ const first=main.querySelector('.home-faq');
+ const width=main.getBoundingClientRect().width;
+ if(!first){
+  if(rhythmWidth&&Math.abs(rhythmWidth-width)>1){
+   for(const name of ['--section-external-space','--section-internal-space','--section-before-heading','--section-after-heading'])shell.style.removeProperty(name);
+   rhythmWidth=0;
+  }
+  return;
+ }
+ const topic=main.querySelector('.hero-topics>span:last-child');
+ const baseline=topic?.querySelector('.rhythm-baseline');
+ if(!baseline)return;
+ const heading=first.querySelector('.home-section-heading').getBoundingClientRect();
+ const mark=first.querySelector('.home-heading-mark').getBoundingClientRect();
+ const body=first.querySelector('.home-faq-list').getBoundingClientRect();
+ const inkBottom=baseline.getBoundingClientRect().top+glyphBounds(topic,topic.textContent.trim()).descent;
+ const external=mark.top-inkBottom,internal=body.top-mark.bottom;
+ if(external<0||external>180||internal<0||internal>120)return;
+ rhythmValue(shell,'--section-external-space',external);
+ rhythmValue(shell,'--section-internal-space',internal);
+ rhythmValue(shell,'--section-before-heading',external-(mark.top-heading.top));
+ rhythmValue(shell,'--section-after-heading',internal-(heading.bottom-mark.bottom));
+ rhythmWidth=width;
+ main.dataset.rhythmWidth=String(Math.round(width));
+ main.dataset.rhythmReady="true";
+}
 function measureCatalogHeading(){
   const intro=main.querySelector('.photo-catalog-intro');if(!intro)return;
+  if(intro.classList.contains('filters-only')){intro.style.removeProperty('--catalog-heading-bottom-space');return;}
   const heading=intro.querySelector('.catalog-heading'),text=heading.querySelector('.catalog-heading-text'),mark=heading.querySelector('.photo-catalog-baseline'),first=intro.querySelector('.filter');
   if(!first||!mark)return;
   const previous=parseFloat(heading.style.getPropertyValue('--catalog-heading-shift'))||0;
   const line=heading.getBoundingClientRect(),button=first.getBoundingClientRect();
-  if(button.top>=line.bottom+4){heading.style.setProperty('--catalog-heading-shift','0px');return;}
+  if(button.top>=line.bottom+4){heading.style.setProperty('--catalog-heading-shift','0px');rhythmValue(intro,'--catalog-heading-bottom-space',0);return;}
   const ink=nameInkBounds(text),center=mark.getBoundingClientRect().top+(ink.descent-ink.ascent)/2;
   const shift=Math.round((button.top+button.height/2-center+previous)*64)/64;
   heading.style.setProperty('--catalog-heading-shift',shift+'px');
+  const bottom=mark.getBoundingClientRect().top+ink.descent;
+  rhythmValue(intro,'--catalog-heading-bottom-space',Math.max(0,intro.getBoundingClientRect().bottom-bottom));
 }
 
 function measureSketchSpacing(card,title){
@@ -111,14 +170,15 @@ function measureShell(card){
   const {width:w,height:h}=card.getBoundingClientRect();
   const diameter=card.querySelector('.card-photo').getBoundingClientRect().width;
   const radius=diameter/2+12;
-  const edge=.5,fillet=7,corner=edge+fillet;
+  const shell=card.querySelector('.card-shell');
+  const edge=(parseFloat(getComputedStyle(shell).strokeWidth)||1)/2;
+  const fillet=parseFloat(getComputedStyle(card).getPropertyValue('--radius-block'))||6.5,corner=edge+fillet;
   const outer=radius-edge,center=w-radius;
   const distance=Math.sqrt(outer*outer+2*outer*fillet);
   const join=center-distance;
   const touchX=center-outer*distance/(outer+fillet);
   const touchY=radius-outer*fillet/(outer+fillet);
   const path=`M ${corner} ${radius} H ${join} A ${fillet} ${fillet} 0 0 0 ${touchX} ${touchY} A ${outer} ${outer} 0 0 1 ${w-edge} ${radius} V ${h-corner} A ${fillet} ${fillet} 0 0 1 ${w-corner} ${h-edge} H ${corner} A ${fillet} ${fillet} 0 0 1 ${edge} ${h-corner} V ${radius+fillet} A ${fillet} ${fillet} 0 0 1 ${corner} ${radius} Z`;
-  const shell=card.querySelector('.card-shell');
   const viewBox=`0 0 ${w} ${h}`;
   if(shell.getAttribute('viewBox')!==viewBox)shell.setAttribute('viewBox',viewBox);
   const contour=shell.querySelector('path');

@@ -1,0 +1,347 @@
+/* Inner-page translation of the author's 15 November Affinity prototype.
+   The existing photographs, content, anchors and controls remain the source.
+   Long reading surfaces use the prototype's charcoal ink on its gray canvas;
+   purple is reserved for labels, selection and primary actions. */
+#main:not([data-view="about"]) {
+  --redesign-display: "Arial Black", Arial, Helvetica, sans-serif;
+  --redesign-prose: "American Typewriter", Georgia, serif;
+  --redesign-purple: #5a486d;
+  --redesign-white: #f2f2f2;
+  --redesign-ink: #262626;
+  --redesign-canvas: var(--paper);
+  --redesign-block-fill: #d2c1c1;
+  --body: var(--redesign-ink);
+  color: var(--redesign-ink);
+  font-family: var(--redesign-prose);
+  letter-spacing: 0;
+}
+
+/* Section names continue the square + monospaced caption from the prototype. */
+#main:not([data-view="about"]) .catalog-heading {
+  color: var(--redesign-purple);
+  font-family: var(--label-font);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+#main:not([data-view="about"]) .catalog-heading-square { background: var(--redesign-purple); }
+#main:not([data-view="about"]) :is(.eyebrow,.version-line,.reading-kicker,.chapter-index,.activity-meta,.delivery-meta,.guide-stage,.guide-draft) {
+  color: var(--redesign-purple);
+  letter-spacing: 0;
+}
+#main:not([data-view="about"]) :is(.panel,.reading-panel,.account-window,.library-empty,.essence-card) {
+  background: transparent;
+  color: var(--redesign-ink);
+}
+#main:not([data-view="about"]) :is(.surface-yellow,.surface-blue,.surface-medium,.surface-almost,.surface-white,.surface-light) {
+  --body: var(--redesign-ink);
+  background: transparent;
+  color: var(--redesign-ink);
+}
+#main:not([data-view="about"]) :is(.headline,.empty-result h2,.empty-result h3,.account-window h2,.library-section > h2,.agent-status h2) {
+  font-family: var(--redesign-display);
+  font-weight: 900;
+  letter-spacing: -.035em;
+  line-height: 1.08;
+  text-transform: none;
+}
+#main:not([data-view="about"]) :is(p,li,.intro-summary,.leadin,.lesson-back,.guide-help summary,.profile-check) {
+  font-family: var(--redesign-prose);
+  letter-spacing: 0;
+}
+#main:not([data-view="about"]) :is(.leadin,.caption,.empty-result p,.library-section > p,.library-empty p) {
+  color: var(--redesign-ink);
+}
+#main:not([data-view="about"]) :is(.btn,.filter,.card-details,.text-link,.profile-nav button,.bench-tabs button,.bench-pick button,.format-row button,.bench-matrix button,.account-setting button) {
+  border-color: var(--redesign-ink);
+  color: var(--redesign-ink);
+  background: transparent;
+  letter-spacing: 0;
+}
+#main:not([data-view="about"]) :is(.btn.primary,.btn.dark,.filter[aria-pressed="true"]) {
+  border-color: var(--redesign-purple);
+  background: var(--redesign-purple);
+  color: var(--redesign-white);
+}
+#main:not([data-view="about"]) .btn:disabled { opacity: .55; }
+
+/* Catalogue: the accepted photo outline and measured name/title axes stay intact. */
+#main:not([data-view="about"]) .catalog-panel { background: transparent; }
+#main:not([data-view="about"]) .catalog-intro { border-color: var(--redesign-ink); }
+#main:not([data-view="about"]) .catalog-controls .filter {
+  min-height: 29px;
+  padding: 6px 10px;
+  font-size: 8px;
+}
+#main:not([data-view="about"]) .card-slot {
+  --photo-outline: #262626;
+  --photo-card-fill: var(--redesign-block-fill);
+}
+#main:not([data-view="about"]) .card-slot > .toolcard.photo-card {
+  --muted: #262626;
+  --line: #262626;
+  --title-size: clamp(20px, 8cqw, 28px);
+  --title-leading: calc(var(--title-size) * 1.04);
+  color: var(--redesign-ink);
+}
+#main:not([data-view="about"]) .card-slot > .photo-card > .card-index {
+  color: var(--redesign-ink);
+  background: var(--photo-card-fill);
+  border-color: var(--redesign-ink);
+}
+#main:not([data-view="about"]) .photo-card .card-identity,
+#main:not([data-view="about"]) .photo-card .card-identity .card-name { color: var(--redesign-purple); }
+#main:not([data-view="about"]) .card-slot > .toolcard.photo-card .card-title {
+  font-family: var(--redesign-display);
+  font-weight: 900;
+  letter-spacing: -.04em;
+}
+#main:not([data-view="about"]) .photo-card .copy-label {
+  color: var(--redesign-purple);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.4;
+}
+#main:not([data-view="about"]) .photo-card .copy-block p {
+  color: var(--redesign-ink);
+  font-size: clamp(13px, 4.7cqw, 16px);
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+#main:not([data-view="about"]) .photo-card .card-details {
+  border-color: var(--redesign-purple);
+  background: var(--redesign-purple);
+  color: var(--redesign-white);
+  font-size: clamp(10px, 3.7cqw, 12px);
+}
+#main:not([data-view="about"]) .card-slot .photo-card .card-favorite {
+  border-color: var(--redesign-ink);
+  background: transparent;
+  color: var(--redesign-purple);
+}
+#main:not([data-view="about"]) .card-slot .photo-card .card-favorite[aria-pressed="true"] {
+  border-color: var(--redesign-purple);
+  background: var(--redesign-purple);
+  color: var(--redesign-white);
+}
+#main:not([data-view="about"]) .toolcard:hover { transform: none; }
+#main:not([data-view="about"]) .empty-result {
+  border: 1px solid var(--redesign-ink);
+  background: transparent;
+}
+#main[data-view="saved"] .page-intro {
+  margin: var(--section-space-before) 0 0;
+  padding: 24px 0;
+  border-top: 1px solid var(--redesign-ink);
+  border-bottom: 1px solid var(--redesign-ink);
+  border-radius: 0;
+}
+#main[data-view="saved"] .page-intro .headline { font-size: clamp(29px, 4vw, 42px); }
+#main[data-view="saved"] .page-intro .eyebrow { margin-bottom: 14px; }
+#main[data-view="saved"] .page-intro .leadin { max-width: 580px; margin-top: 18px; font-size: 17px; line-height: 1.45; }
+
+/* Reading pages retain the original photo and single continuous chapter surface. */
+#main:not([data-view="about"]) .reading-panel.reading-intro--photo-right {
+  --intro-fill: var(--redesign-canvas);
+  --intro-outline: #262626;
+  background: var(--intro-fill);
+}
+#main:not([data-view="about"]) .reading-intro--photo-right .intro-code { color: var(--redesign-purple); }
+#main:not([data-view="about"]) .reading-intro--photo-right :is(.tool-identity,.tool-intro-name) {
+  color: var(--redesign-purple);
+  letter-spacing: 0;
+}
+#main:not([data-view="about"]) .reading-intro--photo-right .intro-card-title {
+  color: var(--redesign-ink);
+  font-family: var(--redesign-display);
+  font-size: clamp(22px, 5.1cqw, 32px);
+  font-weight: 900;
+  letter-spacing: -.04em;
+  line-height: 1.06;
+}
+#main:not([data-view="about"]) .reading-intro :is(.intro-description h2,.intro-features h2),
+#main:not([data-view="about"]) .learning-lesson-page :is(.lesson-outcomes h2,.lesson-program h2) {
+  color: var(--redesign-purple);
+  font-family: var(--label-font);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+#main:not([data-view="about"]) .reading-intro :is(.intro-summary,.essence-card p,.lesson-outcomes p,.lesson-outline li) {
+  color: var(--redesign-ink);
+  font-family: var(--redesign-prose);
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+#main:not([data-view="about"]) .reading-intro .essence-card::before { background: var(--redesign-purple); }
+#main:not([data-view="about"]) :is(.intro-index,.chapter-link,.reading-chapter,.tool-guide,.tool-guide-steps > li,.guide-install) {
+  border-color: #26262680;
+}
+#main:not([data-view="about"]) .reading-chapter + .reading-chapter::before { border-color: #26262680; }
+#main:not([data-view="about"]) :is(.reading-chapter h2,.tool-delivery h2,.tool-guide h2,.tool-guide h3) {
+  color: var(--redesign-ink);
+  font-family: var(--redesign-prose);
+  font-weight: 600;
+  letter-spacing: 0;
+}
+#main:not([data-view="about"]) :is(.reading-chapter .chapter-number,.guide-step-number) { color: var(--redesign-purple); }
+#main:not([data-view="about"]) .reading-chapter .reading-prose :is(p,li) {
+  font-family: var(--redesign-prose);
+  font-size: 15px;
+  letter-spacing: 0;
+  line-height: 1.55;
+}
+#main:not([data-view="about"]) .chapter-link { color: var(--redesign-ink); }
+#main:not([data-view="about"]) .chapter-link[aria-current="location"] { color: var(--redesign-purple); }
+#main:not([data-view="about"]) .tool-delivery { border: 1px solid var(--redesign-ink); }
+#main:not([data-view="about"]) .tool-guide { border-color: var(--redesign-ink); }
+#main:not([data-view="about"]) :is(.tool-guide p,.tool-guide .guide-lead,.tool-guide .guide-check,.tool-guide .guide-install p) { color: var(--redesign-ink); }
+#main:not([data-view="about"]) .guide-help p { border-left-color: var(--redesign-purple); }
+
+/* Working windows use the same gray field, outline and purple capsule actions. */
+#main:not([data-view="about"]) .workbench {
+  background: transparent;
+  color: var(--redesign-ink);
+  border-color: var(--redesign-ink);
+  scrollbar-color: var(--redesign-purple) transparent;
+}
+#main[data-view^="tool/"] :is(.reading-panel,.workbench) { background: var(--redesign-block-fill); }
+#main[data-view^="tool/"] .reading-panel.reading-intro--photo-right { --intro-fill: var(--redesign-block-fill); }
+#main[data-view^="tool/"] :is(.reading-panel:not(.reading-chapter),.workbench) { border-radius: var(--radius-block); }
+#main[data-view^="tool/"] .reading-panel.reading-intro--photo-right { border-top-right-radius: var(--intro-photo-radius); }
+#main[data-view^="tool/"] .reading-chapter:first-child { border-radius: var(--radius-block) var(--radius-block) 0 0; }
+#main[data-view^="tool/"] .reading-chapter:has(+ .tool-delivery) { border-radius: 0 0 var(--radius-block) var(--radius-block); }
+#main:not([data-view="about"]) .worktop {
+  background: transparent;
+  color: var(--redesign-purple);
+  border-color: var(--redesign-ink);
+}
+#main:not([data-view="about"]) .worktop :is(.num,span) { color: inherit; }
+#main:not([data-view="about"]) .work-content :is(h2,h3) {
+  color: var(--redesign-ink);
+  font-family: var(--redesign-prose);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.15;
+  text-transform: none;
+}
+#main:not([data-view="about"]) .work-content p,
+#main:not([data-view="about"]) :is(.bench-hint,.bench-hint strong,.bench-label,.format-row span,.bench-steps .num,.matrix-route,.profile-email label) {
+  color: var(--redesign-ink);
+}
+#main:not([data-view="about"]) .work-content .bench-label { color: var(--redesign-purple); }
+#main:not([data-view="about"]) .bench-tabs { border-color: var(--redesign-ink); }
+#main:not([data-view="about"]) :is(.bench-tabs button[aria-selected="true"],.bench-pick button[aria-pressed="true"],.bench-matrix button.selected,.bench-matrix button[aria-pressed="true"]) {
+  background: var(--redesign-purple);
+  color: var(--redesign-white);
+  border-color: var(--redesign-purple);
+  box-shadow: none;
+}
+#main:not([data-view="about"]) .bench-matrix button span { color: var(--redesign-purple); }
+#main:not([data-view="about"]) :is(.bench-matrix button.selected,.bench-matrix button[aria-pressed="true"]) span { color: var(--redesign-white); }
+#main:not([data-view="about"]) .workbench textarea,
+#main:not([data-view="about"]) .profile-email input,
+#main:not([data-view="about"]) .output-panel pre {
+  border-color: var(--redesign-ink);
+  background: #ffffff14;
+  color: var(--redesign-ink);
+  font-family: var(--redesign-prose);
+  letter-spacing: 0;
+  line-height: 1.5;
+}
+#main:not([data-view="about"]) .workbench textarea::placeholder,
+#main:not([data-view="about"]) .profile-email input::placeholder { color: #49404e; opacity: 1; }
+#main:not([data-view="about"]) :is(.output-panel,.bench-steps li,.bench-example,.format-row,.profile-demo,.profile-details) { border-color: #26262680; }
+#main:not([data-view="about"]) .workbench .form-error { color: #5c1616; }
+#main:not([data-view="about"]) :is(.lesson-panel .btn.light,.account-profile .btn.light) {
+  color: var(--redesign-purple);
+  border-color: var(--redesign-purple);
+}
+#main:not([data-view="about"]) .lesson-back { color: var(--redesign-ink); }
+#main:not([data-view="about"]) .learning-promo-mark { background: #5a486dcc; border-color: var(--redesign-white); color: var(--redesign-white); }
+
+/* Local library and demonstration profile retain their states and controls. */
+#main:not([data-view="about"]) .account-layout.is-signed-out {
+  grid-template-columns: minmax(0, 420px);
+  grid-template-areas: "profile";
+  justify-content: center;
+  min-height: 0;
+  margin-top: 56px;
+}
+#main:not([data-view="about"]) .account-library[data-account-empty="true"] { display: none; }
+#main:not([data-view="about"]) :is(.profile-badge,.work-content .profile-badge) { color: var(--redesign-purple); }
+#main:not([data-view="about"]) .profile-avatar { border-color: var(--redesign-purple); color: var(--redesign-purple); }
+#main:not([data-view="about"]) :is(.profile-note,.work-content .profile-note) { color: var(--redesign-ink); }
+#main:not([data-view="about"]) .profile-check input { accent-color: var(--redesign-purple); }
+#main:not([data-view="about"]) :is(.library-empty,.library-purchased,.activity-row) { border-color: #26262680; }
+#main:not([data-view="about"]) .library-empty { background: transparent; }
+#main:not([data-view="about"]) .library-section > h2 { font-size: clamp(20px, 2.2vw, 25px); }
+#main[data-view="agent"] .agent-status { margin-top: 24px; padding: 58px 30px; border: 1px solid var(--redesign-ink); border-radius: var(--radius); }
+
+/* Download dialog shares the same language, with no change to its delivery logic. */
+.modal-dialog {
+  --redesign-purple: #5a486d;
+  --redesign-white: #f2f2f2;
+  border: 1px solid #262626;
+  background: var(--paper);
+  color: #262626;
+  font-family: "American Typewriter", Georgia, serif;
+  box-shadow: none;
+}
+.modal-dialog::backdrop { background: #262626a6; backdrop-filter: none; }
+.modal-dialog .dialog-head { border-color: #262626; }
+.modal-dialog .dialog-head .eyebrow { color: var(--redesign-purple); }
+.modal-dialog :is(.dialog-head button,.modal-options button) { color: #262626; border-color: #262626; background: transparent; }
+.modal-dialog .dialog-main h2 { font-family: "Arial Black", Arial, sans-serif; font-weight: 900; letter-spacing: -.035em; line-height: 1.1; text-transform: none; }
+.modal-dialog .dialog-main p { color: #262626; font-family: "American Typewriter", Georgia, serif; letter-spacing: 0; }
+.modal-dialog .modal-options button small { color: #262626; font-family: "American Typewriter", Georgia, serif; }
+.modal-dialog .modal-note { border-color: #26262680; }
+.toast { background: #5a486d; border-color: #5a486d; color: #f2f2f2; box-shadow: none; }
+
+/* The signed-out entry shares the rightmost header column. */
+#main[data-view="account"] .account-layout.is-signed-out {
+ grid-template-columns:repeat(3,minmax(0,1fr));grid-template-areas:". . profile";
+ gap:18px;justify-content:stretch;
+}
+#main[data-view="account"] .is-signed-out #account-profile {
+ width:100%;justify-self:end;background:#262626;border-color:#262626;border-radius:var(--radius-block);color:#f2f2f2;
+}
+#main[data-view="account"] .is-signed-out #account-profile :is(.worktop,h1,h2,h3,p,label,input,button,summary,.profile-badge,.profile-note) {color:#f2f2f2}
+#main[data-view="account"] .is-signed-out #account-profile :is(.worktop,.profile-demo,.profile-details,.btn.light,.profile-email input) {border-color:var(--paper)}
+#main[data-view="account"] .is-signed-out #account-profile .profile-email input {background:transparent}
+#main[data-view="account"] .is-signed-out #account-profile .profile-email input::placeholder {color:#f2f2f2;opacity:.7}
+/* Tool work windows share the dark entry theme, including every tab. */
+#main[data-view^="tool/"] #workbench {background:#262626;border-color:#262626;color:#f2f2f2}
+#main[data-view^="tool/"] #workbench * {color:#f2f2f2}
+#main[data-view^="tool/"] #workbench :is(.worktop,.bench-tabs,.bench-pick button,.bench-matrix button,
+ .bench-steps li,.bench-example,.format-row,.format-row button,.output-panel,textarea,pre,.btn.light,.text-link) {border-color:var(--paper)}
+#main[data-view^="tool/"] #workbench :is(.bench-pick button[aria-pressed="true"],.bench-matrix button[aria-pressed="true"],.btn.primary) {border-color:var(--redesign-purple)}
+#main[data-view^="tool/"] #workbench textarea {background:transparent}
+#main[data-view^="tool/"] #workbench textarea::placeholder {color:#f2f2f2;opacity:.7}
+#main[data-view^="tool/"] #workbench .form-error {color:#ffd2c9}
+#main[data-view^="tool/"] #workbench :focus-visible {outline-color:var(--redesign-purple)}
+@media(max-width:791px){
+ #main[data-view="account"] .account-layout.is-signed-out {grid-template-columns:minmax(0,1fr);grid-template-areas:"profile";justify-items:end}
+ #main[data-view="account"] .is-signed-out #account-profile {width:min(264.2578125px,100%)}
+}
+
+@media (hover: hover) {
+  #main:not([data-view="about"]) :is(.btn,.filter,.card-details,.card-favorite,.text-link,.profile-nav button,.bench-pick button,.bench-matrix button,.format-row button,.account-setting button):hover:not(:disabled) {
+    background: var(--redesign-purple);
+    border-color: var(--redesign-purple);
+    color: var(--redesign-white);
+    box-shadow: none;
+  }
+  #main:not([data-view="about"]) :is(.btn.primary,.btn.dark,.card-details,.filter[aria-pressed="true"]):hover:not(:disabled) { background: #483859; border-color: #483859; }
+  #main:not([data-view="about"]) .workbench .bench-tabs button:hover { background: #5a486d1f; color: var(--redesign-purple); }
+  #main:not([data-view="about"]) .workbench .bench-tabs button[aria-selected="true"]:hover { background: #483859; color: var(--redesign-white); }
+  #main:not([data-view="about"]) :is(.chapter-link,.guide-help summary,.guide-action,.profile-details summary,.lesson-back):hover { color: var(--redesign-purple); }
+  .modal-dialog .modal-options button:hover { background: #5a486d; color: #f2f2f2; border-color: #5a486d; }
+  .modal-dialog .modal-options button:hover small { color: inherit; }
+}
+@media (max-width: 680px) {
+  #main:not([data-view="about"]) .catalog-controls .filter { min-height: 36px; font-size: 8px; padding: 8px 10px; }
+  #main:not([data-view="about"]) .reading-intro--photo-right .intro-card-title { font-size: clamp(20px, 6cqw, 28px); }
+  #main:not([data-view="about"]) .account-layout.is-signed-out { margin-top: 32px; }
+  #main[data-view="agent"] .agent-status { padding: 36px 22px; }
+  .modal-dialog .dialog-main h2 { font-size: 28px; }
+}

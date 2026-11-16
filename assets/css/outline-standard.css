@@ -1,0 +1,21 @@
+/* One authorial line weight for every existing frame and divider.
+   Setting width alone preserves border-style:none; absent borders stay absent.
+   This layer deliberately takes precedence over legacy component widths. */
+:root{--platform-outline-width:1.5px;--radius-screen:19.56px;--radius-block:6.5px}
+#shell,#shell *,#shell *::before,#shell *::after,
+#dl-modal,#dl-modal *,#dl-modal *::before,#dl-modal *::after,#toast,
+.policy-page #top,.policy-page #top *,
+.policy-page .policy-main,.policy-page .policy-main *,
+.policy-page .policy-main *::before,.policy-page .policy-main *::after,
+.policy-page .policy-bottom,.policy-page .policy-bottom *{
+ border-width:var(--platform-outline-width)!important;
+}
+#shell .hero-outline,#shell .card-shell{stroke-width:var(--platform-outline-width)}
+#shell .hero-outline path,#shell .card-shell path{vector-effect:non-scaling-stroke}
+/* Reading dividers had translucent legacy strokes; use the header's ink. */
+#shell :is(.reading-chapter,.tool-guide,.account-window,.library-empty,.library-purchased,
+ .card-heading,.card-actions,.worktop,.intro-index,.intro-features,.chapter-link,
+ .lesson-program,.lesson-outcomes,.bench-tabs,.bench-steps li,.bench-example,
+ .format-row,.output-panel,.tool-guide-steps>li,.guide-install,
+ .activity-row,.account-setting,.subscription-details){border-color:var(--ink)}
+#shell .reading-chapter+.reading-chapter::before{border-color:var(--ink)}

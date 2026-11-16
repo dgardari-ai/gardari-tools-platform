@@ -14,8 +14,8 @@ export function learningCard(item,account,data) {
  const saved=account?.savedLessons().includes(item.id)||false;
  const {tone,photo}=lessonPresentation(item,data);
  return `<div class="card-slot card-slot--sketch learning-card-slot" data-card-tone="${E(tone)}">
-  <span class="card-index">${E(item.code)}</span>
   <article class="toolcard photo-card photo-card--sketch learning-card learning-photo-card tone-${E(tone)}" data-lesson-id="${E(item.id)}">
+   <span class="card-index">${E(item.code)}</span>
    <svg class="card-shell" aria-hidden="true"><path vector-effect="non-scaling-stroke"/></svg>
    <img class="card-photo" style="object-position:${E(photo.position)}" src="assets/images/catalog/${E(photo.src)}" alt="${E(photo.alt)}" width="600" height="600" decoding="async">${promoMark}
    <header class="card-heading"><div class="card-identity"><a class="card-name" href="#lesson/${E(item.id)}" aria-label="${E(item.title)}"><span class="card-name-text">${E(item.kind)}<span class="photo-name-baseline" aria-hidden="true"></span></span><span class="card-name-arrow" aria-hidden="true"><svg class="card-name-chevron" viewBox="0 4 24 16"><path d="m9 5 7 7-7 7"/></svg></span></a></div><h2 class="card-title cardtitle" id="lesson-title-${E(item.id)}"><span class="photo-title-baseline" aria-hidden="true"><span class="photo-title-cap"></span></span>${E(item.cardTitle||item.title)}</h2></header>
@@ -35,7 +35,7 @@ export function refreshTraining(data,filters,account) {
 }
 
 export function renderTraining(main,data,filters={kind:'Все',search:''},account) {
- main.innerHTML=`<section class="panel catalog-panel learning-catalog"><div class="catalog-intro photo-catalog-intro"><h1 class="catalog-heading"><span class="catalog-heading-square" aria-hidden="true"></span><span class="catalog-heading-text">ОБУЧЕНИЕ: КУРСЫ И ЛЕКЦИИ<span class="photo-catalog-baseline" aria-hidden="true"></span></span></h1><div class="catalog-controls" aria-label="Формат обучения">${['Все','Мини-курс','Лекция'].map((kind,i)=>`<button class="filter" data-action="learning-filter" data-kind="${kind}" aria-pressed="${filters.kind===kind}">${['ВСЁ','МИНИ-КУРСЫ','ЛЕКЦИИ'][i]}</button>`).join('')}<button class="filter reset" id="learning-reset" data-action="learning-reset" hidden>СБРОСИТЬ</button><span class="visually-hidden" id="learning-count" role="status" aria-live="polite" aria-atomic="true"></span></div></div><div id="learning-results"></div></section>`;
+ main.innerHTML=`<section class="panel catalog-panel learning-catalog"><div class="catalog-intro photo-catalog-intro filters-only"><h1 class="catalog-heading"><span class="catalog-heading-square" aria-hidden="true"></span><span class="catalog-heading-text">ОБУЧЕНИЕ: КУРСЫ И ЛЕКЦИИ<span class="photo-catalog-baseline" aria-hidden="true"></span></span></h1><div class="catalog-controls" aria-label="Формат обучения">${['Все','Мини-курс','Лекция'].map((kind,i)=>`<button class="filter" data-action="learning-filter" data-kind="${kind}" aria-pressed="${filters.kind===kind}">${['ВСЁ','МИНИ-КУРСЫ','ЛЕКЦИИ'][i]}</button>`).join('')}<button class="filter reset" id="learning-reset" data-action="learning-reset" hidden>СБРОСИТЬ</button><span class="visually-hidden" id="learning-count" role="status" aria-live="polite" aria-atomic="true"></span></div></div><div id="learning-results"></div></section>`;
  refreshTraining(data,filters,account);
 }
 
