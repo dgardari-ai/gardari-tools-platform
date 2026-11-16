@@ -338,6 +338,7 @@ async function start() {
   });
   window.addEventListener('platform:editor-ready',()=>window.dispatchEvent(new CustomEvent('platform:rendered',{detail:{catalog:data.catalog}})));
   applyRoute(true);
+  document.dispatchEvent(new CustomEvent('platform:boot-ready',{detail:{error:false}}));
   const initialMenu=new URLSearchParams(location.search).get('catalog')==='open';
   if(initialMenu){
     setMenu(true);
@@ -349,4 +350,5 @@ start().catch(error => {
   document.getElementById('main').innerHTML = `<section class="panel surface-light"><h1>Не удалось загрузить каталог</h1><p>${E(error.message)}</p><p>Проверьте соединение и откройте страницу через локальный сервер или адрес сайта.</p><div class="empty-actions"><button class="btn primary" id="retry-load" type="button">ПОВТОРИТЬ</button></div></section>`;
   document.getElementById('retry-load').addEventListener('click',()=>location.reload());
   document.getElementById('sidebar').inert=true;
+  document.dispatchEvent(new CustomEvent('platform:boot-ready',{detail:{error:true}}));
 });

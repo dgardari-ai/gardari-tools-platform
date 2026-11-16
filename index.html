@@ -5,6 +5,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <meta name="theme-color" content="#c7b3b3">
+<style>
+html{background:#c7b3b3}
+html[data-platform-boot="pending"] body{background:#c7b3b3}
+html[data-platform-boot="pending"] #shell{visibility:hidden;opacity:0;pointer-events:none}
+</style>
+<script id="platform-boot">
+// The first visible surface is the requested page, never a catalogue placeholder.
+(() => {
+ const root=document.documentElement;
+ root.dataset.platformBoot='pending';
+ let settled=false;
+ const finish=result=>{
+  settled=true;clearTimeout(timer);root.dataset.platformBoot=result;
+  window.removeEventListener('error',moduleError,true);
+ };
+ const fail=()=>{
+  if(settled)return;
+  const main=document.getElementById('main');
+  if(!main){document.addEventListener('DOMContentLoaded',fail,{once:true});return;}
+  main.innerHTML='<section class="panel surface-light"><h1>Не удалось открыть страницу</h1><p>Проверьте соединение и попробуйте ещё раз.</p><div class="empty-actions"><button class="btn primary" id="boot-retry" type="button">ПОВТОРИТЬ</button></div></section>';
+  document.getElementById('boot-retry').addEventListener('click',()=>location.reload());
+  finish('error');
+ };
+ function moduleError(event){
+  const tag=event.target;
+  if(tag?.tagName==='SCRIPT'&&tag.type==='module'&&tag.src.includes('/assets/js/app.js'))fail();
+ }
+ const timer=setTimeout(fail,15000);
+ document.addEventListener('platform:boot-ready',event=>finish(event.detail?.error?'error':'ready'),{once:true});
+ window.addEventListener('error',moduleError,true);
+})();
+</script>
 <meta name="description" content="Авторские методы для исследования, мышления, моделирования и работы с ИИ. Выберите задачу, познакомьтесь с методом и попробуйте его в работе.">
 <title>ПЛАТФОРМА ИНСТРУМЕНТОВ</title>
 <link rel="canonical" href="https://dgardari-ai.github.io/gardari-tools-platform/">
@@ -46,7 +78,7 @@
 <link rel="stylesheet" href="assets/css/outline-standard.css?v=20261116-radius">
 <link rel="stylesheet" href="assets/css/home-motion.css?v=20261116-release15">
 <script type="module" src="assets/js/section-header.js?v=20261115-correction3-r2"></script>
-<script type="module" src="assets/js/app.js?v=20261116-release15"></script>
+<script type="module" src="assets/js/app.js?v=20261116-release16"></script>
 </head>
 <body>
 
@@ -63,7 +95,7 @@
 <div class="mainframe noside" id="frame">
   <div class="mobile-overlay" id="overlay" aria-hidden="true"></div>
   <aside class="sidepanel" id="sidebar" aria-label="Разделы и инструменты" aria-hidden="true" inert><div class="side-close-wrap"><button class="side-close" id="close-menu" type="button" aria-label="Закрыть каталог"><svg class="side-close-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 8 8 8M16 8l-8 8"/></svg></button></div><div class="side-inner" id="sidebar-content"></div><form class="header-search" id="header-search" role="search" aria-label="Поиск по каталогу инструментов"><label class="visually-hidden" for="search">Поиск инструмента</label><input id="search" type="search" aria-label="Поиск инструмента" placeholder="НАЙТИ ИНСТРУМЕНТ…" autocomplete="off"><button class="search-submit" type="submit" aria-label="Найти инструмент"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.3"/><path d="m15.2 15.2 5 5"/></svg></button></form></aside>
-  <main class="content-area" id="main" tabindex="-1"><section class="panel surface-light"><h1>Каталог инструментов</h1><p role="status">Загружаем библиотеку…</p></section></main>
+  <main class="content-area" id="main" tabindex="-1"></main>
 </div>
 <footer class="editorial-footer" id="site-footer">
  <div class="footer-main">
