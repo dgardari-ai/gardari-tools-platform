@@ -17,6 +17,7 @@ import {createAccountState} from './account-state.js';
 import {lessonById} from './lessons-data.js';
 import {renderAgent} from './agent.js';
 import {followWorkbench} from './sticky-workbench.js';
+import {bindHomeMotion} from './home-motion.js?v=20261116-release15';
 
 initFooter();
 
@@ -109,7 +110,9 @@ async function start() {
       else link.removeAttribute('aria-current');
     });
   }
+  let releaseHomeMotion=()=>{};
   function renderPage() {
+    releaseHomeMotion();releaseHomeMotion=()=>{};
     main.dataset.view=route.page==='tool'?`tool/${route.id}`:route.page==='lesson'?`lesson/${route.id}`:route.page;
     renderSide();
     syncHeader();
@@ -132,6 +135,7 @@ async function start() {
     updateChapter();
     downloads.refresh();
     presentManual(data.manual);
+    if(route.page==='about')releaseHomeMotion=bindHomeMotion(main);
     window.dispatchEvent(new CustomEvent('platform:rendered',{detail:{catalog:data.catalog}}));
   }
   function applyRoute(initial = false) {

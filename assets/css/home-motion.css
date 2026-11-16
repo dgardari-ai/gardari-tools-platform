@@ -1,0 +1,12 @@
+/* Temporary motion layers follow measured native boxes; no final grid changes. */
+.home-motion-preparing :is(.hero-illustration,.home-hero-phrase,.hero-outline,.hero-brand-symbol,.hero-wordmark,.home-hero-description,.hero-catalog-cta,.prototype-tabs,.hero-topics){opacity:0!important}
+.home-motion-art,.home-motion-letters,.home-motion-phone-frame{position:absolute;display:block;overflow:visible;pointer-events:none;user-select:none}
+.home-motion-art{z-index:1}
+.home-motion-letters{z-index:2}
+.home-motion-phone-frame{z-index:0;color:var(--ink)}
+.home-scroll-pending{opacity:0}
+.home-faq-list:has(>.home-scroll-pending:first-child){border-top-color:transparent}
+@media(prefers-reduced-motion:reduce){
+ .home-motion-preparing :is(.hero-illustration,.home-hero-phrase,.hero-outline,.hero-brand-symbol,.hero-wordmark,.home-hero-description,.hero-catalog-cta,.prototype-tabs,.hero-topics),.home-scroll-pending{opacity:1!important}
+ .home-motion-art,.home-motion-letters,.home-motion-phone-frame{display:none}
+}
