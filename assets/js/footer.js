@@ -1,4 +1,6 @@
-import {copyText,notify} from './utils.js';
+import {layoutRect} from './layout.js?v=20261117-preview20';
+import {layoutMedia} from './layout.js?v=20261117-preview20';
+import {copyText,notify} from './utils.js?v=20261117-preview20';
 
 // Share the public entry point, including from a local or editor preview.
 export const PLATFORM_URL = 'https://platforma.gardari.art/';
@@ -20,7 +22,7 @@ export function initFooter() {
   document.getElementById('share-platform')?.addEventListener('click',sharePlatform);
   const footer = document.getElementById('site-footer');
   const legal = document.getElementById('footer-contact-dialog');
-  const mobile = window.matchMedia('(max-width:700px)');
+  const mobile = layoutMedia('(max-width:700px)');
   footer?.addEventListener('click', event => {
     if (!event.target.closest('[data-footer-home]')) return;
     event.preventDefault();
@@ -56,7 +58,7 @@ export function initFooter() {
   const name = identity?.querySelector('.footer-name');
   if (!identity || !name) return;
   const alignShareButton = () => {
-    const width = name.getBoundingClientRect().right - identity.getBoundingClientRect().left;
+    const width = layoutRect(name).right - layoutRect(identity).left;
     identity.style.setProperty('--footer-share-width',`${Math.max(0,width)}px`);
   };
   let typeFrame = 0;
@@ -64,14 +66,14 @@ export function initFooter() {
     typeFrame = 0;
     for (const node of footer.querySelectorAll('[data-footer-baseline]')) {
       if (mobile.matches) { node.style.removeProperty('--footer-type-shift'); continue; }
-      const box = node.getBoundingClientRect();
+      const box = layoutRect(node);
       if (!box.width || !box.height) continue;
       let mark = node.querySelector(':scope > .footer-type-baseline');
       if (!mark) {
         mark = document.createElement('i'); mark.className = 'footer-type-baseline';
         mark.setAttribute('aria-hidden','true'); node.append(mark);
       }
-      const offset = mark.getBoundingClientRect().top - node.getBoundingClientRect().top;
+      const offset = layoutRect(mark).top - layoutRect(node).top;
       const shift = -Math.round(offset*128)/128+'px';
       if (node.style.getPropertyValue('--footer-type-shift') !== shift) node.style.setProperty('--footer-type-shift',shift);
     }
@@ -82,6 +84,7 @@ export function initFooter() {
   observer.observe(footer);
   mobile.addEventListener('change',scheduleLabels);
   window.addEventListener('platform:rendered',scheduleLabels);
+window.addEventListener('platform:layout',scheduleLabels);
   document.fonts.ready.then(scheduleLabels);
   document.fonts.addEventListener('loadingdone',scheduleLabels);
   scheduleLabels();

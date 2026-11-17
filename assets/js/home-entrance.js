@@ -31,7 +31,7 @@ SOFTWARE.
 
 */
 
-import {bindHeroParticles} from './home-particles.js';
+import {bindHeroParticles} from './home-particles.js?v=20261117-preview20';
 const active=new WeakMap();
 const titleDelay=100,pieceDuration=420,stagger=20;
 const clamp01=value=>Math.max(0,Math.min(1,value));

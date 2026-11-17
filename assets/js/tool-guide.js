@@ -1,4 +1,4 @@
-import {E,arrow} from './utils.js';
+import {E,arrow} from './utils.js?v=20261117-preview20';
 
 // First-use form grounded in the existing trial flow. Installation is a later,
 // package-specific guide; no current sample is presented as an installed skill.

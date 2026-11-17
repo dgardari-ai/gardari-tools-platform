@@ -1,4 +1,4 @@
-import {LESSONS} from './lessons-data.js';
+import {LESSONS} from './lessons-data.js?v=20261117-preview20';
 const SESSION='gardari-account-demo:v1', SAVED='gardari-learning:v1';
 export function createAccountState() {
  let signed=false, saved=[];

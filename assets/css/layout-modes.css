@@ -1,0 +1,15 @@
+/* The device mode remains stable while the window changes size. */
+html[data-layout-ready="pending"] body{visibility:hidden}
+html[data-layout]{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html[data-layout="desktop"]{--platform-field-max:936px;--platform-field-width:936px;scrollbar-gutter:stable;overflow-x:auto;scroll-padding-inline:var(--platform-layout-gutter,32px)}
+html[data-layout="desktop"] body{width:100%;min-width:0;padding-left:var(--platform-layout-safe-left,0px);padding-right:var(--platform-layout-safe-right,0px)}
+/* Keep the accepted 1440px reference curvature when its viewport cqw fallback
+   would otherwise change independently of the fixed936px composition. */
+html[data-layout="desktop"] #site-footer.editorial-footer{border-radius:11.37463776px / 12.83457744px}
+/* The footer itself cannot query its own inline-size container. */
+html[data-layout="phone"] #site-footer.editorial-footer{height:calc(var(--platform-phone-width) * 1.67501345903)}
+html[data-layout="phone"] body{width:100%;max-width:calc(600px + var(--platform-safe-left,0px) + var(--platform-safe-right,0px));margin-inline:auto}
+html[data-layout] dialog{top:var(--platform-layout-safe-top,0px);right:var(--platform-layout-safe-right,0px);bottom:var(--platform-layout-safe-bottom,0px);left:var(--platform-layout-safe-left,0px);max-width:calc(var(--platform-visible-width) - var(--platform-layout-safe-left,0px) - var(--platform-layout-safe-right,0px) - 28px);max-height:calc(var(--platform-visible-height) - var(--platform-layout-safe-top,0px) - var(--platform-layout-safe-bottom,0px) - 28px)}
+html[data-layout] #toast{max-width:min(390px,calc(var(--platform-visible-width) - var(--platform-layout-safe-left,0px) - var(--platform-layout-safe-right,0px) - 32px));right:calc(var(--platform-layout-safe-right,0px) + 26px);bottom:calc(var(--platform-layout-safe-bottom,0px) + 22px)}
+html[data-layout="phone"] .sidepanel{height:calc(var(--platform-visible-height) - var(--platform-safe-top,0px) - var(--platform-safe-bottom,0px));max-height:calc(var(--platform-visible-height) - var(--platform-safe-top,0px) - var(--platform-safe-bottom,0px))}
+@media print{html[data-layout]{zoom:1!important;width:auto!important}html[data-layout-ready="pending"] body{visibility:visible}}

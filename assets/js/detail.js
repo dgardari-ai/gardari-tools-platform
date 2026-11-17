@@ -1,8 +1,8 @@
-import {E,arrow,number,paragraphs,list} from './utils.js';
-import {chapterRoute} from './router.js';
-import {renderBench} from './workbench.js?v=20261116-tools1';
-import {renderToolGuide} from './tool-guide.js?v=20261116-tools1';
-import {photoByTool} from './card-images.js';
+import {E,arrow,number,paragraphs,list} from './utils.js?v=20261117-preview20';
+import {chapterRoute} from './router.js?v=20261117-preview20';
+import {renderBench} from './workbench.js?v=20261117-preview20';
+import {renderToolGuide} from './tool-guide.js?v=20261117-preview20';
+import {photoByTool} from './card-images.js?v=20261117-preview20';
 export function renderIntroText(text) {
   return E(text);
 }

@@ -1,5 +1,5 @@
-import {E} from './utils.js';
-import {chapterRoute} from './router.js';
+import {E} from './utils.js?v=20261117-preview20';
+import {chapterRoute} from './router.js?v=20261117-preview20';
 export function renderSidebar(side,data,store,route) {
  const selected=route.page==='tool'||route.page==='saved'?'catalog':route.page==='lesson'?'training':route.page;
  const sections=[['about','ГЛАВНАЯ'],['catalog','ИНСТРУМЕНТЫ'],['training','ОБУЧЕНИЕ'],['account','ЛИЧНЫЙ КАБИНЕТ']];

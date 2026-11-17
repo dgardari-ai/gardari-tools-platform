@@ -1,3 +1,4 @@
+import {layoutRect} from './layout.js?v=20261117-preview20';
 // Align the visible capital body with the centre of the capsule, rather than
 // relying on a font's asymmetric line box. No layout or content is replaced.
 const header=document.querySelector('.section-header');
@@ -15,10 +16,10 @@ if(header&&title&&name&&text&&baseline){
   context.font=`${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
   context.textBaseline='alphabetic';
   const ink=context.measureText(text.textContent.trim().toUpperCase());
-  const lines=Math.max(1,Math.round(name.getBoundingClientRect().height/leading));
-  const base=baseline.getBoundingClientRect().top;
+  const lines=Math.max(1,Math.round(layoutRect(name).height/leading));
+  const base=layoutRect(baseline).top;
   const centre=base-(lines-1)*leading/2+(ink.actualBoundingBoxDescent-ink.actualBoundingBoxAscent)/2;
-  const box=title.getBoundingClientRect();
+  const box=layoutRect(title);
   const previous=Number.parseFloat(name.style.getPropertyValue('--section-header-name-shift'))||0;
   const next=Math.round((box.y+box.height/2-centre+previous)*64)/64+'px';
   if(name.style.getPropertyValue('--section-header-name-shift')!==next)name.style.setProperty('--section-header-name-shift',next);
@@ -28,6 +29,7 @@ if(header&&title&&name&&text&&baseline){
  new ResizeObserver(schedule).observe(header.querySelector('.header-frame'));
  new MutationObserver(schedule).observe(text,{childList:true,characterData:true,subtree:true});
  window.addEventListener('platform:rendered',schedule);
+window.addEventListener('platform:layout',schedule);
  document.fonts.ready.then(schedule);
  document.fonts.addEventListener('loadingdone',schedule);
  schedule();

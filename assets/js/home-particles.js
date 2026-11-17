@@ -1,3 +1,4 @@
+import {layoutRect} from './layout.js?v=20261117-preview20';
 // x0 supplies the scattered origins and easing. Each particle is a piece of
 // the original image and grows into its exact tile. No full-photo crossfade.
 let played=false;
@@ -81,7 +82,7 @@ export function bindHeroParticles(art,{onStart=()=>{},onFinish=()=>{}}={}) {
  const start=()=>{
   if(finished||!art.isConnected||!image.naturalWidth||motion.matches){finish();return;}
   try {
-   const bounds=art.getBoundingClientRect(),photo=image.getBoundingClientRect();
+   const bounds=layoutRect(art),photo=layoutRect(image);
    const dpr=Math.min(window.devicePixelRatio||1,2);
    const width=Math.round(bounds.width*dpr),height=Math.round(bounds.height*dpr);
    if(!width||!height){finish();return;}
@@ -113,7 +114,7 @@ export function bindHeroParticles(art,{onStart=()=>{},onFinish=()=>{}}={}) {
     } catch {finish('error');}
    };
    const resized=()=>{
-    const current=art.getBoundingClientRect();
+    const current=layoutRect(art);
     if(Math.abs(current.width-bounds.width)>1||Math.abs(current.height-bounds.height)>1)finish('resize');
    };
    if(typeof ResizeObserver!=='undefined'){observer=new ResizeObserver(resized);observer.observe(art);}

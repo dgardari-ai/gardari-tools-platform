@@ -1,7 +1,8 @@
+import {layoutRect} from './layout.js?v=20261117-preview20';
 /* Choreography adapted from HOMO COGITANS 3.0.1 home-motion,
    home-wordmark-motion and home-frame-motion. The accepted Platform assets,
    native text and contour remain the final, unmodified originals. */
-import {HEADLINE_PATHS} from './home-headline-paths.js?v=20261116-release15';
+import {HEADLINE_PATHS} from './home-headline-paths.js?v=20261117-preview20';
 
 const NS='http://www.w3.org/2000/svg';
 export const clamp=value=>Math.max(0,Math.min(1,value));
@@ -31,7 +32,7 @@ export async function createArtwork(stage,image,{signal}) {
  const source=new DOMParser().parseFromString(await response.text(),'image/svg+xml');
  if(source.querySelector('parsererror')||signal.aborted)throw Error('Artwork could not be prepared');
  const root=document.importNode(source.documentElement,true);
- const art=image.getBoundingClientRect(),host=stage.getBoundingClientRect();
+ const art=layoutRect(image),host=layoutRect(stage);
  if(!art.width||!art.height)throw Error('Artwork has no visible size');
  root.removeAttribute('width');root.removeAttribute('height');
  root.setAttribute('aria-hidden','true');root.setAttribute('focusable','false');
@@ -75,7 +76,7 @@ export async function createArtwork(stage,image,{signal}) {
 
 let serial=0;
 export function createHeadline(stage,heading) {
- const box=heading.getBoundingClientRect(),host=stage.getBoundingClientRect();
+ const box=layoutRect(heading),host=layoutRect(stage);
  const root=svgNode('svg',{viewBox:`0 0 ${box.width} ${box.height}`,'aria-hidden':'true',focusable:'false'});
  root.classList.add('home-motion-letters');
  Object.assign(root.style,{left:`${box.left-host.left}px`,top:`${box.top-host.top}px`,width:`${box.width}px`,height:`${box.height}px`,visibility:'hidden'});
@@ -90,7 +91,7 @@ export function createHeadline(stage,heading) {
    const marker=document.createElement('i');
    Object.assign(marker.style,{display:'inline-block',width:'0',height:'0',padding:'0',margin:'0',border:'0',verticalAlign:'baseline'});
    marker.setAttribute('aria-hidden','true');line.append(marker);
-   const baseline=marker.getBoundingClientRect().top-box.top;marker.remove();
+   const baseline=layoutRect(marker).top-box.top;marker.remove();
    const walker=document.createTreeWalker(line,NodeFilter.SHOW_TEXT);
    let textNode;
    while((textNode=walker.nextNode())) {
@@ -98,7 +99,7 @@ export function createHeadline(stage,heading) {
     for(const char of textNode.textContent) {
      const begin=offset;offset+=char.length;if(!char.trim())continue;
      const range=document.createRange();range.setStart(textNode,begin);range.setEnd(textNode,offset);
-     const rect=range.getBoundingClientRect(),style=getComputedStyle(textNode.parentElement);
+     const rect=layoutRect(range),style=getComputedStyle(textNode.parentElement);
      const size=parseFloat(style.fontSize),scale=size/HEADLINE_PATHS.units;
      const glyph=HEADLINE_PATHS.glyphs[char];
      if(measure)measure.font=`${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
@@ -167,7 +168,7 @@ export function createHeadline(stage,heading) {
 
 export function createFrame(stage) {
  const original=stage.querySelector('.hero-outline'),path=original?.querySelector(':scope > path');
- const origin=stage.getBoundingClientRect(),originalBox=original?.getBoundingClientRect();
+ const origin=layoutRect(stage),originalBox=layoutRect(original);
  const desktop=!!(path&&originalBox.width>0&&getComputedStyle(original).display!=='none');
  const restores=[],targets=[],routes=[];let finished=false;
  let width=936,height=425.598,radius=19.56,scale=desktop?originalBox.width/936:1;
@@ -206,7 +207,7 @@ export function createFrame(stage) {
  const rightVertical=right-radius-rightStart+quarter,leftVertical=leftStart-left-radius+quarter;
  const vertical=bottom-top-2*radius,rightTop=rightVertical+vertical+quarter;
  const local=node=>{
-  const box=node.getBoundingClientRect();return {left:(box.left-origin.left)/scale,right:(box.right-origin.left)/scale,bottom:(box.bottom-origin.top)/scale};
+  const box=layoutRect(node);return {left:(box.left-origin.left)/scale,right:(box.right-origin.left)/scale,bottom:(box.bottom-origin.top)/scale};
  };
  const upRight=y=>rightVertical+clamp((bottom-radius-y)/vertical)*vertical;
  function add(node,distance,direction='right',duration=220) {

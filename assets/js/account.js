@@ -1,8 +1,8 @@
-import {E,arrow} from './utils.js';
-import {card} from './catalog.js';
-import {learningCard} from './training.js';
-import {LESSONS} from './lessons-data.js';
-import {createAccountState} from './account-state.js';
+import {E,arrow} from './utils.js?v=20261117-preview20';
+import {card} from './catalog.js?v=20261117-preview20';
+import {learningCard} from './training.js?v=20261117-preview20';
+import {LESSONS} from './lessons-data.js?v=20261117-preview20';
+import {createAccountState} from './account-state.js?v=20261117-preview20';
 
 export function renderAccount(main,data,store,account=createAccountState()) {
   const state=store.snapshot(), signed=account.signedIn();

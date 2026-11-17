@@ -1,27 +1,31 @@
-import {initPhotoCards} from './photo-cards.js?v=20261116-release17';
-import {initFooter} from './footer.js?v=20261117-preview19';
-import {applyManualData,manualPresentation} from './manual-edits.js';
-import {loadData} from './data.js';
-import {createLocalAdapter} from './storage.js';
-import {parseRoute} from './router.js';
-import {E,arrow,notify,copyText,focusElement} from './utils.js';
-import {renderCatalog,refreshCatalog,renderFavorites} from './catalog.js?v=20261116-release17';
-import {renderDetail} from './detail.js?v=20261116-tools1';
-import {newBench,renderBench,compose} from './workbench.js?v=20261116-tools1';
-import {createDownloads} from './downloads.js?v=20261116-tools1';
-import {renderAccount,renderAbout} from './account.js';
-import {renderTraining,refreshTraining,renderLesson} from './training.js?v=20261116-lessons1';
-import {renderHome} from './home.js?v=20261117-preview19';
-import {renderSidebar} from './sidebar.js?v=20261116-release17';
-import {createAccountState} from './account-state.js';
-import {lessonById} from './lessons-data.js';
-import {renderAgent} from './agent.js';
-import {followWorkbench} from './sticky-workbench.js?v=20261116-tools1';
-import {bindHomeMotion} from './home-motion.js?v=20261116-release17';
+import {layoutWidth} from './layout.js?v=20261117-preview20';
+import {layoutRect} from './layout.js?v=20261117-preview20';
+import {layoutMedia} from './layout.js?v=20261117-preview20';
+import {initPhotoCards} from './photo-cards.js?v=20261117-preview20';
+import {initFooter} from './footer.js?v=20261117-preview20';
+import {applyManualData,manualPresentation} from './manual-edits.js?v=20261117-preview20';
+import {loadData} from './data.js?v=20261117-preview20';
+import {createLocalAdapter} from './storage.js?v=20261117-preview20';
+import {parseRoute} from './router.js?v=20261117-preview20';
+import {E,arrow,notify,copyText,focusElement} from './utils.js?v=20261117-preview20';
+import {renderCatalog,refreshCatalog,renderFavorites} from './catalog.js?v=20261117-preview20';
+import {renderDetail} from './detail.js?v=20261117-preview20';
+import {newBench,renderBench,compose} from './workbench.js?v=20261117-preview20';
+import {createDownloads} from './downloads.js?v=20261117-preview20';
+import {renderAccount,renderAbout} from './account.js?v=20261117-preview20';
+import {renderTraining,refreshTraining,renderLesson} from './training.js?v=20261117-preview20';
+import {renderHome} from './home.js?v=20261117-preview20';
+import {renderSidebar} from './sidebar.js?v=20261117-preview20';
+import {createAccountState} from './account-state.js?v=20261117-preview20';
+import {lessonById} from './lessons-data.js?v=20261117-preview20';
+import {renderAgent} from './agent.js?v=20261117-preview20';
+import {followWorkbench} from './sticky-workbench.js?v=20261117-preview20';
+import {bindHomeMotion} from './home-motion.js?v=20261117-preview20';
 
 initFooter();
 
 async function start() {
+  await window.PlatformLayout?.ready;
   const data = await loadData();
   const presentManual=manualPresentation(data.manual);
   const store = createLocalAdapter(data);
@@ -55,7 +59,7 @@ async function start() {
     frame.classList.toggle('noside',!menuOpen);
     menuButton.setAttribute('aria-expanded',String(menuOpen));
     menuButton.setAttribute('aria-label',menuOpen?'Закрыть каталог':'Открыть каталог');
-    const mobileMenu=window.matchMedia('(max-width:700px)').matches;
+    const mobileMenu=layoutMedia('(max-width:700px)').matches;
     document.querySelectorAll('[data-menu-trigger]').forEach(button=>{
       const navigationOnly=mobileMenu&&(button.dataset.headerPage==='catalog'||button.matches('.hero-brand-symbol'));
       if(navigationOnly){button.removeAttribute('aria-expanded');button.removeAttribute('aria-controls');}
@@ -77,14 +81,14 @@ async function start() {
     if(open) { positionMenu(); focusElement(side.querySelector('[aria-current="page"]') || side.querySelector('a')); }
     else if (restore) {
       const available=menuReturn?.isConnected&&menuReturn.getClientRects().length;
-      const homeTrigger=window.matchMedia('(max-width:700px)').matches?'.hero-menu-trigger':'.hero-brand-symbol';
+      const homeTrigger=layoutMedia('(max-width:700px)').matches?'.hero-menu-trigger':'.hero-brand-symbol';
       const fallback=route.page==='about'?main.querySelector(homeTrigger):document.querySelector('.header-logo');
       focusElement(available?menuReturn:fallback||menuButton);
     }
   }
   function positionMenu() {
-    const viewport=document.documentElement.clientWidth;
-    const content=frame.getBoundingClientRect();
+    const viewport=layoutWidth();
+    const content=layoutRect(frame);
     const safe=getComputedStyle(document.body);
     const left=parseFloat(safe.paddingLeft)||0,right=parseFloat(safe.paddingRight)||0;
     const width=Math.min(284,viewport-left-right-24);
@@ -96,8 +100,9 @@ async function start() {
   }
   new ResizeObserver(positionMenu).observe(document.getElementById('top'));
   window.addEventListener('resize',positionMenu);
+  window.addEventListener('platform:layout',positionMenu);
   window.addEventListener('scroll',positionMenu,{passive:true});
-  window.matchMedia('(max-width:700px)').addEventListener('change',()=>{
+  layoutMedia('(max-width:700px)').addEventListener('change',()=>{
     syncMenu();
     if(route.page==='catalog'&&main.dataset.view==='catalog')refreshCatalog(data,store,filters);
   });
@@ -205,7 +210,7 @@ async function start() {
     if(menuTrigger){
       event.preventDefault();
       const catalog=menuTrigger.dataset.headerPage==='catalog';
-      const mobileMenu=window.matchMedia('(max-width:700px)').matches;
+      const mobileMenu=layoutMedia('(max-width:700px)').matches;
       if(catalog){
         filters.category='Все';filters.search='';document.getElementById('search').value='';
         if(route.page==='catalog')renderPage();
@@ -315,13 +320,13 @@ async function start() {
     event.preventDefault();
     if(route.page==='training'||route.page==='lesson'){
       learningFilters.search=document.getElementById('search').value;
-      if(route.page==='training'){renderPage();focusElement(main.querySelector('h1'),true);}
+      if(route.page==='training'){renderPage();window.scrollTo({top:0,left:0,behavior:'instant'});focusElement(main.querySelector('h1'));}
       else location.hash='#training';
       return;
     }
     filters.search=document.getElementById('search').value;
     filters.category='Все';
-    if(route.page==='catalog'){renderPage();focusElement(main.querySelector('h1'),true);}
+    if(route.page==='catalog'){renderPage();window.scrollTo({top:0,left:0,behavior:'instant'});focusElement(main.querySelector('h1'));}
     else location.hash='#catalog';
   });
   window.addEventListener('hashchange',()=>applyRoute());

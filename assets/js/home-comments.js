@@ -1,4 +1,7 @@
-import {E} from './utils.js';
+import {layoutWidth,layoutHeight} from './layout.js?v=20261117-preview20';
+import {layoutRect} from './layout.js?v=20261117-preview20';
+import {layoutMedia} from './layout.js?v=20261117-preview20';
+import {E} from './utils.js?v=20261117-preview20';
 
 // Temporary layout media. Stock names below are placeholders, not testimonials.
 const COMMENTS = [
@@ -27,13 +30,14 @@ export function bindComments() {
  let origin=null,animation=null,closing=false,generation=0,frame=0;
  const reduced=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches;
  const size=()=>{
-  const field=section.getBoundingClientRect().width;
-  const desired=window.matchMedia('(max-width:680px)').matches?field:field*2/3;
-  dialog.style.setProperty('--comment-size',`${Math.max(100,Math.min(desired,window.innerWidth-32,window.innerHeight-100))}px`);
+  const safe=window.PlatformLayout?.safe||{top:0,right:0,bottom:0,left:0};
+  const field=layoutRect(section).width;
+  const desired=layoutMedia('(max-width:680px)').matches?field:field*2/3;
+  dialog.style.setProperty('--comment-size',`${Math.max(100,Math.min(desired,layoutWidth()-safe.left-safe.right-32,layoutHeight()-safe.top-safe.bottom-100))}px`);
  };
  const transform=()=>{
   if(!origin?.isConnected)return null;
-  const a=origin.getBoundingClientRect(),b=view.getBoundingClientRect();
+  const a=layoutRect(origin),b=layoutRect(view);
   return `translate(${a.x+a.width/2-b.x-b.width/2}px,${a.y+a.height/2-b.y-b.height/2}px) scale(${a.width/b.width})`;
  };
  const drawProgress=()=>{
@@ -100,5 +104,6 @@ export function bindComments() {
  dialog.addEventListener('close',reset,options);
  dialog.addEventListener('click',event=>{if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)close();}},options);
  window.addEventListener('resize',()=>{if(dialog.open){animation?.cancel();size();}},options);
+ window.addEventListener('platform:layout',()=>{if(dialog.open){animation?.cancel();size();}},options);
  window.addEventListener('hashchange',()=>{animation?.cancel();if(dialog.open)dialog.close();reset();events.abort();},{once:true});
 }

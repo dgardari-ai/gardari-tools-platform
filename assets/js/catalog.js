@@ -1,12 +1,13 @@
-import {E,arrow} from './utils.js';
-import {renderPhotoCard} from './photo-cards.js?v=20261116-shape';
+import {layoutMedia} from './layout.js?v=20261117-preview20';
+import {E,arrow} from './utils.js?v=20261117-preview20';
+import {renderPhotoCard} from './photo-cards.js?v=20261117-preview20';
 export function card(tool,data,store){return renderPhotoCard(tool,data,store);}
 const normalize = text => text.toLocaleLowerCase('ru').replaceAll('ё','е');
 export function refreshCatalog(data,store,filters) {
   const query = normalize(filters.search.trim());
   // Hidden mobile type controls must not leave an invisible category applied.
   // Retain the desktop choice so returning to a wide window restores it.
-  const category=globalThis.matchMedia?.('(max-width:700px)').matches?'Все':filters.category;
+  const category=layoutMedia('(max-width:700px)').matches?'Все':filters.category;
   const group=data.groups.find(g=>g.id===category);
   const pending=!query&&group&&!data.catalog.some(t=>t.category===group.id);
   const chosen = data.catalog.filter(tool => (category === 'Все' || tool.category === category) && (!query || normalize(JSON.stringify(tool)).includes(query)));

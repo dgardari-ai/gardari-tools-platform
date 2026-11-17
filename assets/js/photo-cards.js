@@ -1,6 +1,9 @@
-import {E,arrow} from './utils.js';
-import {photoCardCopy} from './photo-card-data.js';
-import {photoByTool} from './card-images.js';
+import {layoutRects} from './layout.js?v=20261117-preview20';
+import {layoutRect} from './layout.js?v=20261117-preview20';
+import {layoutMedia} from './layout.js?v=20261117-preview20';
+import {E,arrow} from './utils.js?v=20261117-preview20';
+import {photoCardCopy} from './photo-card-data.js?v=20261117-preview20';
+import {photoByTool} from './card-images.js?v=20261117-preview20';
 const nameLines={"plugin-maker":["СВОЙ ПЛАГИН","CHATGPT"],"rdc-agent":["ДОСТУП К","КОМПЬЮТЕРУ ИЗ ЧАТА"],"drive-knowledge":["КАБИНЕТ НА","GOOGLE DRIVE"],"chatgpt-project":["РАБОЧИЙ ПРОЕКТ","CHATGPT"]};
 
 export function renderPhotoCard(tool,data,store){
@@ -80,7 +83,7 @@ function fitTitleSlots(){
   const text=[...title.childNodes].find(node=>node.nodeType===3&&node.textContent.trim());
   if(!text)return true;
   const range=document.createRange();range.selectNodeContents(text);
-  const tops=[...range.getClientRects()].map(rect=>Math.round(rect.top*2)/2);
+  const tops=layoutRects(range).map(rect=>Math.round(rect.top*2)/2);
   return new Set(tops).size<=3;
  });
  while(!fits()&&size>16){
@@ -116,9 +119,9 @@ function rhythmValue(element,name,value){
 function measureSectionRhythm(){
  const shell=document.getElementById('shell');
  const first=main.querySelector('.home-faq');
- const width=main.getBoundingClientRect().width;
+ const width=layoutRect(main).width;
  // The authored mobile strip has independent section bars, not the desktop pair.
- if(window.matchMedia?.('(max-width:700px)').matches){
+ if(layoutMedia('(max-width:700px)').matches){
   for(const name of ['--section-external-space','--section-internal-space','--section-before-heading','--section-after-heading'])shell.style.removeProperty(name);
   rhythmWidth=0;
   if(first){main.dataset.rhythmWidth=String(Math.round(width));main.dataset.rhythmReady="true";}
@@ -134,10 +137,10 @@ function measureSectionRhythm(){
  const topic=main.querySelector('.hero-topics>span:last-child');
  const baseline=topic?.querySelector('.rhythm-baseline');
  if(!baseline)return;
- const heading=first.querySelector('.home-section-heading').getBoundingClientRect();
- const mark=first.querySelector('.home-heading-mark').getBoundingClientRect();
- const body=first.querySelector('.home-faq-list').getBoundingClientRect();
- const inkBottom=baseline.getBoundingClientRect().top+glyphBounds(topic,topic.textContent.trim()).descent;
+ const heading=layoutRect(first.querySelector('.home-section-heading'));
+ const mark=layoutRect(first.querySelector('.home-heading-mark'));
+ const body=layoutRect(first.querySelector('.home-faq-list'));
+ const inkBottom=layoutRect(baseline).top+glyphBounds(topic,topic.textContent.trim()).descent;
  const external=mark.top-inkBottom,internal=body.top-mark.bottom;
  if(external<0||external>180||internal<0||internal>120)return;
  rhythmValue(shell,'--section-external-space',external);
@@ -154,18 +157,18 @@ function measureCatalogHeading(){
   const heading=intro.querySelector('.catalog-heading'),text=heading.querySelector('.catalog-heading-text'),mark=heading.querySelector('.photo-catalog-baseline'),first=intro.querySelector('.filter');
   if(!first||!mark)return;
   const previous=parseFloat(heading.style.getPropertyValue('--catalog-heading-shift'))||0;
-  const line=heading.getBoundingClientRect(),button=first.getBoundingClientRect();
+  const line=layoutRect(heading),button=layoutRect(first);
   if(button.top>=line.bottom+4){heading.style.setProperty('--catalog-heading-shift','0px');rhythmValue(intro,'--catalog-heading-bottom-space',0);return;}
-  const ink=nameInkBounds(text),center=mark.getBoundingClientRect().top+(ink.descent-ink.ascent)/2;
+  const ink=nameInkBounds(text),center=layoutRect(mark).top+(ink.descent-ink.ascent)/2;
   const shift=Math.round((button.top+button.height/2-center+previous)*64)/64;
   heading.style.setProperty('--catalog-heading-shift',shift+'px');
-  const bottom=mark.getBoundingClientRect().top+ink.descent;
-  rhythmValue(intro,'--catalog-heading-bottom-space',Math.max(0,intro.getBoundingClientRect().bottom-bottom));
+  const bottom=layoutRect(mark).top+ink.descent;
+  rhythmValue(intro,'--catalog-heading-bottom-space',Math.max(0,layoutRect(intro).bottom-bottom));
 }
 
 function measureSketchSpacing(card,title){
-  const photoBottom=card.querySelector('.card-photo').getBoundingClientRect().bottom;
-  const baseline=card.querySelector('.photo-title-baseline').getBoundingClientRect().top;
+  const photoBottom=layoutRect(card.querySelector('.card-photo')).bottom;
+  const baseline=layoutRect(card.querySelector('.photo-title-baseline')).top;
   const previousTrim=parseFloat(card.style.getPropertyValue('--sketch-title-trim'))||0;
   // One shared capital plane preserves the common divider across all titles.
   const originalGap=baseline-glyphBounds(title,'Н').ascent-photoBottom+previousTrim;
@@ -174,8 +177,8 @@ function measureSketchSpacing(card,title){
 }
 
 function measureShell(card){
-  const {width:w,height:h}=card.getBoundingClientRect();
-  const diameter=card.querySelector('.card-photo').getBoundingClientRect().width;
+  const {width:w,height:h}=layoutRect(card);
+  const diameter=layoutRect(card.querySelector('.card-photo')).width;
   const radius=diameter/2+12;
   const shell=card.querySelector('.card-shell');
   const edge=(parseFloat(getComputedStyle(shell).strokeWidth)||1)/2;
@@ -205,6 +208,7 @@ function refresh(){
 new MutationObserver(refresh).observe(main,{childList:true,subtree:true});
 new ResizeObserver(scheduleTypography).observe(main);
 window.addEventListener('platform:rendered',refresh);
+window.addEventListener('platform:layout',refresh);
 window.addEventListener('resize',scheduleTypography);
 document.fonts.ready.then(()=>{glyphCache.clear();scheduleTypography();});
 document.fonts.addEventListener('loadingdone',()=>{glyphCache.clear();scheduleTypography();});

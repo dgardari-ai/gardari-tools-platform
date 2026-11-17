@@ -1,7 +1,8 @@
+import {layoutMedia} from './layout.js?v=20261117-preview20';
 /* First visit: the illustration's own colour shapes → traced/filled headline →
    two travelling sides of the accepted frame → the five subject words.
    The home below this scene reveals only after actual page scrolling. */
-import {createArtwork,createHeadline,createFrame,propertySnapshot,bezier} from './home-motion-parts.js?v=20261116-release17';
+import {createArtwork,createHeadline,createFrame,propertySnapshot,bezier} from './home-motion-parts.js?v=20261117-preview20';
 
 let played=false;
 
@@ -61,7 +62,7 @@ export function bindHomeMotion(main) {
  if(!hero||!stage||!image||!heading)return ()=>{};
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
  // The accepted phone layout is static and has no authorial outer contour.
- const phoneLayout=matchMedia('(max-width:700px)').matches&&!!heading.querySelector('.hero-mobile-phrase');
+ const phoneLayout=layoutMedia('(max-width:700px)').matches&&!!heading.querySelector('.hero-mobile-phrase');
  if(played||reduced.matches||phoneLayout||typeof requestAnimationFrame!=='function') {
   hero.dataset.motionStage='complete';hero.dataset.motionResult=reduced.matches?'reduced-motion':phoneLayout?'mobile-layout':'return';
   played=true;return ()=>{};

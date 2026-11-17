@@ -1,4 +1,4 @@
-import {applyManualData} from './manual-edits.js';
+import {applyManualData} from './manual-edits.js?v=20261117-preview20';
 // All runtime requests remain on the current static origin.
 export async function loadData() {
   const names = ['catalog', 'groups', 'triads', 'editions', 'manual-edits'];

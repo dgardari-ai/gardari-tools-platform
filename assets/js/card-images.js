@@ -56,8 +56,8 @@ export const photoByTool={
     "position": "50% 50%"
   },
   "razvedka": {
-    "src": "razvedka.webp",
-    "alt": "Разноцветные вопросительные знаки",
+    "src": "razvedka.webp?v=20261117-preview20",
+    "alt": "Круглая геометрическая композиция с лупой, книгой, картой, очками и фонариком",
     "position": "50% 50%"
   },
   "watch": {

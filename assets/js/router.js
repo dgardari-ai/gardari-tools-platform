@@ -1,4 +1,4 @@
-import {lessonById} from './lessons-data.js';
+import {lessonById} from './lessons-data.js?v=20261117-preview20';
 export function parseRoute(data) {
   let raw;
   try { raw = decodeURIComponent(location.hash.slice(1)); } catch { return {page:'not-found'}; }

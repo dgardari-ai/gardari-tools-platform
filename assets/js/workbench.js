@@ -1,4 +1,4 @@
-import {E,arrow,number,notify,focusElement} from './utils.js';
+import {E,arrow,number,notify,focusElement} from './utils.js?v=20261117-preview20';
 export const newBench = tool => ({tab:'trial',mode:0,text:tool.modes[0].example,output:'',registers:[]});
 export function renderBench(tool,data,state,focusSelector) {
   const holder = document.getElementById('bench-body');

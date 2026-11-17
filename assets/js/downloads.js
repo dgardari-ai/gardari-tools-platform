@@ -1,4 +1,4 @@
-import {E,arrow,notify} from './utils.js';
+import {E,arrow,notify} from './utils.js?v=20261117-preview20';
 export function createDownloads(data,store,onChange) {
   const modal = document.getElementById('dl-modal');
   let origin = null;

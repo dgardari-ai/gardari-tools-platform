@@ -1,6 +1,6 @@
-import {E,arrow} from './utils.js';
-import {LESSONS,lessonById} from './lessons-data.js';
-import {photoByTool} from './card-images.js';
+import {E,arrow} from './utils.js?v=20261117-preview20';
+import {LESSONS,lessonById} from './lessons-data.js?v=20261117-preview20';
+import {photoByTool} from './card-images.js?v=20261117-preview20';
 
 const promoMark='<span class="learning-promo-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 5 11 7-11 7Z"/></svg></span>';
 

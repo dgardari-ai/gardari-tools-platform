@@ -1,5 +1,6 @@
-import {E,arrow} from './utils.js';
-import {commentsMarkup,bindComments} from './home-comments.js';
+import {E,arrow} from './utils.js?v=20261117-preview20';
+import {layoutCondition} from './layout.js?v=20261117-preview20';
+import {commentsMarkup,bindComments} from './home-comments.js?v=20261117-preview20';
 
 const FAQ=[
  ['Что это за платформа и кому она полезна?',[
@@ -24,11 +25,11 @@ const FAQ=[
  ]]
 ];
 const PHOTOS={
- 'Исследования':{file:'research.webp',width:900,height:900,alt:'Книги, образующие проём'},
- 'Мышление':{file:'thinking.webp',width:886,height:886,alt:'Композиция со скульптурой, портретами и цифровыми знаками'},
- 'Моделирование':{file:'modelling.webp',width:1920,height:1920,alt:'Люди и цветные отражения в прозрачных панелях'},
- 'ИИ-проекты':{file:'ai-projects.webp',height:1800,alt:'Программный код на экране'},
- 'Креатив':{file:'creative.webp',width:1361,height:1361,alt:'Руки в разноцветной краске'}
+ 'Исследования':{file:'research.webp?v=20261117-preview20',width:1254,height:1254,alt:'Геометрическая композиция с научными записями, книгой «База данных» и лупой'},
+ 'Мышление':{file:'thinking.webp?v=20261117-preview20',width:1254,height:1254,alt:'Геометрическая композиция с книгами, маской, нейронами и древними письменами'},
+ 'Моделирование':{file:'modelling.webp?v=20261117-preview20',width:1254,height:1254,alt:'Геометрическая композиция с макетом, анкетами, портретом пользователя и схемами процессов'},
+ 'ИИ-проекты':{file:'ai-projects.webp?v=20261117-preview20',width:1254,height:1254,alt:'Геометрическая композиция с процессором, платами, кодом и искусственной нейросетью'},
+ 'Креатив':{file:'creative.webp?v=20261117-preview20',width:1254,height:1254,alt:'Геометрическая композиция с палитрой, пяльцами, кистями, ножницами и красками'}
 };
 // The first two line breaks are authored; the remaining full questions wrap
 // at the same text axis and use the same baseline and line interval.
@@ -71,7 +72,7 @@ export function renderHome(main,data) {
   <svg class="hero-outline" viewBox="0 0 936 425.598" preserveAspectRatio="none" aria-hidden="true"><path d="M448.194 0H19.56A19.56 19.56 0 0 0 0 19.56V406.038A19.56 19.56 0 0 0 19.56 425.598H95.931 M854.511 0H916.44A19.56 19.56 0 0 1 936 19.56V406.038A19.56 19.56 0 0 1 916.44 425.598H854.511 M468.002 425.598H589.5"/></svg>
   <button class="hero-brand-symbol" type="button" data-menu-trigger aria-controls="sidebar" aria-expanded="false" aria-label="Открыть каталог"><img src="assets/images/redesign/platform-logo.svg" alt=""></button>
   <p class="hero-wordmark"><span>ПЛАТФОРМА ИНСТРУМЕНТОВ</span></p>
-  <picture><source media="(max-width:700px)" srcset="assets/images/redesign/platform-workers-mobile.svg"><img class="hero-illustration" src="assets/images/redesign/platform-workers.svg" alt="Люди с молотками и красным флагом" fetchpriority="high"></picture>
+  <picture><source data-layout-media="(max-width:700px)" media="${layoutCondition('(max-width:700px)')}" srcset="assets/images/redesign/platform-workers-mobile.svg"><img class="hero-illustration" src="assets/images/redesign/platform-workers.svg" alt="Люди с молотками и красным флагом" fetchpriority="high"></picture>
   <div class="home-hero-phrase"><h1 id="home-title"><span>КОГДА ЗНАНИЕ</span> <span>СТАНОВИТСЯ</span> <span>ИНСТРУМЕНТОМ &nbsp;<b aria-hidden="true">. . .</b></span><span class="hero-mobile-phrase"><span class="hero-mobile-line" data-mobile-baseline>КОГДА</span><span class="hero-mobile-line" data-mobile-baseline>ЗНАНИЕ</span><span class="hero-mobile-line" data-mobile-baseline>СТАНОВИТСЯ</span><span class="hero-mobile-line" data-mobile-baseline>ИНСТРУМЕНТОМ</span></span></h1></div>
   <div class="home-hero-description"><p><span>Платформа инструментов объединяет</span><span>наши авторские способы мышления,</span><span>исследования, проектирования</span><span>и взаимодействия с ИИ.</span></p><p><span>Выберите свою задачу, познакомьтесь</span><span>с методом и попробуйте его в работе.</span></p></div>
   <button class="hero-menu-trigger" type="button" data-menu-trigger aria-controls="sidebar" aria-expanded="false" aria-label="Открыть каталог"><svg class="mobile-menu-glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12M6 12h12M6 17h12"/></svg></button>
