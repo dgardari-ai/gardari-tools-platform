@@ -2,7 +2,7 @@ import {layoutWidth} from './layout.js?v=20261117-preview20';
 import {layoutRect} from './layout.js?v=20261117-preview20';
 import {layoutMedia} from './layout.js?v=20261117-preview20';
 import {initPhotoCards} from './photo-cards.js?v=20261117-preview20';
-import {initFooter} from './footer.js?v=20261117-preview20';
+import {initFooter} from './footer.js?v=20261117-preview22';
 import {applyManualData,manualPresentation} from './manual-edits.js?v=20261117-preview20';
 import {loadData} from './data.js?v=20261117-preview20';
 import {createLocalAdapter} from './storage.js?v=20261117-preview20';
@@ -148,7 +148,7 @@ async function start() {
     else main.innerHTML = `<section class="panel surface-light"><p class="eyebrow">СТРАНИЦА НЕ НАЙДЕНА</p><h1>Проверьте адрес</h1><p>Такого инструмента или раздела нет в каталоге.</p><div class="empty-actions"><a class="btn primary" href="#catalog">ОТКРЫТЬ КАТАЛОГ ${arrow()}</a></div></section>`;
     const names = {catalog:'Каталог',saved:'Избранное',account:'Личный кабинет',about:'Главная',training:'Обучение',lesson:'Обучение',agent:'AI агент','not-found':'Страница не найдена'};
     document.title = `${route.page==='tool'?data.byId.get(route.id).name:route.page==='lesson'?lessonById(route.id).title:names[route.page]} — Платформа инструментов Гардари`;
-    const description = route.page==='tool' ? data.byId.get(route.id).summary : '13 авторских методов исследования, мышления, моделирования и работы с ИИ.';
+    const description = route.page==='tool' ? data.byId.get(route.id).summary : route.page==='about' ? 'Платформа инструментов объединяет наши авторские способы мышления, исследования, проектирования и взаимодействия с ИИ.' : '13 авторских методов исследования, мышления, моделирования и работы с ИИ.';
     document.querySelector('meta[name="description"]').content = description;
     syncHeader();
     syncMenu();

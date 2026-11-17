@@ -8,7 +8,7 @@ export const PLATFORM_URL = 'https://platforma.gardari.art/';
 export async function sharePlatform() {
   if (typeof navigator.share === 'function') {
     try {
-      await navigator.share({title:'ПЛАТФОРМА ИНСТРУМЕНТОВ',url:PLATFORM_URL});
+      await navigator.share({title:'Когда знание становится инструментом',url:PLATFORM_URL});
       return;
     } catch (error) {
       if (error.name === 'AbortError') return;
