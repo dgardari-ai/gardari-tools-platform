@@ -1,0 +1,34 @@
+/* Shared painted geometry; the 24 × 16 viewBox includes both round end caps. */
+.type-baseline{display:inline-block;vertical-align:baseline;width:0;height:0;margin:0;padding:0;border:0;font-size:0;line-height:0}
+svg.type-chevron{width:calc(var(--chevron-cap,1cap)*1.5)!important;height:var(--chevron-cap,1cap)!important;max-width:none;flex:none;overflow:visible;fill:none;stroke:currentColor;stroke-width:2!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+.type-chevron path{vector-effect:none}
+
+/* Preserve every authored outer mark box: rhythm measurement reads that box. */
+.home-heading-mark>.heading-mark-ink{display:block;width:100%;height:100%;background:var(--accent)}
+@media(min-width:701px){
+ .home-section-heading .home-heading-mark{background:transparent}
+ .home-heading-mark>.heading-mark-ink{animation:section-mark-pulse 2.6s ease-in-out infinite;transform-origin:center}
+ #main:not([data-view="about"]) .catalog-heading-square{background:transparent;animation:none}
+ .catalog-heading-square::before{content:'';display:block;width:100%;height:100%;background:var(--redesign-purple,var(--accent));animation:section-mark-pulse 2.6s ease-in-out infinite;transform-origin:center}
+}
+@keyframes section-mark-pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(.42);opacity:.45}}
+@media(prefers-reduced-motion:reduce){.home-heading-mark>.heading-mark-ink,.catalog-heading-square::before{animation:none}}
+
+/* Card controls and cabinet actions share the accepted capsule geometry. */
+.card-slot>.photo-card .card-details{height:44px;min-height:44px;padding:0 32px}
+.card-slot .photo-card .card-favorite{width:44px;height:44px;min-height:44px}
+#main[data-view="account"] :is(.btn,.profile-nav button,.account-setting button){height:44px;min-height:44px;padding:0 32px;border-radius:999px;font:400 11px/1.3 var(--label-font)}
+#main[data-view="account"] .profile-email input{height:44px;min-height:44px;padding:0 32px;border-radius:999px}
+
+/* Full-screen iPhone layout keeps interactive content outside the notch. */
+:root{--platform-safe-top:env(safe-area-inset-top,0px);--platform-safe-bottom:env(safe-area-inset-bottom,0px);--platform-safe-left:env(safe-area-inset-left,0px);--platform-safe-right:env(safe-area-inset-right,0px)}
+body{padding-left:var(--platform-safe-left);padding-right:var(--platform-safe-right)}
+.footer-contact-dialog{max-height:calc(100dvh - var(--platform-safe-top) - var(--platform-safe-bottom) - 28px)}
+@media(max-width:700px){
+ .section-header{padding-top:calc(30px + var(--platform-safe-top))}
+ .sidepanel,.noside .sidepanel{top:var(--platform-safe-top);bottom:var(--platform-safe-bottom);height:calc(100dvh - var(--platform-safe-top) - var(--platform-safe-bottom));max-height:calc(100dvh - var(--platform-safe-top) - var(--platform-safe-bottom))}
+ #site-footer.editorial-footer{height:calc(167.501345903cqw + var(--platform-safe-bottom));padding-bottom:var(--platform-safe-bottom)}
+ .home-heading-mark>.heading-mark-ink{display:none}
+ .home-section-heading .home-heading-mark{width:var(--mobile-heading-cap-height,1cap);height:var(--mobile-heading-cap-height,1cap)}
+ .hero-mobile-arrow.type-chevron,#site-footer .footer-catalog-arrow.type-chevron{margin-left:calc(var(--chevron-cap)*-.5);transform:none}
+}

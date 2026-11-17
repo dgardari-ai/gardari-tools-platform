@@ -1,5 +1,5 @@
 import {initPhotoCards} from './photo-cards.js?v=20261116-release17';
-import {initFooter} from './footer.js?v=20261117-affinity-final';
+import {initFooter} from './footer.js?v=20261117-preview19';
 import {applyManualData,manualPresentation} from './manual-edits.js';
 import {loadData} from './data.js';
 import {createLocalAdapter} from './storage.js';
@@ -11,7 +11,7 @@ import {newBench,renderBench,compose} from './workbench.js?v=20261116-tools1';
 import {createDownloads} from './downloads.js?v=20261116-tools1';
 import {renderAccount,renderAbout} from './account.js';
 import {renderTraining,refreshTraining,renderLesson} from './training.js?v=20261116-lessons1';
-import {renderHome} from './home.js?v=20261117-mobile-final';
+import {renderHome} from './home.js?v=20261117-preview19';
 import {renderSidebar} from './sidebar.js?v=20261116-release17';
 import {createAccountState} from './account-state.js';
 import {lessonById} from './lessons-data.js';
@@ -85,10 +85,12 @@ async function start() {
   function positionMenu() {
     const viewport=document.documentElement.clientWidth;
     const content=frame.getBoundingClientRect();
-    const width=Math.min(284,viewport-24);
-    const aside=content.left>=width+52;
+    const safe=getComputedStyle(document.body);
+    const left=parseFloat(safe.paddingLeft)||0,right=parseFloat(safe.paddingRight)||0;
+    const width=Math.min(284,viewport-left-right-24);
+    const aside=content.left-left>=width+52;
     sidebar.style.width=`${width}px`;
-    sidebar.style.left=`${aside?content.left-width-48:0}px`;
+    sidebar.style.left=`${aside?Math.max(left,content.left-width-48):left}px`;
     sidebar.dataset.placement=aside?'aside':'overlay';
     document.documentElement.style.setProperty('--platform-header-height',`${document.getElementById('top').offsetHeight}px`);
   }

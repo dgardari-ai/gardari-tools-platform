@@ -75,6 +75,7 @@ export function initFooter() {
       const shift = -Math.round(offset*128)/128+'px';
       if (node.style.getPropertyValue('--footer-type-shift') !== shift) node.style.setProperty('--footer-type-shift',shift);
     }
+    window.dispatchEvent(new Event('platform:type-baselines'));
   };
   const scheduleLabels = () => { if (!typeFrame) typeFrame = requestAnimationFrame(alignLabels); };
   const observer = new ResizeObserver(() => { alignShareButton(); scheduleLabels(); });

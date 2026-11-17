@@ -1,5 +1,5 @@
 export const E = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-export const arrow = (extra = '') => `<svg class="chevron ${extra}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m9 5 7 7-7 7"/></svg>`;
+export const arrow = (extra = '') => `<svg class="chevron ${extra}" viewBox="0 4 24 16" aria-hidden="true" focusable="false"><path d="m9 5 7 7-7 7"/></svg>`;
 export const number = value => String(value).padStart(2, '0');
 export const paragraphs = values => values.map(p => `<p>${E(p)}</p>`).join('');
 export const list = values => values.map(p => `<li>${E(p)}</li>`).join('');

@@ -46,7 +46,7 @@
  .hero-cta-content{display:contents;translate:none}
  .hero-catalog-cta .hero-cta-label{position:absolute;left:23.058290cqw;top:6.929182cqw;transform:translateY(var(--mobile-baseline-shift,0px))}
  .hero-catalog-cta .hero-action-arrow{display:none}
- .hero-mobile-arrow{position:absolute;left:55.526462cqw;top:6.929221cqw;display:block;font:400 3.857307493cqw/1 Chalkboard,cursive;transform:translateY(var(--mobile-baseline-shift,0px))}
+ .hero-mobile-arrow{position:absolute;left:55.526462cqw;top:6.929221cqw;display:block;transform:none}
 
  .hero-menu-trigger .mobile-menu-glyph{width:67.33712%;height:67.33712%;stroke-width:1.4}
 

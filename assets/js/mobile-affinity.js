@@ -8,10 +8,10 @@ const policyLinks=[...document.querySelectorAll('.policy-page .prototype-tabs a'
 const policyLogo=document.querySelector('.policy-page .header-logo');
 const policyLogoLabel=policyLogo?.getAttribute('aria-label');
 const selectors=[
- '.hero-mobile-line','.hero-cta-label','.hero-mobile-arrow','.home-hero-description p>span','.hero-topics>span',
+ '.hero-mobile-line','.hero-cta-label','.home-hero-description p>span','.hero-topics>span',
  '.prototype-tab-name','.home-heading-text','.home-question-number',
  '.home-question-mark','.footer-version','.footer-contacts>.footer-label',
- '.footer-control-label','.footer-catalog-arrow',
+ '.footer-control-label',
  '.footer-link-label:not(:has(.footer-policy-first))','.footer-policy-first','.footer-policy-last',
  '.footer-copyright-desktop'
 ].join(',');
@@ -23,18 +23,19 @@ function align(){
   link.setAttribute('href',mobile.matches?url.pathname+url.search+url.hash:href);
  }
  if(policyLogo)policyLogo.setAttribute('aria-label',mobile.matches?'Открыть меню':policyLogoLabel);
- // Centre the painted letters, including accents, rather than the font's
- // asymmetric line box. All three section bands keep the same field height.
+ // Share the capital body height and baseline. Sparse accents (Й) must not
+ // shift an entire heading relative to the other section bands.
  for(const label of document.querySelectorAll('.home-section-heading .home-heading-text')){
-  if(!mobile.matches){label.style.removeProperty('--mobile-heading-baseline');continue;}
+  if(!mobile.matches){label.style.removeProperty('--mobile-heading-baseline');label.closest('.home-section-heading').style.removeProperty('--mobile-heading-cap-height');continue;}
   const band=label.closest('.home-section-heading');
   const box=band.getBoundingClientRect();
   if(!box.height||!box.width||!sideMeasure)continue;
   const style=getComputedStyle(label);
   sideMeasure.font=`${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
-  const metrics=sideMeasure.measureText(label.innerText.trim());
+  const metrics=sideMeasure.measureText('Н');
   const ascent=Number.isFinite(metrics.actualBoundingBoxAscent)?metrics.actualBoundingBoxAscent:Number.parseFloat(style.fontSize)*.75;
   const descent=Number.isFinite(metrics.actualBoundingBoxDescent)?metrics.actualBoundingBoxDescent:0;
+  band.style.setProperty('--mobile-heading-cap-height',(ascent+descent)+'px');
   const baseline=Math.round((box.height+ascent-descent)*64)/128+'px';
   if(label.style.getPropertyValue('--mobile-heading-baseline')!==baseline)label.style.setProperty('--mobile-heading-baseline',baseline);
  }
@@ -76,6 +77,7 @@ function align(){
   }
  }
  document.documentElement.dataset.mobileGeometryReady=String(mobile.matches);
+ window.dispatchEvent(new Event('platform:type-baselines'));
 }
 const schedule=()=>{if(!frame)frame=requestAnimationFrame(align);};
 new ResizeObserver(schedule).observe(document.body);
