@@ -1,0 +1,309 @@
+/* Accepted detail system for tools and lessons: shared grid, reading rhythm and work window.
+   Other pages retain their own styles; spacing follows block / heading / list roles. */
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) {
+  --detail-pad: 24px;
+  --detail-reading-pad: 28px;
+  --detail-space: 24px;
+  --detail-caption-gap: 8px;
+  --detail-list-gap: 4px;
+  --detail-rule: 1.5px;
+  --detail-control-pad: 32px;
+  --detail-outline: #262626;
+}
+
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .detail-main :is(.reading-panel, .intro-code, .intro-photo) {
+  border-color: var(--detail-outline);
+}
+#shell:has(#main:is([data-view^="tool/"], [data-view^="lesson/"])) #site-footer::before,
+#dl-modal[data-tool] .modal-options button {
+  border-color: #262626;
+}
+
+@media (min-width: 926px) {
+  #main:is([data-view^="tool/"], [data-view^="lesson/"]) .detail-main {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 18px;
+    row-gap: 12px;
+  }
+  #main:is([data-view^="tool/"], [data-view^="lesson/"]) .detail-main > #workbench {
+    position: sticky;
+    top: calc(var(--platform-header-height) + 24px);
+    display: flex;
+    flex-direction: column;
+    height: calc(100dvh - var(--platform-header-height) - 48px);
+    max-height: calc(100dvh - var(--platform-header-height) - 48px);
+    overflow: visible;
+  }
+  #main:is([data-view^="tool/"], [data-view^="lesson/"]) #workbench .worktop {
+    flex: none;
+  }
+  #main:is([data-view^="tool/"], [data-view^="lesson/"]) #workbench .work-content {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior-y: contain;
+    scrollbar-width: thin;
+    scrollbar-gutter: stable;
+    scrollbar-color: var(--paper) transparent;
+    border-radius: 0 0 calc(var(--radius-block) - var(--detail-rule)) calc(var(--radius-block) - var(--detail-rule));
+  }
+  #main:is([data-view^="tool/"], [data-view^="lesson/"]) #workbench .work-content:focus-visible {
+    outline: var(--detail-rule) solid #5a486d;
+    outline-offset: -4px;
+  }
+}
+
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .reading-intro {
+  --intro-pad: var(--detail-pad);
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .reading-intro .intro-code {
+  width: clamp(20px, 4.53cqw, 28px);
+  height: auto;
+  aspect-ratio: 1;
+  inset-block-start: calc(-1 * var(--detail-rule));
+  inset-inline-end: calc(-1 * var(--detail-rule));
+  padding: 0 0 .5px;
+  font: 400 clamp(7px, 1.54cqw, 9.5px)/1 var(--label-font);
+  letter-spacing: -.055em;
+  font-variant-numeric: lining-nums tabular-nums;
+  color: #262626;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .reading-intro .tool-identity {
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .reading-intro .tool-intro-name {
+  margin-bottom: 14px;
+  font-size: 13px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .reading-intro .intro-card-title {
+  font-size: clamp(20px, 5.1cqw, 32px);
+  line-height: 1.04;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .reading-intro .intro-description {
+  margin-top: var(--detail-space);
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .reading-intro :is(.intro-description h2, .intro-features h2) {
+  margin: 0 0 var(--detail-caption-gap);
+  color: #5a486d !important;
+  font: 700 12px/1.25 var(--label-font) !important;
+  letter-spacing: 0;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .reading-intro .intro-summary {
+  font-size: 15px;
+  line-height: 1.4 !important;
+  letter-spacing: 0;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .reading-intro .intro-features {
+  position: relative;
+  margin-top: var(--detail-space);
+  padding-top: var(--detail-space);
+  border-top: 0;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .reading-intro :is(.intro-features, .intro-index)::before {
+  content: "";
+  position: absolute;
+  inset-inline: calc(-1 * var(--detail-rule));
+  inset-block-start: 0;
+  height: var(--detail-rule);
+  background: #262626;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .reading-intro .essence-grid {
+  gap: var(--detail-list-gap);
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .reading-intro .essence-card {
+  grid-template-columns: 4px minmax(0, 1fr);
+  column-gap: 10px;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .reading-intro .essence-card::before {
+  width: 3px;
+  height: 3px;
+  margin-top: 8px;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .reading-intro .essence-card p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.35;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .reading-intro .intro-actions {
+  gap: 12px;
+  margin-top: var(--detail-space);
+}
+
+/* The contents are one compact list; no rules separate its individual rows. */
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .reading-intro .intro-index {
+  position: relative;
+  margin-top: var(--detail-space);
+  padding: var(--detail-space) 0 0;
+  border-top: 0;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .reading-intro .intro-index > .eyebrow {
+  margin: 0 0 var(--detail-caption-gap);
+  padding-inline: var(--detail-pad);
+  font: 700 12px/1.25 var(--label-font);
+  color: #5a486d;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .chapter-links { display: block; }
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .chapter-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  padding-inline: var(--detail-pad);
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .chapter-row .chapter-link {
+  min-height: 34px;
+  padding-block: 6px;
+  border: 0;
+  font-size: 13px;
+  line-height: 1.35;
+}
+
+/* Full-width light cut in the dark window, including its outside stroke. */
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) #workbench {
+  container-type: inline-size;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) #workbench .worktop {
+  position: relative;
+  min-height: 50px;
+  padding: 16px var(--detail-pad);
+  border-bottom: 0;
+  font-size: 9px;
+  line-height: 1.3;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) #workbench .worktop > span {
+  color: #ffa800;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) #workbench .worktop::after {
+  content: "";
+  position: absolute;
+  inset-inline: calc(-1 * var(--detail-rule));
+  bottom: 0;
+  height: var(--detail-rule);
+  background: var(--paper);
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) #workbench .work-content {
+  padding: var(--detail-space) var(--detail-pad);
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) #workbench .work-content > h2 {
+  margin-bottom: 12px;
+  font: 900 clamp(16px, 6cqw, 20px)/1.12 "Arial Black", Arial, sans-serif;
+  letter-spacing: -.035em;
+  text-transform: uppercase;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) #workbench .work-content > p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) #workbench .work-content h3 {
+  margin: 24px 0 12px;
+  font: 700 12px/1.3 var(--label-font);
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) #workbench :is(.bench-steps li, .bench-example, .format-row, .output-panel) {
+  position: relative;
+  border-top: 0;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) #workbench :is(.bench-steps li, .bench-example, .format-row, .output-panel)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  inset-inline: calc(-1 * var(--detail-pad) - var(--detail-rule));
+  height: var(--detail-rule);
+  background: var(--paper);
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) #workbench .bench-example summary {
+  font-size: 13px;
+  line-height: 1.35;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) #workbench .bench-tabs {
+  margin: var(--detail-space) 0;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) #workbench .bench-label {
+  margin-bottom: var(--detail-caption-gap);
+  font: 400 10px/1.3 var(--label-font);
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) #workbench .bench-pick {
+  gap: 8px;
+  margin-bottom: var(--detail-space);
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) #workbench .bench-pick button {
+  padding: 10px 18px;
+  min-height: 40px;
+  line-height: 1.2;
+  text-align: center;
+}
+
+/* One inset for normal CTA labels. Compact choices retain their own scale. */
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) :is(.btn, .text-link),
+#dl-modal[data-tool] .modal-options button {
+  padding-inline: var(--detail-control-pad, 32px);
+  column-gap: 20px;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .btn {
+  min-height: 44px;
+  line-height: 1.2;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .btn .chevron { flex-shrink: 0; }
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) #workbench .bench-example-link {
+  min-height: 40px;
+  margin-top: 8px;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) #workbench .format-row button {
+  padding-inline: 18px;
+  gap: 12px;
+  justify-content: center;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .cover-bottom { gap: 12px; }
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .delivery-meta { justify-content: flex-end; }
+
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .reading-chapter {
+  padding: 24px var(--detail-reading-pad);
+  row-gap: 12px;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .reading-chapter + .reading-chapter::before {
+  left: calc(-1 * var(--detail-rule));
+  right: calc(-1 * var(--detail-rule));
+  border-top-color: #262626;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .reading-chapter .reading-prose ul {
+  margin-top: 8px;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .reading-chapter .reading-prose li {
+  margin-bottom: 4px;
+  line-height: 1.35;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .reading-chapter .reading-prose li:last-child {
+  margin-bottom: 0;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .tool-guide {
+  padding: 24px var(--detail-reading-pad);
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .tool-guide-steps > li {
+  position: relative;
+  padding-block: 20px;
+  border-top: 0;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .tool-guide-steps > li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  inset-inline: calc(-1 * var(--detail-reading-pad) - var(--detail-rule));
+  height: var(--detail-rule);
+  background: #262626;
+}
+#main:is([data-view^="tool/"], [data-view^="lesson/"]) .tool-guide h3 {
+  margin-bottom: 8px;
+}
+
+@media (max-width: 760px) {
+  #main:is([data-view^="tool/"], [data-view^="lesson/"]) .chapter-row { display: block; }
+}
+@media (max-width: 650px) {
+  #main:is([data-view^="tool/"], [data-view^="lesson/"]) { --detail-reading-pad: 24px; }
+}

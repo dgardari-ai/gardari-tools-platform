@@ -12,6 +12,15 @@ export function followWorkbench() {
     scheduled = false;
     const y = window.scrollY;
     if (!panel?.isConnected) { previousY=y; return; }
+    // An independently scrolling window is anchored by CSS. Document scrolling
+    // must never move its frame or feed the old tall-panel offset algorithm.
+    if (panel.dataset.scrollMode==='independent') {
+      const mode=document.documentElement.clientWidth<=925?'flow':'independent';
+      if(panel.dataset.followMode!==mode)panel.dataset.followMode=mode;
+      if(panel.style.getPropertyValue('--workbench-follow-top'))panel.style.removeProperty('--workbench-follow-top');
+      previousY=y;
+      return;
+    }
     if (document.documentElement.clientWidth<=925) {
       panel.style.removeProperty('--workbench-follow-top');
       panel.dataset.followMode='flow';

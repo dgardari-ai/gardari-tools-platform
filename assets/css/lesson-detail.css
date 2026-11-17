@@ -1,0 +1,78 @@
+/* Lesson-specific sections use the accepted tool-detail rhythm.
+   Programmes and material contents remain independent of their presentation. */
+#main[data-view^="lesson/"] .reading-panel.reading-intro--photo-right {
+  --intro-fill: var(--redesign-block-fill);
+  border-radius: var(--radius-block) var(--intro-photo-radius) var(--radius-block) var(--radius-block);
+}
+#main[data-view^="lesson/"] .reading-intro .tool-intro-name { font-family: var(--label-font); }
+
+#main[data-view^="lesson/"] .learning-lesson-page .lesson-outcomes {
+  position: relative;
+  gap: var(--detail-space);
+  margin-top: var(--detail-space);
+  padding: var(--detail-space) var(--detail-pad) 0;
+  border-top: 0;
+}
+#main[data-view^="lesson/"] .lesson-outcomes::before {
+  content: "";
+  position: absolute;
+  inset-inline: calc(-1 * var(--detail-rule));
+  top: 0;
+  height: var(--detail-rule);
+  background: var(--detail-outline);
+}
+#main[data-view^="lesson/"] .learning-lesson-page .reading-intro :is(.lesson-outcomes, .lesson-program) h2 {
+  margin: 0 0 var(--detail-caption-gap);
+  color: #5a486d;
+  font: 700 12px/1.25 var(--label-font);
+  letter-spacing: 0;
+}
+#main[data-view^="lesson/"] .learning-lesson-page .lesson-outcomes p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+#main[data-view^="lesson/"] .reading-intro .lesson-program > h2 {
+  padding-inline: var(--detail-pad);
+}
+#main[data-view^="lesson/"] .learning-lesson-page .lesson-outline {
+  display: grid;
+  gap: var(--detail-list-gap);
+  margin: var(--detail-caption-gap) var(--detail-pad) 0;
+  padding-inline-start: 20px;
+}
+#main[data-view^="lesson/"] .learning-lesson-page .reading-intro .lesson-outline li {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.35;
+}
+#main[data-view^="lesson/"] .lesson-outline li::marker {
+  color: #5a486d;
+  font: 400 12px/1.35 var(--label-font);
+}
+
+#main[data-view^="lesson/"] #workbench {
+  background: #262626;
+  border-color: #262626;
+  border-radius: var(--radius-block);
+  color: #f2f2f2;
+}
+#main[data-view^="lesson/"] #workbench :is(h2, p, a, button) { color: #f2f2f2; }
+#main[data-view^="lesson/"] #workbench .btn.light {
+  background: transparent;
+  border-color: var(--paper);
+}
+#main[data-view^="lesson/"] #workbench .btn.primary { border-color: #5a486d; }
+#main[data-view^="lesson/"] #workbench .lesson-back {
+  margin-top: var(--detail-space);
+  line-height: 1.4;
+  text-underline-offset: 4px;
+}
+#main[data-view^="lesson/"] #workbench :focus-visible { outline-color: #5a486d; }
+@media (min-width: 926px) {
+  #main[data-view^="lesson/"] .detail-main > #workbench { height: auto; }
+}
+@media (hover: hover) {
+  #main[data-view^="lesson/"] #workbench .btn.light:hover { background: #5a486d; }
+}

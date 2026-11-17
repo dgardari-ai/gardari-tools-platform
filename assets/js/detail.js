@@ -1,7 +1,7 @@
 import {E,arrow,number,paragraphs,list} from './utils.js';
 import {chapterRoute} from './router.js';
-import {renderBench} from './workbench.js';
-import {renderToolGuide} from './tool-guide.js';
+import {renderBench} from './workbench.js?v=20261116-tools1';
+import {renderToolGuide} from './tool-guide.js?v=20261116-tools1';
 import {photoByTool} from './card-images.js';
 export function renderIntroText(text) {
   return E(text);
@@ -10,7 +10,8 @@ export function renderDetail(main,tool,data,store,bench) {
   const group = data.groups.find(g => g.id === tool.category);
   const photo=photoByTool[tool.id];
   const kindLabel=tool.kind.charAt(0).toLocaleUpperCase('ru-RU')+tool.kind.slice(1);
-  const toc = tool.sections.map((part,i) => `<a class="chapter-link" data-chapter-id="section-${tool.id}-${i+1}" href="${chapterRoute(tool.id,i+1)}"><span class="chapter-index">${number(i+1)}</span><span>${E(part.title)}</span>${arrow()}</a>`).join('');
+  const links = tool.sections.map((part,i) => `<a class="chapter-link" data-chapter-id="section-${tool.id}-${i+1}" href="${chapterRoute(tool.id,i+1)}"><span class="chapter-index">${number(i+1)}</span><span>${E(part.title)}</span>${arrow()}</a>`);
+  const toc = links.reduce((rows,link,i) => { if(i%2===0)rows.push([]); rows.at(-1).push(link); return rows; },[]).map(row=>`<div class="chapter-row">${row.join('')}</div>`).join('');
   main.innerHTML = `<div class="detail-main">
       <div class="tool-intro-slot"><section class="reading-panel reading-intro reading-intro--photo-right ${group.surface}" id="section-${tool.id}-intro" data-intro-tone="${E(group.tone)}">
         <span class="intro-code">${E(tool.code)}</span>
@@ -21,10 +22,10 @@ export function renderDetail(main,tool,data,store,bench) {
         <div class="intro-actions"><button type="button" class="btn dark" data-action="download" data-id="${tool.id}">ПОЛУЧИТЬ ИНСТРУМЕНТ ${arrow()}</button><a class="btn light" href="#tool/${tool.id}/workbench" data-action="try">ПОПРОБОВАТЬ ${arrow()}</a></div>
         <div class="intro-index"><p class="eyebrow">ЧИТАТЬ ПОДРОБНО</p><nav class="chapter-links" aria-label="Разделы подробного описания">${toc}</nav></div>
       </section></div>
-      <aside class="workbench" id="workbench" tabindex="-1" aria-label="Интерактивная работа с инструментом"><div class="worktop"><span>РАБОЧЕЕ ОКНО ИНСТРУМЕНТА</span><span>ГАРДАРИ ${arrow()}</span></div><div class="work-content"><h2>попробовать метод</h2><p>Соберите запрос для своей задачи, посмотрите состав инструмента и выберите вариант получения.</p><div class="bench-tabs" role="tablist" aria-label="Режим рабочего окна">${[['trial','ПРОБА'],['guide','КАК РАБОТАЕТ'],['install','ПОЛУЧИТЬ']].map(([id,label]) => `<button type="button" id="tab-${id}" role="tab" data-action="bench" data-tab="${id}" aria-selected="${bench.tab===id}" tabindex="${bench.tab===id?0:-1}" aria-controls="bench-body">${label}</button>`).join('')}</div><div id="bench-body" role="tabpanel" tabindex="0" aria-labelledby="tab-${bench.tab}"></div></div></aside>
+      <aside class="workbench" id="workbench" data-scroll-mode="independent" tabindex="-1" aria-label="Интерактивная работа с инструментом"><div class="worktop"><span>РАБОЧЕЕ ОКНО ИНСТРУМЕНТА</span></div><div class="work-content" tabindex="0" role="region" aria-label="Рабочая панель: ${E(tool.name)}"><h2>попробовать метод</h2><p>Соберите запрос для своей задачи, посмотрите состав инструмента и выберите вариант получения.</p><div class="bench-tabs" role="tablist" aria-label="Режим рабочего окна">${[['trial','ПРОБА'],['guide','КАК РАБОТАЕТ'],['install','ПОЛУЧИТЬ']].map(([id,label]) => `<button type="button" id="tab-${id}" role="tab" data-action="bench" data-tab="${id}" aria-selected="${bench.tab===id}" tabindex="${bench.tab===id?0:-1}" aria-controls="bench-body">${label}</button>`).join('')}</div><div id="bench-body" role="tabpanel" tabindex="0" aria-labelledby="tab-${bench.tab}"></div></div></aside>
       <article class="detail-chapters" aria-label="Подробное описание инструмента">
         ${tool.sections.map((section,i) => `<section class="reading-panel reading-chapter surface-white" id="section-${tool.id}-${i+1}" tabindex="-1"><p class="eyebrow reading-kicker"><span class="chapter-number">${number(i+1)}</span></p><h2>${E(section.title)}</h2><div class="reading-prose">${paragraphs(section.paragraphs)}${section.bullets.length?`<ul>${list(section.bullets)}</ul>`:''}</div></section>`).join('')}
-        <section class="reading-panel ${group.surface} start-last tool-delivery" id="section-${tool.id}-download" tabindex="-1"><h2>Получение инструмента</h2><p>Выберите вариант для своей среды. Сейчас доступен ознакомительный файл Markdown (текст с разметкой) с порядком работы и примером.</p><div class="cover-bottom"><button type="button" class="btn dark" data-action="download" data-id="${tool.id}">ПОЛУЧИТЬ ОБРАЗЕЦ ${arrow()}</button><button type="button" class="btn light" data-action="star" data-id="${tool.id}" aria-pressed="${store.isFavorite(tool.id)}">${store.isFavorite(tool.id)?'УБРАТЬ ИЗ ИЗБРАННОГО':'СОХРАНИТЬ В БИБЛИОТЕКУ'} ${arrow()}</button></div><div class="delivery-meta"><span>Образец · demo-1.0</span><a href="#tool/${tool.id}/guide">Как начать ${arrow()}</a></div></section>
+        <section class="reading-panel ${group.surface} start-last tool-delivery" id="section-${tool.id}-download" tabindex="-1"><h2>Получение инструмента</h2><p>Выберите свою среду и скачайте файл с описанием метода, порядком работы и первым примером.</p><div class="cover-bottom"><button type="button" class="btn dark" data-action="download" data-id="${tool.id}">ПОЛУЧИТЬ ИНСТРУМЕНТ ${arrow()}</button><button type="button" class="btn light" data-action="star" data-id="${tool.id}" aria-pressed="${store.isFavorite(tool.id)}">${store.isFavorite(tool.id)?'УБРАТЬ ИЗ ИЗБРАННОГО':'СОХРАНИТЬ В БИБЛИОТЕКУ'} ${arrow()}</button></div><div class="delivery-meta"><a href="#tool/${tool.id}/guide">Как начать ${arrow()}</a></div></section>
         ${renderToolGuide(tool)}
       </article>
     </div>`;

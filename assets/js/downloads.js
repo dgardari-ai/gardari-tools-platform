@@ -8,7 +8,7 @@ export function createDownloads(data,store,onChange) {
     const wasOpen=modal.open,scroll=document.getElementById('modal-content').scrollTop;
     if(!wasOpen)origin = document.activeElement;
     modal.dataset.tool = productId;
-    document.getElementById('modal-content').innerHTML = `<p class="eyebrow">${tool.code} / ОБРАЗЕЦ ПОСТАВКИ</p><h2 id="modal-title">${E(tool.name)}</h2><p>Выберите удобную форму. Ознакомительный файл содержит назначение метода, порядок работы и пример первого применения.</p><div class="modal-options">${tool.formats.map((format,index) => `<button type="button" data-action="package" data-index="${index}"><span>${E(format)}<small>Демо-образец · Markdown (текст с разметкой) · .md</small></span>${arrow()}</button>`).join('')}</div><p class="modal-note">Издание образца: demo-1.0. Это ознакомительный материал, не полный производственный навык или установочный плагин. Полные пакеты будут доступны после выпуска. Регистрация, подписка и автоматическая установка сейчас не подключены.</p>`;
+    document.getElementById('modal-content').innerHTML = `<p class="eyebrow">${tool.code} / ПОЛУЧИТЬ ИНСТРУМЕНТ</p><h2 id="modal-title">${E(tool.name)}</h2><p>Выберите свою среду. Файл содержит назначение метода, порядок работы и первый пример.</p><div class="modal-options">${tool.formats.map((format,index) => `<button type="button" data-action="package" data-index="${index}"><span>${E(format)}</span>${arrow()}</button>`).join('')}</div>`;
     if(!wasOpen)modal.showModal();else document.getElementById('modal-content').scrollTop=scroll;
     if (Number.isInteger(preferredIndex)) modal.querySelector(`[data-index="${preferredIndex}"]`)?.focus();
   }
@@ -40,7 +40,8 @@ export function createDownloads(data,store,onChange) {
     const saved = store.recordDownload(tool.id,index);
     close();
     onChange();
-    notify(!rememberHistory ? 'Демо-файл передан браузеру. Сохранение истории отключено.' : saved ? 'Демо-файл передан браузеру. Запись доступна в кабинете.' : 'Демо-файл передан браузеру. История не сохранена: хранилище недоступно.');
+    const fileLabel='Файл';
+    notify(!rememberHistory ? `${fileLabel} передан браузеру. Сохранение истории отключено.` : saved ? `${fileLabel} передан браузеру. Запись доступна в кабинете.` : `${fileLabel} передан браузеру. История не сохранена: хранилище недоступно.`);
   }
   return {show,download,refresh(){if(modal.open)show(modal.dataset.tool);}};
 }
