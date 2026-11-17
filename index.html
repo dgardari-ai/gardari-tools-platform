@@ -201,7 +201,7 @@ html[data-platform-boot="pending"] #shell{visibility:hidden;opacity:0;pointer-ev
  };
  function moduleError(event){
   const tag=event.target;
-  if(tag?.tagName==='SCRIPT'&&tag.type==='module'&&tag.src.includes('/assets/js/app.js?v=20261117-preview20'))fail();
+  if(tag?.tagName==='SCRIPT'&&tag.type==='module'&&tag.src.includes('/assets/js/app.js?v=20261117-hover4'))fail();
  }
  const timer=setTimeout(fail,15000);
  document.addEventListener('platform:boot-ready',event=>finish(event.detail?.error?'error':'ready'),{once:true});
@@ -248,6 +248,7 @@ html[data-platform-boot="pending"] #shell{visibility:hidden;opacity:0;pointer-ev
 <link rel="stylesheet" href="assets/css/section-header.css?v=20261116-background">
 <link rel="stylesheet" href="assets/css/outline-standard.css?v=20261116-radius">
 <link rel="stylesheet" href="assets/css/home-motion.css?v=20261116-release15">
+<link rel="stylesheet" href="assets/css/home-hover.css?v=20261117-hover4">
 <link rel="stylesheet" href="assets/css/mobile-affinity.css?v=20261117-preview19">
 <link rel="stylesheet" href="assets/css/mobile-footer.css?v=20261117-preview19">
 <link rel="stylesheet" href="assets/css/desktop-footer.css?v=20261117-preview19">
@@ -258,7 +259,7 @@ html[data-platform-boot="pending"] #shell{visibility:hidden;opacity:0;pointer-ev
 <script type="module" src="assets/js/visual-details.js?v=20261117-preview20"></script>
 <script type="module" src="assets/js/mobile-affinity.js?v=20261117-preview20"></script>
 <script type="module" src="assets/js/section-header.js?v=20261117-preview20"></script>
-<script type="module" src="assets/js/app.js?v=20261117-preview20"></script>
+<script type="module" src="assets/js/app.js?v=20261117-hover4"></script>
 </head>
 <body>
 

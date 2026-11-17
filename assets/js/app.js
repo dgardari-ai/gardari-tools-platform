@@ -21,6 +21,7 @@ import {lessonById} from './lessons-data.js?v=20261117-preview20';
 import {renderAgent} from './agent.js?v=20261117-preview20';
 import {followWorkbench} from './sticky-workbench.js?v=20261117-preview20';
 import {bindHomeMotion} from './home-motion.js?v=20261117-preview20';
+import {bindHeroHover} from './home-hover.js?v=20261117-hover4';
 
 initFooter();
 
@@ -155,7 +156,10 @@ async function start() {
     updateChapter();
     downloads.refresh();
     presentManual(data.manual);
-    if(route.page==='about')releaseHomeMotion=bindHomeMotion(main);
+    if(route.page==='about'){
+      const releaseMotion=bindHomeMotion(main),releaseHover=bindHeroHover(main);
+      releaseHomeMotion=()=>{releaseHover();releaseMotion();};
+    }
     window.dispatchEvent(new CustomEvent('platform:rendered',{detail:{catalog:data.catalog}}));
   }
   function applyRoute(initial = false) {
